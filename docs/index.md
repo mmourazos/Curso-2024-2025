@@ -2,6 +2,8 @@
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
+*Cambio para comprobar si se actualiza el fichero en GitHub Pages.*
+
 ## Commands
 
 * `mkdocs new [dir-name]` - Create a new project.
