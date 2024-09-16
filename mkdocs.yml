@@ -8,7 +8,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/mmourazos/DAM_PR_Apuntes
+      link: https://github.com/mmourazos/Curso-2024-2025
 markdown_extensions:
   - pymdownx.highlight:
       use_pygments: true
