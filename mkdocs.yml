@@ -9,7 +9,6 @@ theme:
     - navigation.instant
     - navigation.tabs
 nav:
-  - Home: index.md
   - Apuntes 2024 - 2025: apuntes.md
 extra:
   social:
