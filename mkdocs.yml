@@ -2,3 +2,5 @@ site_name: Apuntes de informática
 site_url: https://mmourazos.github.io/Curso-2024-2025
 theme: 
   name: material
+nav:
+  - Apuntes: apuntes.md
