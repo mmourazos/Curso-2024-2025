@@ -9,6 +9,7 @@ theme:
     - navigation.instant
     - navigation.tabs
 nav:
+  - Inicio: index.md
   - Apuntes 2024 - 2025: apuntes.md
 extra:
   social:
