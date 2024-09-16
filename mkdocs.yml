@@ -1,11 +1,18 @@
 site_name: Apuntes de informática
 site_url: https://mmourazos.github.io/Curso-2024-2025
-theme: 
+repo_url: https://github.com/mmourazos/Curso-2024-2025
+
+theme:
   name: material
-  languaje: es
-  features:
-    - navigation.instant
-    - navigation.tabs
-nav:
-  - Home: index.md
-  - Apuntes: apuntes.md
+  language: es
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mmourazos/DAM_PR_Apuntes
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - footnotes
