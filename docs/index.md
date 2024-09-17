@@ -1,19 +1,14 @@
 # Welcome to MkDocs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Este sitio está ospedado en GitHub Pages. Puedes acceder a él a través de la siguiente URL: [mmourazos.github.io/Curso-2024-2025](https://mmourazos.github.io/Curso-2024-2025/).
 
-*Cambio para comprobar si se actualiza el fichero en GitHub Pages.*
+Para quien pueda estar interesado se utilizó el *framework* [mkdocs.org](https://www.mkdocs.org). En concreto el *theme* [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
 
-## Commands
+Para realizar el renderizado de las páginas se utilizó la herramienta de GitHub actions (siguiendo las indicaciones del la documentación de mkdocs).
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Para la edición de los ficheros markdown se utilizó el editor de texto en consola [**Neovim**](https://neovim.io/) con la *distribución* [**LazyVim**](https://lazyvim.org/) de [Folke Lemaitre](https://github.com/folke).
 
-## Project layout
+Finalmente, para gestionar el repositorio de GitHub se utilizó la aplicación [Lazygit](https://github.com/jesseduffield/lazygit) de [Jesse Duffield](https://github.com/jesseduffield).
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Un saludo
+Manuel.
