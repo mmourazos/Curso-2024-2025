@@ -14,6 +14,8 @@ Un sistema de información es un conjunto de elementos que interactúan entre s�
 
 Estos elementos interactúan entre sí para procesar información y generar conocimiento, es decir, información más elaborada que ayuda a la toma de decisiones.
 
+![Sistema de información](C:\Users\asinc\Documents\Trabajo\IES San Clemente\Curso-2024-2025\docs\GBD\UD 1 - Sistemas de información\images\sistema de información.svg)
+
 ### Sistema de información informático
 
 Un sistema de información informático es un subconjunto de los sistemas de información generales. Un **SI** informático estará formado por:
@@ -53,6 +55,8 @@ Se define fichero como un conjunto de información relacionada tratada como una 
 
 * **Registros lógicos**: Son *bloques* que contienen información relativa a un mismo elemento u *objeto*. Por ejemplo, cada registro de un fichero de clientes contendría la información de un cliente.
 * **Campos**: Son los *elementos* que componen un registro. Por ejemplo, en el fichero de clientes, los campos podrían ser el nombre, apellidos, dirección, teléfono, etc.
+
+![Estructura lógica de un fichero](./images/estructura lógica fichero.svg)
 
 #### Limitaciones de los ficheros tradicionales
 
@@ -246,9 +250,27 @@ Tablaeu, Power BI, QlikView, MicroStrategy, son algunas de las herramientas más
 
 XLM (*eXtensible Markup Language*) es un lenguaje de marcado que permite almacenar datos de manera jerárquica. Es muy utilizado en la web para intercambiar información entre aplicaciones.
 
+```xml
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+```
+
 #### JSON
 
 JSON (*JavaScript Object Notation*) es un formato de intercambio de datos ligero y fácil de leer. Es muy utilizado en aplicaciones web y APIs para transmitir datos entre el servidor y el cliente. Su sintaxis es más compacta que la de XML y es más fácil de leer y escribir.
+
+```json
+{
+  to: "Tove",
+  from: "Jani",
+  heading: "Reminder",
+  body: "Don't forget me this weekend!"
+}
+```
 
 ### Servicio de directorio
 

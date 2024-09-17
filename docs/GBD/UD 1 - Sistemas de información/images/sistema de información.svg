@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210.2563mm"
+   height="65mm"
+   viewBox="0 0 221.255 68.400209"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="sistema de información.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:connector-spacing="6"
+     inkscape:zoom="1.4778115"
+     inkscape:cx="357.96175"
+     inkscape:cy="179.65755"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="marker24"
+       refX="4"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path24" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="4"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <rect
+       x="159.6956"
+       y="385.02881"
+       width="203.67957"
+       height="160.37228"
+       id="rect5" />
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(10.773301,-63.332083)">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text5"
+       style="font-size:21.3333px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';white-space:pre;shape-inside:url(#rect5);display:inline" />
+    <g
+       id="g24"
+       transform="translate(5.4993462,1.7001048)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova Bold';stroke-width:0.264583"
+         x="16.182184"
+         y="74.030869"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova Bold';stroke-width:0.264583"
+           x="16.182184"
+           y="74.030869">Sistema de información</tspan></text>
+      <g
+         id="g9"
+         transform="translate(-41.178571,-2.4754377)">
+        <rect
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+           id="rect1"
+           width="31.5"
+           height="10"
+           x="44.122974"
+           y="82.14286"
+           rx="1"
+           ry="1" />
+        <text
+           xml:space="preserve"
+           style="font-size:4.93889px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';stroke-width:0.264583"
+           x="46.218681"
+           y="88.910538"
+           id="text2"><tspan
+             sodipodi:role="line"
+             id="tspan2"
+             style="font-size:4.93889px;stroke-width:0.264583"
+             x="46.218681"
+             y="88.910538">Información</tspan></text>
+      </g>
+      <g
+         id="g7"
+         transform="translate(-41.178571,-13.058771)">
+        <text
+           xml:space="preserve"
+           style="font-size:4.93889px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';stroke-width:0.264583"
+           x="48.811115"
+           y="131.77142"
+           id="text4"><tspan
+             sodipodi:role="line"
+             id="tspan4"
+             style="font-size:4.93889px;stroke-width:0.264583"
+             x="48.811115"
+             y="131.77142">Recursos</tspan></text>
+        <rect
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+           id="rect6"
+           width="31.5"
+           height="10"
+           x="44.122978"
+           y="125.03389"
+           rx="1"
+           ry="1" />
+      </g>
+      <g
+         id="g8"
+         transform="translate(-46.155183,-6.4748869)">
+        <text
+           xml:space="preserve"
+           style="font-size:4.93889px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';stroke-width:0.264583"
+           x="53.890217"
+           y="109.03369"
+           id="text3"><tspan
+             sodipodi:role="line"
+             id="tspan3"
+             style="font-size:4.93889px;stroke-width:0.264583"
+             x="53.890217"
+             y="109.03369">Personas</tspan></text>
+        <rect
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+           id="rect7"
+           width="31.5"
+           height="10"
+           x="49.099586"
+           y="102.29616"
+           rx="1"
+           ry="1" />
+      </g>
+      <g
+         id="g10"
+         transform="translate(-41.178571,-2.4754377)">
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova Bold';stroke-width:0.264583"
+           x="104.81625"
+           y="106.02712"
+           id="text9"><tspan
+             sodipodi:role="line"
+             id="tspan9"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova Bold';stroke-width:0.264583"
+             x="104.81625"
+             y="106.02712">Actividades</tspan></text>
+        <rect
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+           id="rect10"
+           width="59.977482"
+           height="42.308002"
+           x="96.501083"
+           y="82.142708"
+           rx="1"
+           ry="0.96060306" />
+      </g>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+         d="M 34.444407,116.97512 H 55.322512"
+         id="path16"
+         inkscape:connector-type="orthogonal"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g7"
+         inkscape:connection-end="#g10" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+         d="M 34.444403,100.82127 H 55.322512"
+         id="path17"
+         inkscape:connector-type="orthogonal"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g8"
+         inkscape:connection-end="#g10" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+         d="M 34.444403,84.667423 H 55.322512"
+         id="path18"
+         inkscape:connector-type="orthogonal"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g9"
+         inkscape:connection-end="#g10" />
+      <g
+         id="g20"
+         transform="translate(-41.178571,-0.5371118)">
+        <rect
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;paint-order:normal"
+           id="rect18"
+           width="139.291"
+           height="64.5"
+           x="30.65527"
+           y="64.119194"
+           rx="22.663509"
+           ry="32.25" />
+      </g>
+      <g
+         id="g23"
+         transform="translate(0,12.469839)">
+        <g
+           id="g22">
+          <text
+             xml:space="preserve"
+             style="font-size:7.76111px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';stroke-width:0.264583"
+             x="155.02321"
+             y="88.086334"
+             id="text21"><tspan
+               sodipodi:role="line"
+               id="tspan21"
+               style="font-size:7.76111px;stroke-width:0.264583"
+               x="155.02321"
+               y="88.086334">Objetivos</tspan></text>
+          <text
+             xml:space="preserve"
+             style="font-size:4.23333px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';stroke-width:0.264583"
+             x="154.15109"
+             y="93.377998"
+             id="text22"><tspan
+               sodipodi:role="line"
+               id="tspan22"
+               style="font-size:4.23333px;stroke-width:0.264583"
+               x="154.15109"
+               y="93.377998">de la organización</tspan></text>
+        </g>
+        <path
+           sodipodi:type="star"
+           style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;paint-order:normal"
+           id="path22"
+           inkscape:flatsided="true"
+           sodipodi:sides="6"
+           sodipodi:cx="143.76692"
+           sodipodi:cy="72.510094"
+           sodipodi:r1="28.120253"
+           sodipodi:r2="24.352852"
+           sodipodi:arg1="1.0471976"
+           sodipodi:arg2="1.5707963"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m 157.82705,96.862947 -28.12026,-1e-6 -14.06012,-24.352854 14.06013,-24.352852 28.12025,10e-7 14.06012,24.352854 z"
+           inkscape:transform-center-x="1.8112368e-06"
+           transform="translate(27.307154,15.841339)" />
+      </g>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker24)"
+         d="m 115.29999,100.82127 27.65383,0"
+         id="path23"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g10"
+         inkscape:connection-end="#g23" />
+    </g>
+  </g>
+</svg>
