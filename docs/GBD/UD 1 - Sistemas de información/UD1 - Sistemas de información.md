@@ -14,7 +14,7 @@ Un sistema de información es un conjunto de elementos que interactúan entre s�
 
 Estos elementos interactúan entre sí para procesar información y generar conocimiento, es decir, información más elaborada que ayuda a la toma de decisiones.
 
-![Sistema de información](C:\Users\asinc\Documents\Trabajo\IES San Clemente\Curso-2024-2025\docs\GBD\UD 1 - Sistemas de información\images\sistema de información.svg)
+![Sistema de información](./images/sistema de información.svg)
 
 ### Sistema de información informático
 
