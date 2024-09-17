@@ -1,6 +1,6 @@
-# Welcome to MkDocs
+# Sobre este sitio
 
-Este sitio está ospedado en GitHub Pages. Puedes acceder a él a través de la siguiente URL: [mmourazos.github.io/Curso-2024-2025](https://mmourazos.github.io/Curso-2024-2025/).
+Este sitio está hospedado en GitHub Pages. Puedes acceder a él a través de la siguiente URL: [mmourazos.github.io/Curso-2024-2025](https://mmourazos.github.io/Curso-2024-2025/).
 
 Para quien pueda estar interesado se utilizó el *framework* [mkdocs.org](https://www.mkdocs.org). En concreto el *theme* [mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
 
