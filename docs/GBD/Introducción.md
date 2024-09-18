@@ -1,1 +1,1 @@
-# La introducción de la asignatura de SBD
+# La introducción de la asignatura de GBD
