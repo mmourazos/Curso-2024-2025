@@ -119,7 +119,7 @@ El objetivo de un lenguaje de programación es facilitar la escritura de program
 
 Todo lenguaje de programación consta de:
 
-* Alfabeto: Conjunto de símbolos que se pueden utilizar para escribir instrucciones.
+* **Alfabeto**: Conjunto de símbolos que se pueden utilizar para escribir instrucciones.
 * **Sintaxis**: Conjunto de reglas que definen la estructura del lenguaje.
 * **Semántica**: Conjunto de reglas que definen el significado de las instrucciones.
 
@@ -150,4 +150,5 @@ Dependiendo de cómo se ejecuten las instrucciones, los lenguajes de programaci�
 Como comentábamos antes, también hay lenguajes semicompilados, como Java, que generan código máquina para una máquina virtual. Son compilados en el sentido de que se genera código objeto, pero no para una máquina real, sino para una máquina virtual. Como ejemplo de máquinas virtuales tenemos la JVM de Java, el CLR de .NET o BEAM de Erlang. Estas máquinas virtuales son programas que simulan un ordenador y que permiten ejecutar este código máquina en cualquier ordenador que tenga dicha máquina virtual instalada.
 
 En el caso de Java, por ejemplo, podremos escribir un programa en Java y ejecutarlo en cualquier ordenador que tenga una JVM instalada, independientemente de la arquitectura del procesador o del sistema operativo.
+
 
