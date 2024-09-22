@@ -12,7 +12,7 @@ Esta es una de las fase más importantes del desarrollo de software, ya que si n
 
 En esta fase se definen la arquitectura del sistema y los componentes que lo forman. El objetivo es transformar los requisitos recopilados en la fase de análisis en un diseño detallado que permita la implementación del sistema.
 
-Se selecciona la tecnología quese va a utilizar para desarrollar el sistema: lenguaje de programación, base de datos, entorno de desarrollo, etc.
+Se selecciona la tecnología que se va a utilizar para desarrollar el sistema: lenguaje de programación, base de datos, entorno de desarrollo, etc.
 
 A partir de ahí se definen las estructuras de datos, los algoritmos y las interfaces de usuario que se van a utilizar en el sistema, las entidades y las relaciones, etc.
 
@@ -150,5 +150,3 @@ Dependiendo de cómo se ejecuten las instrucciones, los lenguajes de programaci�
 Como comentábamos antes, también hay lenguajes semicompilados, como Java, que generan código máquina para una máquina virtual. Son compilados en el sentido de que se genera código objeto, pero no para una máquina real, sino para una máquina virtual. Como ejemplo de máquinas virtuales tenemos la JVM de Java, el CLR de .NET o BEAM de Erlang. Estas máquinas virtuales son programas que simulan un ordenador y que permiten ejecutar este código máquina en cualquier ordenador que tenga dicha máquina virtual instalada.
 
 En el caso de Java, por ejemplo, podremos escribir un programa en Java y ejecutarlo en cualquier ordenador que tenga una JVM instalada, independientemente de la arquitectura del procesador o del sistema operativo.
-
-
