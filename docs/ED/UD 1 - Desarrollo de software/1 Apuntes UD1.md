@@ -1,26 +1,39 @@
 # Apuntes de la UD1 - Desarrollo de software
 
+[TOC]
+
 ## Fases del desarrollo de software
+
+El ciclo de vida del desarrollo del software (SDLC - Software Development Life Cycle) es un proceso que se sigue para desarrollar software. Este proceso consta de varias fases que se realizan de forma secuencial. El proceso en su conjunto ha de completar las tareas de planificación, creación, pruebas, despliegue y mantenimiento del software.
+
+No se trata de un proceso estricto sino que existen distintas metodologías que se adaptan a las necesidades de cada proyecto. Algunas de las metodologías más conocidas son:
+
+* Waterfall: Modelo en cascada. El más antiguo y sencillo, pero también el menos flexible.
+* Agile: Metodología ágil. Se basa en el desarrollo iterativo e incremental.
+* Scrum: Metodología ágil. Se basa en el desarrollo iterativo e incremental, pero con roles y reuniones definidas.
+* ...
+
+Aunque varían según los modelos las fases del ciclo de vida del software se podrían resumir en las siguientes:
 
 ### Análisis
 
-También se le conoce como **análisis de requisitos**. En esta fase se recopilan los requisitos del sistema, es decir, se identifican las necesidades que debe satisfacer el software que se va a desarrollar. Los requisitos pueden ser funcionales (lo que el sistema debe hacer) o no funcionales (cómo debe hacerlo). Por ejemplo, un requisito funcional podría ser que el sistema permita a los usuarios registrarse y un requisito no funcional podría ser que el sistema sea fácil de usar.
+También se le conoce como **análisis de requisitos**. En esta fase se recopilan los requisitos del sistema, es decir, se identifican las necesidades que debe satisfacer el software que se va a desarrollar. Los requisitos pueden ser **funcionales** (lo que el sistema debe hacer) o **no funcionales** (cómo debe hacerlo). Por ejemplo, un requisito funcional podría ser que el sistema permita a los usuarios registrarse y un requisito no funcional podría ser que el sistema sea fácil de usar.
 
-Esta es una de las fase más importantes del desarrollo de software, ya que si no se recopilan correctamente los requisitos, el software resultante no cumplirá con las expectativas del cliente. Si se comete un error en esta fase, es muy costoso corregirlo en fases posteriores del desarrollo. Esto se traduce en pérdidas de tiempo y dinero.
+Esta es una de las fases más importantes del desarrollo de software ya que si no se recopilan correctamente los requisitos el software resultante no cumplirá con las expectativas del cliente. Si se comete un error en esta fase será muy costoso corregirlo en fases posteriores del desarrollo. Esto se traduce en importantes pérdidas de tiempo y dinero.
 
 ### Diseño
 
 En esta fase se definen la arquitectura del sistema y los componentes que lo forman. El objetivo es transformar los requisitos recopilados en la fase de análisis en un diseño detallado que permita la implementación del sistema.
 
-Se selecciona la tecnología que se va a utilizar para desarrollar el sistema: lenguaje de programación, base de datos, entorno de desarrollo, etc.
+Se seleccionará la tecnología que se va a utilizar para desarrollar el sistema: lenguaje de programación, base de datos, entorno de desarrollo, etc.
 
-A partir de ahí se definen las estructuras de datos, los algoritmos y las interfaces de usuario que se van a utilizar en el sistema, las entidades y las relaciones, etc.
+A partir de ahí se definen las estructuras de datos, los algoritmos y las interfaces de usuario que se van a utilizar en el sistema, las entidades y las relaciones (si procede), etc.
 
 ### Implementación / codificación
 
-En esta fase se escribe el código fuente del sistema. El código fuente es el conjunto de instrucciones que le indican al ordenador qué operaciones debe realizar. El código fuente se escribe en un lenguaje de programación, ya seleccionado en la fase de diseño, y se guarda en archivos de texto plano. Dependiendo del proyecto podrían utilizarse varios lenguajes de programación.
+En esta fase se escribe el código fuente del sistema. El código fuente es el conjunto de instrucciones, escritas en uno o más lenguajes de programación, que le indican al sistema qué operaciones debe realizar. El código fuente se escribe en el lenguaje de programación, seleccionado en la fase de diseño, y se guarda en archivos de texto plano. Dependiendo del proyecto podrían utilizarse varios lenguajes de programación.
 
-Es en esta fase donde se usará un IDE (Entorno de Desarrollo Integrado) para escribir el código fuente, compilarlo y ejecutarlo. Un IDE es una herramienta que facilita el desarrollo de software, ya que proporciona un editor de texto, un compilador, un depurador, etc.
+Es en esta fase donde se usará un **IDE (Entorno de Desarrollo Integrado)** para escribir el código fuente, compilarlo y ejecutarlo. Un IDE es una herramienta que facilita el desarrollo de software, ya que proporciona un editor de texto, un compilador, un depurador, etc.
 
 ### Compilación
 
