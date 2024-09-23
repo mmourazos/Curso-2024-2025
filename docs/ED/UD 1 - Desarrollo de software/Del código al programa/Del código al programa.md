@@ -1,5 +1,7 @@
 # Del código al programa
 
+[TOC]
+
 En esta sección vamos a ver el proceso que hay desde la escritura de código en un lenguaje de programación (código fuente) hasta la ejecución del mismo en el sistema operativo (código objeto).
 
 ## Código compilado
