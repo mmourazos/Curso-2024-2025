@@ -15,10 +15,10 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/mmourazos/Curso-2024-2025
+
 markdown_extensions:
-  - pymdownx.highlight:
-      use_pygments: true
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - footnotes
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
