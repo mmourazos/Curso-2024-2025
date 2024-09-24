@@ -6,3 +6,6 @@
 *.dll
 *.so
 *.jar
+
+# Ignorar también los .pdf
+*.pdf

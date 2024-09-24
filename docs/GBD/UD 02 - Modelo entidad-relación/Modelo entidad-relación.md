@@ -1,5 +1,7 @@
 # Modelo entidad relación
 
+[TOC]
+
 El modelo entidad-relación fue propuesto por Peter Chen en 1976 y es una herramienta muy útil para diseñar bases de datos. Es un modelo conceptual de la base de datos que describe las **entidades** que la componen, los **atributos** de las entidades y las **relaciones** entre ellas de una forma gráfica y sencilla. Esto es, permite obtener un diagrama entidad-relación que es una representación gráfica de la estructura conceptual de una base de datos.
 
 Este modelo describe **elementos de interés interrelacionados** dentro de un **dominio específico de conocimiento**. ¿Qué quiere decir esto? Un _dominio de conocimiento_ podría ser lo que sabemos del funcionamiento de una biblioteca, y los _elementos de interés_ serían los fondos: libros, revistas, películas, etc.; los socios, los préstamos, etc.
@@ -86,11 +88,11 @@ Como se puede observar, la relación tendrá un nombre que indica la naturaleza 
 
 #### Roles
 
-Es práctica común expresar el _rol_ que representa cada entidad en una relación mediante como "el empleado es supervisor de otros empleados" o "el socio toma prestado un libro". En el ejemplo anterior, el rol de la entidad `empleado` es `supervisor` y el rol de la entidad `empleado` es `supervisado`, del mismo modo el rol de la entidad `socio` es `prestatario` y el rol de la entidad `libro` es `prestado`.
+Es práctica común expresar el _rol_ que representa cada entidad en una relación mediante una expresión como "el empleado es supervisor de otros empleados" o "el socio toma prestado un libro". En el ejemplo anterior, el rol de la entidad `empleado` es `supervisor` y el rol de la entidad `empleado` es `supervisado`, del mismo modo el rol de la entidad `socio` es `prestatario` y el rol de la entidad `libro` es `prest ado`.
 
 ## Cardinalidad
 
-La cardinalidad de una relación indica cuántas instancias de una entidad pueden estar relacionadas con una instancia de otra entidad. La cardinalidad se representa mediante un número o un rango de números. Por ejemplo, en la relación `prestamo` entre las entidades `socio` y `libro`, la cardinalidad podría ser `1` (uno) a `n` (ene), lo que indica que un socio puede tomar prestado varios libros (n libros), pero un libro solo puede ser tomado prestado por un socio. Obviamente esto viene determinado por las reglas del dominio de conocimiento que estamos modelando (por las reglas de negocio).
+La cardinalidad de una relación indica cuántas instancias de una entidad pueden estar relacionadas con una instancia de otra entidad. La cardinalidad se representa mediante un número o un rango de números. Por ejemplo, en la relación `prestamo` entre las entidades `socio` y `libro`, la cardinalidad podría ser `1` (uno) a `n` (ene), lo que indica que un socio puede tomar prestado varios libros (n libros), pero un libro solo puede ser tomado prestado por un socio. Obviamente esto viene determinado por las reglas del dominio de conocimiento que estamos modelando (por las reglas del negocio).
 
 ### Tipos de cardinalidad
 
