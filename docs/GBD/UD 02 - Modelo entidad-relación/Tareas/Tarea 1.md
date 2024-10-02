@@ -15,7 +15,7 @@ Representa utilizando el diagrama de entidad-relación (notación Crow's Foot) l
 
 ## Apartado 2: Relaciones
 
-**a)** Representa la relación entre `ALUMNO` y `CICLO`. Un alumno se matricula en un ciclo (ignoraremos la posibilidad de matricularse simultáneamente de dos ciclos) y un ciclo tiene matriculados a varios alumnos.
+**a)** Representa la relación entre `ALUMNO` y `CICLO`. Un alumno se matricula en un ciclo (ignoraremos la posibilidad de matricularse simultáneamente de dos ciclos) y un ciclo podrá tener matriculados a varios alumnos.
 
 **b)** Representa la relación entre `CICLO` y `MODULO`. Un ciclo se compone de varios módulos y un módulo pertenece a un solo ciclo.
 
