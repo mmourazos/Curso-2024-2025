@@ -8,6 +8,14 @@ En esta actividad vamos a instalar y configurar un Sistema Gestor de Base de Dat
 
 ### Instalación en Linux
 
+Para instalar MySQL Server en Linux vamos a seguir los siguientes pasos:
+
+```bash
+$ sudo apt update
+$ sudo upgrade
+$ sudo apt install mysql-server
+```
+
 ## Instalación de MySQL Workbench
 
 ### Instalación en Windows
@@ -69,7 +77,7 @@ Donde:
 Ahora hemos de darle permisos al usuario para que pueda acceder a la base de datos. Para ello ejecutamos la siguiente instrucción:
 
 ```sql
-GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'sammy'@'remote_server_ip' WITH GRANT OPTION;
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'usuario'@'ip_desde_donde_conecta' WITH GRANT OPTION;
 ```
 
 De esta forma el usuario podra...:
