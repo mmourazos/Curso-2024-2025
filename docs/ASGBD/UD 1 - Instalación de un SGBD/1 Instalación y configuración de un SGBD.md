@@ -1,5 +1,7 @@
 # Instalación y configuración de un Sistema Gestor de Base de Datos
 
+[TOC]
+
 En esta actividad vamos a instalar y configurar un Sistema Gestor de Base de Datos. Para ello vamos a utilizar el Sistema Gestor de Base de Datos MySQL.
 
 ## Instalación de MySQL Server
@@ -12,7 +14,7 @@ Hoy en día, a la hora de realizar la instalación de cualquier software casi si
 
 #### Descargando el instalador
 
-Para descargar el instalador de MySQL server hemos de ir a la página web de MySQL y buscar la versión que queremos instalar. En nuestro caso vamos a instalar la versión 8.4.2 LTS (Long Time Support) en su versión *Community*. Para ello iremos a la siguiente URL (4/10/2024): [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/) y seleccionamos la versión y el S.O. correspodiente. Se nos presentarán tres opciones de descarga: *MSI Intaller* y dos *ZIP Archive* (el segundo con características de desarrollo). Nosotros vamos a descargar el *MSI Installer*.
+Para descargar el instalador de MySQL server hemos de ir a la página web de MySQL y buscar la versión que queremos instalar. En nuestro caso vamos a instalar la versión 8.4.2 LTS (Long Time Support) en su versión *Community*. Para ello iremos a la siguiente URL (4/10/2024): [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/) y seleccionamos la versión y el S.O. correspondiente. Se nos presentarán tres opciones de descarga: *MSI Intaller* y dos *ZIP Archive* (el segundo con características de desarrollo). Nosotros vamos a descargar el *MSI Installer*.
 
 ![Descarga del instalador de MySQL Server](./images/MySQL_Server_URL.png)
 
@@ -107,7 +109,7 @@ El caso que vamos a ver es el de conectar un MySQL Workbench instalado en Window
 
 El archivo de configuración de MySQL Server (en Ubuntu Server) es `mysqld.cnf` y se encuentra en la siguiente ruta: `/etc/mysql/mysql.conf.d/mysqld.cnf`.
 
-*En Windows, el archivo de configuración de MySQL Server puede ser tanto `my.cnf` como `my.ini` y, en el momento de arrancar el servidor, éste lo buscará en las siguientes localilzaciones:`
+*En Windows, el archivo de configuración de MySQL Server puede ser tanto `my.cnf` como `my.ini` y, en el momento de arrancar el servidor, éste lo buscará en las siguientes localizaciones:`
 
 | Fichero de configuración | Propósito |
 | :----: | :----: |
@@ -177,7 +179,7 @@ Ahora hemos de darle permisos al usuario para que pueda acceder a la base de dat
 GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'usuario'@'ip_desde_donde_conecta' WITH GRANT OPTION;
 ```
 
-De esta forma el usuario podra...:
+De esta forma el usuario podrá...:
 
 * `CREATE`: crear bases de datos y tablas.
 * `ALTER`: modificar la estructura de las tablas.
