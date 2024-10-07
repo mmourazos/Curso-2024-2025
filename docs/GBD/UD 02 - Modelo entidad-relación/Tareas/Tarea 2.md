@@ -8,4 +8,33 @@ A su vez los productos son suministrados por diferentes proveedores. Un producto
 
 **Empieza identificando las entidades y atributos, y después las relaciones. Finalmente las cardinalidades.**
 
- 
+```mermaid
+erDiagram
+    CLIENTE {
+        string nombre
+        string apellidos
+        string direccion
+        date fecha_nacimiento
+    }
+    PRODUCTO {
+        string nombre
+        string descripcion
+        float precio_venta
+        int stock
+    }
+    PROVEEDOR {
+        string nombre
+        string direccion
+        string NIF
+        string telefono
+        string email
+    }
+    COMPRA {
+        int id_compra
+        date fecha_compra
+    }
+    CLIENTE ||--o{ COMPRA : realiza
+    PRODUCTO ||--o{ COMPRA : incluye
+    PROVEEDOR ||--o| PRODUCTO : suministra
+```
+
