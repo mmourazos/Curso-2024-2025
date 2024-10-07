@@ -149,7 +149,7 @@ Se representaría de la siguiente forma:
 
 ```mermaid
 erDiagram
-    SOCIO ||--|o LIBRO : PRESTAMO
+    SOCIO ||--o{ LIBRO : PRESTAMO
 ```
 
 #### Cardinalidad 0 ó 1 a 0 o n
@@ -163,4 +163,29 @@ Gráficamente sería:
 ```mermaid
 erDiagram
     SOCIO |o--o{ LIBRO : PRESTAMO
+```
+
+### Combinación de cardinalidades
+
+Las cardinalidades se pueden combinar de diferentes formas. Por ejemplo, si tenemos una relación `autor` entre las entidades `libro` y `autor`, la cardinalidad podría ser 1 a n en ambas direcciones, ya que un libro puede tener varios autores y un autor puede haber escrito varios libros.
+
+```mermaid
+erDiagram
+    LIBRO ||--|{ AUTOR : ESCRIBIO
+```
+
+Si queremos indicar que un libro puede tener varios autores la cardinalidad sería *m a n*, y se expresaría de la siguiente forma:
+
+```mermaid
+erDiagram
+    LIBRO }|--|{ AUTOR: ESCRIBIO
+```
+
+Entendiéndose que un autor ha escrito **uno o más libros** y que un libro ha sido escrito por **uno o más autores**.
+
+Si también nos interesa representar la posibilidad de que un libro no tenga autor (un libro anónimo) la cardinalidad entre libro y autor sería 0 a n:
+
+```mermaid
+erDiagram
+    LIBRO }|--o{ AUTOR : ESCRIBIO
 ```
