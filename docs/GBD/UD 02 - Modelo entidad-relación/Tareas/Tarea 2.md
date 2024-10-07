@@ -11,12 +11,14 @@ A su vez los productos son suministrados por diferentes proveedores. Un producto
 ```mermaid
 erDiagram
     CLIENTE {
+        string DNI PK
         string nombre
         string apellidos
         string direccion
         date fecha_nacimiento
     }
     PRODUCTO {
+        int id PK
         string nombre
         string descripcion
         float precio_venta
@@ -25,12 +27,14 @@ erDiagram
     PROVEEDOR {
         string nombre
         string direccion
-        string NIF
+        string NIF PK
         string telefono
         string email
     }
     COMPRA {
-        int id_compra
+        int id PK
+        int dni_cliente FK
+        int id_producto FK
         date fecha_compra
     }
     CLIENTE ||--o{ COMPRA : realiza
