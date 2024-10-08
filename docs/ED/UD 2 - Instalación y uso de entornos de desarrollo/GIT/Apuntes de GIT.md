@@ -43,6 +43,20 @@ GIT es un sistema de control de versiones distribuido. Permite llevar un control
 2. Selecciones los archivos que queremos incluir (*staged*) en la siguiente instantánea (*commit*).
 3. Realizamos el *commit* para salvar los cambios en forma de una instantánea.
 
+### Ramas en Git (Branches)
+
+Las ramas en Git son simplemente apuntadores móviles a uno de los *commits*. Por defecto, cuando creamos un nuevo proyecto, se crea una rama principal llamada `master`. Al crear una nueva rama, se crea un nuevo apuntador que podemos mover a cualquier *commit*. Esto nos permite trabajar en paralelo en diferentes funcionalidades o versiones de nuestro proyecto.
+
+La rama en uso se llama `HEAD`. Cuando creamos un nuevo *commit*, `HEAD` se mueve al nuevo *commit*. Si cambiamos de rama, `HEAD` se mueve a la nueva rama.
+
+El comando para crear una nueva rama es `git branch nombre_rama`. Para cambiar de rama, usamos `git checkout nombre_rama`. Es común combinar estos dos comandos en uno solo: `git checkout -b nombre_rama` que crea una nueva rama y se cambia a ella.
+
+Desde la versión 2.23 de Git, se recomienda usar `git switch` en lugar de `git checkout` para cambiar de rama.
+
+#### Fusionar ramas (Merge)
+
+La fusión de ramas es el proceso de combinar dos ramas en una sola. Para fusionar una rama con la rama actual, usamos el comando `git merge nombre_rama`. Si hay conflictos, debemos resolverlos manualmente.
+
 ## Instalación de GIT
 
 ## Configuración de GIT
