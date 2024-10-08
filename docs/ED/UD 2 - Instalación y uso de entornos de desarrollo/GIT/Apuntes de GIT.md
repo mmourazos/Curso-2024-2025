@@ -63,6 +63,32 @@ La fusión de ramas es el proceso de combinar dos ramas en una sola. Para fusion
 
 ## Comandos básicos de GIT
 
+### Inicializar un repositorio
+
+Para inicializar un repositorio en un directorio, usamos el comando `git init`.
+
+### Ver el estado de los archivos
+
+Para ver el estado de los archivos en un repositorio, usamos el comando `git status`.
+
+### Clonar un repositorio
+
+Para clonar un repositorio, usamos el comando `git clone url_repositorio`.
+
+### Añadir archivos al área de preparación (staging area)
+
+Para añadir un archivo al área de preparación, usamos el comando `git add nombre_archivo`.
+
+### Realizar un commit
+
+Para realizar un commit, usamos el comando `git commit -m "mensaje_commit"`.
+
+Si queremos añadir todos los archivos modificados al área de preparación y realizar un commit, podemos usar el comando `git commit -am "mensaje_commit"`.
+
+### Para subir los cambios a un repositorio remoto
+
+Para subir los cambios a un repositorio remoto, usamos el comando `git push origin nombre_rama`.
+
 ## GUIs de GIT
 
 ### [Lazygit](https://github.com/jesseduffield/lazygit)
