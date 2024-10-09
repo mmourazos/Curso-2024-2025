@@ -9,3 +9,6 @@
 
 # Ignorar también los .pdf
 *.pdf
+
+# Ignora los directorios
+.zig-cache/
