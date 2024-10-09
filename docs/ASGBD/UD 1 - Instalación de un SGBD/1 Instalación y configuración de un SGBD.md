@@ -14,7 +14,7 @@ Hoy en día, a la hora de realizar la instalación de cualquier software casi si
 
 #### Descargando el instalador
 
-Para descargar el instalador de MySQL server hemos de ir a la página web de MySQL y buscar la versión que queremos instalar. En nuestro caso vamos a instalar la versión 8.4.2 LTS (Long Time Support) en su versión *Community*. Para ello iremos a la siguiente URL (4/10/2024): [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/) y seleccionamos la versión y el S.O. correspondiente. Se nos presentarán tres opciones de descarga: *MSI Intaller* y dos *ZIP Archive* (el segundo con características de desarrollo). Nosotros vamos a descargar el *MSI Installer*.
+Para descargar el instalador de MySQL server hemos de ir a la página web de MySQL y buscar la versión que queremos instalar. En nuestro caso vamos a instalar la versión 8.4.2 LTS (Long Time Support) en su versión *Community*. Para ello iremos a la siguiente URL (4/10/2024): [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/) y seleccionamos la versión y el S.O. correspondiente. Se nos presentarán tres opciones de descarga: *MSI Installer* y dos *ZIP Archive* (el segundo con características de desarrollo). Nosotros vamos a descargar el *MSI Installer*.
 
 ![Descarga del instalador de MySQL Server](./images/MySQL_Server_URL.png)
 
@@ -43,11 +43,13 @@ TriCo                           ngudbhav.TriCo                     3.1.0        
 MySQL Shell                     Oracle.MySQLShell                  8.4.0                   winget
 MySQL Workbench 8.0 CE          Oracle.MySQLWorkbench              8.0.38                  winget
 ```
+
 El que nos interesa es el paquete `Oracle.MySQL` que es el servidor de MySQL de Oracle. Para instalarlo ejecutaríamos el siguiente comando:
 
 ```powershell
 winget install Oracle.MySQL
 ```
+
 `winget` se encargará de descargar el instalador correcto y de instalarlo en nuestro sistema (pidiéndonos permisos de administrador si fuera necesario). Una vez terminado el proceso de instalación `winget` borrará el instalador descargado y ya podremos usar MySQL Server.
 
 ### Instalación en Linux
@@ -56,7 +58,21 @@ Para instalar MySQL Server en Linux vamos a seguir los siguientes pasos:
 
 ```bash
 $ sudo apt update # Actualizamos la lista de paquetes.
+Get:1 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+[...]
+Building dependency tree... Done
+Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
 $ sudo upgrade # Actualizamos los paquetes a sus últimas versiones.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+[...]
+Need to get 1046 kB of archives.
+After this operation, 0 B of additional disk space will be used.
+Do you want to continue? [Y/n]
 $ sudo apt install mysql-server
 ```
 
@@ -68,7 +84,7 @@ apt search mysql
 
 ## Instalación de MySQL Workbench
 
-### Instalación en Windows
+### Instalación del WorkBench en Windows
 
 Esta vez veremos únicamente la instalación mediante `winget`. Para ello ejecutaremos el siguiente comando:
 
@@ -76,9 +92,10 @@ Esta vez veremos únicamente la instalación mediante `winget`. Para ello ejecut
 wignet install Oracle.MySQLWorkbench
 ```
 
-### Instalación en Linux
+### Instalación del WorkBench en Linux
 
 De nuevo usando apt (la herramienta de gestión de paquetes de Ubuntu) instalaremos MySQL Workbench con el siguiente comando:
+
 ```bash
 sudo apt install mysql-workbench
 ```
@@ -94,11 +111,13 @@ Alternativamente podríamos usar `snap` para instalar MySQL Workbench. Para ello
     mysql-workbench-community  8.0.36     tonybolzan        -      MySQL Workbench
     zworkbench                 2.2.220.1  alexei-developer  -      ZWorkbench
     ```
+
 1. Seleccionamos `mysql-workbench-community` y lo instalamos:
 
     ```bash
     $ sudo snap install mysql-workbench-community
     ```
+
 Una vez terminado el proceso de instalación de MySQL Server y MySQL Workbench ya podremos proceder a la configuración de MySQL Server y a la conexión de MySQL Workbench con MySQL Server. En el siguiente apartado veremos el caso de conectar a MySQL Server desde un MySQL Workbench instalado en otra máquina.
 
 ## Conexión de MySQL Workbench con MySQL Server
@@ -111,11 +130,11 @@ El archivo de configuración de MySQL Server (en Ubuntu Server) es `mysqld.cnf` 
 
 *En Windows, el archivo de configuración de MySQL Server puede ser tanto `my.cnf` como `my.ini` y, en el momento de arrancar el servidor, éste lo buscará en las siguientes localizaciones:`
 
-| Fichero de configuración | Propósito |
-| :----: | :----: |
+|      Fichero de configuración      |     Propósito     |
+| :--------------------------------: | :---------------: |
 | `%WINDIR%\my.ini, %WINDIR%\my.cnf` | Opciones globales |
-| `C:\my.ini, C:\my.cnf ` | Opciones globales |
-| `BASEDIR\my.ini, BASEDIR\my.cnf` | Opciones globales |
+|      `C:\my.ini, C:\my.cnf `       | Opciones globales |
+|  `BASEDIR\my.ini, BASEDIR\my.cnf`  | Opciones globales |
 
 *Volvamos a Ubuntu Server...*
 
@@ -192,7 +211,6 @@ De esta forma el usuario podrá...:
 * `RELOAD`: recargar los privilegios.
 
 Estos permisos los tendrá sobre todas las bases de datos (`*.*`) y desde la dirección IP que hayamos indicado en `ip_desde_donde_conecta`.
-
 
 Finalmente hemos de recargar los privilegios para que los cambios surtan efecto:
 
