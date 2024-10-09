@@ -2,7 +2,7 @@
 
 Representa utilizando el diagrama de entidad-relación (notación Crow's Foot) el siguiente caso:
 
-Estamos desarrollando una aplicación de móvil que funciona como un libro de recetas. La aplicación permitirá, entre otras cosas, filtrar recetas por ingredientes. De cada receta se desea guardar su nombre, una descripción, los ingredientes, el tiempo de preparación y el tiempo de cocinado. También se desea saber las calorías de cada receta, para lo que hemos de conocer también la cantidad de cada ingrediente. La aplicación también desea guardar la fecha en la que el usuario registre la realización de una receta, para que puea llevar un control de las recetas que ha preparado y cuando. De este modo se podrá ver cuántas veces se ha realizado cada receta. Finalmente el usuario podrá guardar notas asociadas a las recetas que ha preparado.
+Estamos desarrollando una aplicación de móvil que funciona como un libro de recetas. La aplicación permitirá, entre otras cosas, filtrar recetas por ingredientes. De cada receta se desea guardar su nombre, una descripción, los ingredientes, el tiempo de preparación y el tiempo de cocinado. También se desea saber las calorías de cada receta, para lo que hemos de conocer también la cantidad de cada ingrediente. La aplicación también desea guardar la fecha en la que el usuario registre la realización de una receta, para que pueda llevar un control de las recetas que ha preparado y cuando. De este modo se podrá ver cuántas veces se ha realizado cada receta. Finalmente el usuario podrá guardar notas asociadas a las recetas que ha preparado.
 
 *Crea las entidades y atributos que consideres necesarias y las relaciones entre ellas. No tienen porque aparecer explícitamente en el enunciado.*
 
