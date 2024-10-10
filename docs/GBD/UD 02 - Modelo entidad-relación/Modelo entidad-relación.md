@@ -104,10 +104,14 @@ _Obviamente esta situación es absurda ya que habrá socios que no tengan libros
 
 Se representa gráficamente de la siguiente forma:
 
+##### Notación de pata de gallo (crow's foot)
+
 ```mermaid
 erDiagram
     SOCIO ||--|| LIBRO : PRESTAMO
 ```
+
+##### Notación de Chen
 
 #### Cardinalidad 1 a 0 ó 1
 

@@ -13,7 +13,3 @@ flowchart TB
 mer[Modelo entidad-relación] --> mrl[Modelo relacional] --> bd[Base de datos]
 mc[Modelo conceptual] --> ml[Modelo lógico] --> mf[Modelo físico]
 ```
-
-```
-
-```
