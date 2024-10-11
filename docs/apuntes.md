@@ -4,7 +4,7 @@ En esta página se irán poniendo los apuntes de los siguientes módulos:
 
 - Gestión de bases de datos (GBD) del ciclo de **administración de sistemas informáticos en red** (1º curso).
 - Administración de sistemas gestores de bases de datos (ASGBD) del ciclo de **administración de sistemas informáticos en red** (ASIR) (2º curso).
-- Entornos de desarrollo (ED) del ciclo de **desarrollo de aplicaciones multiplataforma** (DAM) (1º curso).
+- Entornos de desarrollo (ED) del de **desarrollo de aplicaciones multiplataforma** (DAM) (1º curso).
 
 Los apuntes se irán actualizando a lo largo del curso.
 
