@@ -1,5 +1,7 @@
 # Apuntes de Git
 
+[TOC]
+
 ## ¿Qué es Git?
 
 Git es un sistemas de control de versiones que surgió en el 2005. Su desarrollo surgió a raíz de la necesidad de un sistema de control de versiones que permitiera gestionar el desarrollo del kernel de Linux. Aunque existen otros sistemas de control de versiones, Git se ha convertido en uno de los más populares y extendidos en la actualidad.
@@ -51,7 +53,7 @@ Todo archivo gestionado en un repositorio de GIT puede estar en tres estados:
 * Área de preparación (*staging area*): donde se encuentran los archivos marcados (*staged*) para la próxima instantánea (*commit*).
 * Directorio Git (*Git directory*): donde GIT guarda los metadatos y la base de datos de los cambios. Aquí se encuentra la historia del proyecto. De nuevo, recordar que la historia se puede modificar.
 
-Los ficheros con los que estamos trabajando, es decir, editando, modificando, compilando, etc. son los que se encuentran el el **directorio de trabajo**. 
+Los ficheros con los que estamos trabajando, es decir, editando, modificando, compilando, etc. son los que se encuentran el el **directorio de trabajo**.
 
 ### Flujo de trabajo básico en GIT
 
@@ -70,7 +72,7 @@ Una forma básica de usar Git podría ser la siguiente (aunque hay muchas otras 
 Git está incluido en la mayoría de gestores de paquetes de las distribuciones de Linux. Para instalarlo en Ubuntu, usamos el siguiente comando:
 
 ```bash
-$ sudo apt install git
+sudo apt install git
 ```
 
 ### En Windows
@@ -92,7 +94,7 @@ git config --global user.email "mourazos@iessanclemente.net"
 
 Esto no es estrictamente necesario si utilizamos Git para proyectos personales sin usar un repositorio *remoto*. Pero como el uso más común de Git es colaborativo, es necesario establecer estos valores.
 
-#### `.gitignore`
+### `.gitignore`
 
 Es importante evitar que Git incluya en nuestro proyecto ficheros que **no queremos compartir** o hacer públicos (como ficheros temporales, ficheros de configuración, tokens, claves, etc.). Esto es especialmente importante si tenemos pensado compartir nuestro proyecto en un repositorio público en alguno de los servicios de alojamiento de repositorios (como GitHub, GitLab, Bitbucket, etc.).
 
@@ -203,14 +205,15 @@ Que crea una nueva rama y se cambia a ella.
 
 **Nota:** Desde la versión 2.23 de Git, se recomienda usar `git switch` en lugar de `git checkout` para cambiar de rama.
 
-Así: 
+Así:
 
 ```git
 git switch nombre_rama
 ```
 
 Cambia de rama y ...
-```
+
+```git
 git switch -c nueva_rama
 ```
 
@@ -281,7 +284,7 @@ En estos casos Git no puede decidir *quién tiene la razón* por lo que marca el
 
 **Nota:** Los conflictos sólo afectan al desarrollador que realiza la fusión, el resto del equipo no es consciente del conflicto.
 
-Para resolver el conflicto Git incluye ambas versiones en el fichero y marca las diferencias con `<<<<<<<`, `=======` y `>>>>>>>` donde: 
+Para resolver el conflicto Git incluye ambas versiones en el fichero y marca las diferencias con `<<<<<<<`, `=======` y `>>>>>>>` donde:
 
 * `<<<<<<<` marca el inicio de la versión actual.
 * `=======` marca el inicio de la versión en conflicto.
@@ -310,6 +313,3 @@ ES una herramienta de pago, aunque dispone de versiones gratuitas con algunas li
 Es una herramienta gráfica de terminal (TUI) para Git. Es muy sencilla y fácil de usar.
 
 ![Lazygit](./images/lazygit.png)
-
-
-
