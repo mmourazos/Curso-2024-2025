@@ -8,13 +8,13 @@ Maven es una herramienta de gestión y construcción de proyectos de software en
 
 ¿Qué ofrece Maven?
 
-* **Gestión de dependencias**: Maven se encarga de gestionar las dependencias de nuestro proyecto. Maven descarga las dependencias de nuestro proyecto de un repositorio central y las añade a nuestro proyecto.
-* **Estructura de directorios**: Maven define una estructura de directorios para nuestros proyectos. Esta estructura es la siguiente:
-  * `src/main/java`: aquí se encuentran los ficheros Java de nuestro proyecto.
-  * `src/main/resources`: aquí se encuentran los recursos de nuestro proyecto (ficheros de configuración, imágenes, etc.).
-  * `src/test/java`: aquí se encuentran los ficheros Java de los tests de nuestro proyecto.
-  * `src/test/resources`: aquí se encuentran los recursos de los tests de nuestro proyecto.
-* **Permite incluir plugins**: Maven permite incluir plugins que añaden funcionalidades a nuestro proyecto. Por ejemplo, para realizar pruebas unitarias, para generar documentación, para generar informes, etc.
+- **Gestión de dependencias**: Maven se encarga de gestionar las dependencias de nuestro proyecto. Maven descarga las dependencias de nuestro proyecto de un repositorio central y las añade a nuestro proyecto.
+- **Estructura de directorios**: Maven define una estructura de directorios para nuestros proyectos. Esta estructura es la siguiente:
+  - `src/main/java`: aquí se encuentran los ficheros Java de nuestro proyecto.
+  - `src/main/resources`: aquí se encuentran los recursos de nuestro proyecto (ficheros de configuración, imágenes, etc.).
+  - `src/test/java`: aquí se encuentran los ficheros Java de los tests de nuestro proyecto.
+  - `src/test/resources`: aquí se encuentran los recursos de los tests de nuestro proyecto.
+- **Permite incluir plugins**: Maven permite incluir plugins que añaden funcionalidades a nuestro proyecto. Por ejemplo, para realizar pruebas unitarias, para generar documentación, para generar informes, etc.
 
 La configuración de un proyecto Maven se realiza en un fichero llamado `pom.xml` (Project Object Model) que se encontrará en el directorio raíz del proyecto. En este fichero se define la configuración del proyecto, las dependencias, los plugins, etc.
 
@@ -23,6 +23,7 @@ La configuración de un proyecto Maven se realiza en un fichero llamado `pom.xml
 ### Linux (Ubuntu)
 
 Para instalar Maven en una distribución Linux lo ideal será hacerlo mediante el gestor de paquetes de la distribución. En el caso de Ubuntu, podemos instalar Maven con el siguiente comando:
+
 ```bash
 sudo apt install maven
 ```
@@ -37,7 +38,7 @@ Una forma más fácil de instalar Maven en Windows es utilizar un gestor de paqu
 choco install maven
 ```
 
-***Nota: para instalar paquetes con Chocolatey necesitamos tener permisos de administrador.***
+**_Nota: para instalar paquetes con Chocolatey necesitamos tener permisos de administrador._**
 
 Otra forma de instalar Maven en Windows es utilizando [Scoop](https://scoop.sh/). Para instalar Maven con Scoop ejecutamos el siguiente comando:
 
@@ -47,7 +48,9 @@ scoop install maven
 
 ## Fichero `pom.xml`
 
-El fichero `pom.xml` es el fichero de configuración de Maven. En este fichero se define la configuración del proyecto, las dependencias, los plugins, etc. A continuación se muestra un ejemplo de un fichero `pom.xml`:
+El fichero `pom.xml` es el fichero de configuración de Maven. En este fichero se define la configuración del proyecto así como los plugins y dependencias necesarias para construir el proyecto.
+
+Un ejemplo de un fichero `pom.xml` es el siguiente:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -126,3 +129,44 @@ El fichero `pom.xml` es el fichero de configuración de Maven. En este fichero s
   </build>
 </project>
 ```
+
+### Sección de identificación del proyecto
+
+En todo fichero `pom.xml` es necesario definir la sección de identificación del proyecto. Esta sección se compone de los siguientes elementos:
+
+- `groupId`: identificador del grupo al que pertenece el proyecto. Por ejemplo `gal.edu.xunta`. **No** es necesario que siga la notación de _puntos_ o de paquetes de Java (aunque se considera una buena práctica).
+- `artifactId`: identificador del proyecto. Normalmente coincide con el nombre con el que se conocerá el proyecto. Este identificador es, en combinación con el `groupId`, la clave que identifica de forma única un proyecto respecto a todos los demás.
+- `version`: versión del proyecto.
+
+### _Packaging_ del proyecto
+
+El empaquetado del proyecto se indica mediante la etiqueta `<packaging>`. Los valores más comunes son `jar`, `war` y `pom`. Por defecto, si no se indica nada, el valor de `packaging` es `jar`. Este valor afectará a las acciones que Maven realizará sobre el proyecto.
+
+### Sección `properties`
+
+### Sección `dependencies`
+
+Es uno de los elementos fundamentales de un fichero `pom.xml`. En esta sección se definen las dependencias del proyecto. Cada dependencia se define mediante la etiqueta `<dependency>` y se compone de los siguientes elementos:
+
+- `groupId`, `artifactId` y `version`: identifican la dependencia.
+- `scope`: indica el alcance de la dependencia, es decir, en qué contexto será necesaria. Algunos valores comunes son:
+  - `compile` (el valor por defecto): la dependencia será necesaria para poder construir el proyecto.
+  - `test`: la dependencia sólo será necesaria cuando se deseen realizar tests.
+
+Hay más opciones: `type`, `classifier`, `optional`, etc. Pero las más comunes son las que se han mencionado.
+
+### SEcción `build`
+
+#### Sección plugins
+
+## Creación de un proyecto Maven
+
+## _Archetypes_
+
+Un arquetipo es una plantilla de proyecto que se utiliza para crear un nuevo proyecto. Maven incluye varios arquetipos que podemos utilizar para crear un nuevo proyecto. Para listar los arquetipos disponibles en Maven ejecutamos el siguiente comando:
+
+```bash
+mvn archetype:generate
+```
+
+Los arquetipos disponibles se encuentran en el repositorio central de Maven. Podemos buscar arquetipos en el repositorio central de Maven en la siguiente dirección: [https://repo.maven.apache.org/maven2/archetype-catalog.xml](https://repo.maven.apache.org/maven2/archetype-catalog.xml).
