@@ -166,9 +166,13 @@ Es uno de los elementos fundamentales de un fichero `pom.xml`. En esta sección 
 
 Hay más opciones: `type`, `classifier`, `optional`, etc. Pero las más comunes son las que se han mencionado.
 
-### SEcción `build`
+### Sección `build`
+
+Esta es la sección dedicada a indicar cómo se debe construir el proyecto. En esta sección se pueden definir los plugins que se utilizarán para construir el proyecto.
 
 #### Sección plugins
+
+Los plugins son elementos que añaden funcionalidades a Maven, principalmente para compilar y probar el proyecto pero también para generar documentación, informes, etc. Los plugins se definen dentro de la etiqueta `<plugins>` y cada plugin se define mediante la etiqueta `<plugin>`.
 
 ## Creación de un proyecto Maven
 
