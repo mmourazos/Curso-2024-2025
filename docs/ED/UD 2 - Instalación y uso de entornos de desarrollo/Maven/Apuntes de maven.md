@@ -144,6 +144,17 @@ El empaquetado del proyecto se indica mediante la etiqueta `<packaging>`. Los va
 
 ### Sección `properties`
 
+En esta sección se le puede pasar información a Maven sobre nuestro proyecto. Por ejemplo, si deseamos que Maven utilice una versión concreta de Java, podemos indicarlo en esta sección. En el ejemplo anterior, se indica que se utilizará Java 23.
+
+```xml
+<properties>
+  <maven.compiler.source>23</maven.compiler.source>
+  <maven.compiler.target>23</maven.compiler.target>
+</properties>
+```
+
+En esta sección también podemos establecer nuestros propios valores que podrán ser usados más adelante en el fichero `pom.xml`.o por parte de los plugins.
+
 ### Sección `dependencies`
 
 Es uno de los elementos fundamentales de un fichero `pom.xml`. En esta sección se definen las dependencias del proyecto. Cada dependencia se define mediante la etiqueta `<dependency>` y se compone de los siguientes elementos:
