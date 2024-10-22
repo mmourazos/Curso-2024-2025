@@ -12,3 +12,8 @@
 
 # Ignora los directorios
 .zig-cache/
+
+# Por cosas que añadí
+.gradle/
+bin/
+build/
