@@ -65,9 +65,24 @@ Si hablamos de dos relaciones (para simplificar) tendremos una relación con una
 Por ejemplo, si tenemos una tabla de productos (id, nombre, precio) y una tabla de ventas (id_venta, fecha, id_producto, unidades) donde la columna (o atributo) _id_producto_ de la relación de ventas se corresponde con el atributo _id_ (clave) de productos. Podremos _combinarlas_ mediante la siguiente sentencia `SELECT`:
 
 ```SQL
-SELECT (fecha, nombre, unidades, precio) FROM productos, ventas WHERE productos.id == ventas.id_producto;
+SELECT (fecha, nombre, unidades, precio) FROM Ventas INNER JOIN ON  Ventas.id_producto == Productos.id;
 ```
 
 Existen varios tipos de join: _inner join_, _left join_, _right join_ y _outer join_. Los veremos más adelante cuando veamos las sentencias en lenguaje SQL.
 
-## Normalización
+##### _inner join_
+
+Es el _join_ _más común. Cuando se aplica este _join_ la relación resultante incluirá **únicamente** los valores de la relación A y de la relación B cuyos valores de **clave foránea** y **clave** coincidan. Hay que tener en cuenta que en la relación A no hay nada que impida que la **clave foránea** esté en blanco.
+
+##### _left outer join_
+
+En este caso, la relación resultante incluirá también las tuplas de la relación A cuya **clave foránea NO COINCIDA con ninguna clave** de la relación B.
+
+##### _right outer join_
+
+Análogo al anterior pero ahora saldrían **todas las tuplas de la relación B**, aunque su clave no coincida con ninguna tupla de la relación A pero sólo las tuplas de A que tengan _match_ con las claves de B.
+
+##### _full outer join_
+
+Finalmente, en este _join_ saldrán **TODAS LAS TUPLAS DE A Y DE B**, haya o no _match_ entre los atributos **clave foránea** y **clave**. Obviamente, cuando haya coincidencia (_match_) se mostrarán los datos combinados pero cuando no la haya se mostrarán los atributos de A o los de B dejando el resto en blanco.
+
