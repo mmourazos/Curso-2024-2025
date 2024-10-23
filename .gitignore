@@ -16,3 +16,7 @@
 # Cosas de los proyectos de java.
 .settings/
 bin/
+.gradle/
+.settings/
+bin/
+build/
