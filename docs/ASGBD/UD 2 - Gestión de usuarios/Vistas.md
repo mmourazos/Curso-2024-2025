@@ -6,6 +6,8 @@ Una vista es una consulta almacenada que devuelve un conjunto de resultados al s
 
 ## Crear una vista
 
+Para crear una vista en 
+
 ## Modificar una vista
 
 ## Permisos de vista
