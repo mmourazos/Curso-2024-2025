@@ -51,7 +51,7 @@ GRANT SELECT ON <nombre_de_la_vista> TO <usuario>;
 Si tuviésemos que retirar el permiso de acceso a una vista, deberíamos escribir:
 
 ```sql
-REVOKE SELECT ON <nombre_de_la_vista> FROM <usuario>;
+REVOKE SELECT ON <nombre_de_la_vista> FOR <usuario>;
 ```
 
 ## Otras limitaciones de las vistas

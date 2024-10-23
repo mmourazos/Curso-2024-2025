@@ -102,9 +102,24 @@ Existen varios tipos de join: _inner join_, _left join_, _right join_ y _outer j
 
 Es el _join_ _más común. Cuando se aplica este _join_ la relación resultante incluirá **únicamente** los valores de la relación A y de la relación B cuyos valores de **clave foránea** y **clave** coincidan. Hay que tener en cuenta que en la relación A no hay nada que impida que la **clave foránea** esté en blanco.
 
+Una sentencia de _inner join_ sería la siguiente:
+
+```sql
+SELECT *
+FROM productos AS A
+INNER JOIN precios AS B
+ON A.id = B.id_producto;
+```
+
+Y una representación gráfica de un _inner join_ es la siguiente:
+
+![inner join](./images/inner_join.svg)
+
 ##### _left outer join_
 
 En este caso, la relación resultante incluirá también las tuplas de la relación A cuya **clave foránea NO COINCIDA con ninguna clave** de la relación B.
+
+La sentencia sería igual a la del _inner join_ pero substituyendo `INNER JOIN` por `LEFT OUTER JOIN` o simplemente `LEFT JOIN`.
 
 ##### _right outer join_
 
