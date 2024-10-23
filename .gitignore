@@ -13,10 +13,8 @@
 # Ignora los directorios
 .zig-cache/
 
-# Por cosas que añadí
-.gradle/
-bin/
-build/
 # Cosas de los proyectos de java.
+.gradle/
 .settings/
 bin/
+build/
