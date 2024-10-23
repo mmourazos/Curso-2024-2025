@@ -12,3 +12,6 @@
 
 # Ignora los directorios
 .zig-cache/
+
+# Cosas de los proyectos de java.
+.settings/
