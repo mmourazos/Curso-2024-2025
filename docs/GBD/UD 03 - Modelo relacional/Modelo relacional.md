@@ -1,3 +1,10 @@
+---
+autor: Manuel C. Piñeiro Mourazos
+title: Modelo Relacional
+---
+
+
+
 # Modelo Relacional
 
 <!-- toc -->
@@ -151,6 +158,8 @@ FROM tabla1
 LEFT JOIN tabla2
 ON tabla1.id = tabla2.t1_id;
 ```
+
+
 
 Un representación gráfica de este _join_ sería:
 
