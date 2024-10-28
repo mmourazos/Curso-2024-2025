@@ -2,9 +2,6 @@
 autor: Manuel C. Piñeiro Mourazos
 title: Modelo Relacional
 ---
-
-
-
 # Modelo Relacional
 
 <!-- toc -->
@@ -159,8 +156,6 @@ LEFT JOIN tabla2
 ON tabla1.id = tabla2.t1_id;
 ```
 
-
-
 Un representación gráfica de este _join_ sería:
 
 ![left outer join](.\images\left_outer_join.svg)
@@ -198,3 +193,4 @@ ON tabla_a.atributo = tabla_b.atributo;
 Una imagen que ilustre este _join_ sería:
 
 ![full join](./images/full_outer_join.svg)
+
