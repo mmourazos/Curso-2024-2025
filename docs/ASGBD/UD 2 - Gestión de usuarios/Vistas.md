@@ -58,7 +58,3 @@ REVOKE SELECT ON <nombre_de_la_vista> FOR <usuario>;
 
 * En MySQL una vista *sólo* puede abarcar, como máximo, 61 tablas.
 * No se pueden crear índices sobre una vista.
-
-
-
-```

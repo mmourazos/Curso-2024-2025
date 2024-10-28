@@ -1,6 +1,15 @@
 # Normalización en el modelo relacional
 
- El objetivo de la normalización es simple y claro: **reducir la redundancia de datos**. Es decir, evitar que existan datos repetidos en distintas _relaciones_ (tablas) de la base de datos. Esto tiene tres efectos:
+<!-- toc -->
+
+- [Formas normales](#formas-normales)
+  * [Primera forma normal (1FN)](#primera-forma-normal-1fn)
+  * [Segunda forma normal (2FN)](#segunda-forma-normal-2fn)
+  * [Tercera forma normal (3FN)](#tercera-forma-normal-3fn)
+
+<!-- tocstop -->
+
+El objetivo de la normalización es simple y claro: **reducir la redundancia de datos**. Es decir, evitar que existan datos repetidos en distintas _relaciones_ (tablas) de la base de datos. Esto tiene tres efectos:
 
 * Reducir la redundancia de datos.
 * Facilitar las operaciones de actualización de datos: si un dato está _repetido_ en varios sitios y lo cambiamos en uno habrá que asegurarse de que se cambia en todos lados.
@@ -36,7 +45,7 @@ Una tabla estará en 2FN si está en 1FN y además:
 La mejor forma de entender esta restricción es con un ejemplo.
 
 Supongamos que tenemos una relación: DNI, Nombre, Apellidos, Id proyecto, Horas de trabajo. La **clave primaria** de esta relación sería `{DNI, Id proyecto}`.
-Esta relación **NO ESTARíA EN 2FN**. Pues los atributos `Nombre` y `Apellidos` **NO DEPENDEN** de la combinación `{DNI, Id proyecto}` si no que dependen únicamente de `DNI`. Para que se cumpliese la 2FN tendríamos que dividir la relación anterior en dos relaciones: 
+Esta relación **NO ESTARíA EN 2FN**. Pues los atributos `Nombre` y `Apellidos` **NO DEPENDEN** de la combinación `{DNI, Id proyecto}` si no que dependen únicamente de `DNI`. Para que se cumpliese la 2FN tendríamos que dividir la relación anterior en dos relaciones:
 
 * Relación A: `DNI`, `Nombre`, `Apellidos`. Donde la clave primaria sería `DNI`.
 * Relación B: `DNI`, `Id proyecto`, `Horas de trabajo`. Donde la clave primaria sería `{DNI, Id proyecto}` (`DNI` también sería a su vez clave foránea).

@@ -260,7 +260,7 @@ Repitámoslo par que quede claro: Si queremos hacer un rebase **desde** la rama 
 * Cambiar de rama a `develop`.
 * Escribir el comando `git rebase main`.
 
-Al contrario que en el caso de `mergue` hemos de estar en la rama **dese la cual** queremos que se envíen los cambios:
+Al contrario que en el caso de `merge` hemos de estar en la rama **dese la cual** queremos que se envíen los cambios:
 
 ```git
 git checkout develop

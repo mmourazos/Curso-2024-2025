@@ -1,64 +1,200 @@
-# Normalización en el modelo relacional
+---
+autor: Manuel C. Piñeiro Mourazos
+title: Modelo Relacional
+---
 
- El objetivo de la normalización es simple y claro: **reducir la redundancia de datos**. Es decir, evitar que existan datos repetidos en distintas _relaciones_ (tablas) de la base de datos. Esto tiene tres efectos:
 
-* Reducir la redundancia de datos.
-* Facilitar las operaciones de actualización de datos: si un dato está _repetido_ en varios sitios y lo cambiamos en uno habrá que asegurarse de que se cambia en todos lados.
-* Proteger la integridad de los datos: que se producirían si en el punto anterior no se actualizasen correctamente todas las copias del valor.
 
-Para lograr esto se aplican una serie de reglas a las _relaciones_ obtenidas del paso del modelo ER al relacional.
+# Modelo Relacional
 
-_**Nota:** En la actualidad evitar la redundancia de datos no es tan importante e incluso puede verse como una ventaja. Por ejemplo, en las **bases de datos No SQL** se puede sacrificar la integridad de los datos en favor de la velocidad de acceso o la disponibilidad de los mismos._
+<!-- toc -->
 
-## Formas normales
+- [Conceptos básicos](#conceptos-básicos)
+  - [Relaciones](#relaciones)
+    - [Cabecera](#cabecera)
+    - [Cuerpo](#cuerpo)
+  - [Restricciones o "constrains"](#restricciones-o-constrains)
+  - [Claves](#claves)
+    - [Claves foráneas](#claves-foráneas)
+  - [Operaciones relacionales](#operaciones-relacionales)
+    - [_Join_](#join)
+      - [_inner join_](#inner-join)
+      - [_left outer join_](#left-outer-join)
+      - [_right outer join_](#right-outer-join)
+      - [_full outer join_](#full-outer-join)
 
-Una forma normal indica una serie de restricciones. Decimos que una relación (tabla) _cumple una forma normal_ cuando cumple las restricciones especificadas en dicha forma. Una base de datos estará en la forma normal X si todas sus relaciones lo están.
+<!-- tocstop -->
 
-En general todas las bases de datos (relacionales) deben cumplir las tres primeras formas normales (1ª formal normal, 2ª FN y 3ª FN).
+El modelo relacional es un modelo teórico que fue desarrollado por Edgar F. Codd como un modelo general de los datos. Este nombre volverá a aparecer cuando hablemos de normalización con la _forma normal Boyce-Codd_.
 
-### Primera forma normal (1FN)
+¿Qué coño está pasando aquí?
 
-Una tabla estará en 1FN si:
+## Conceptos básicos
 
-* Todos los atributos son atómicos: Los elementos del _dominio_ (tipo de dato) son simples e indivisibles.
-* No debe existir variación en el número de columnas: todas las tuplas de una relación tendrán el mismo número de atributos.
-* Los atributos que no sean clave han de poder identificarse mediante la clave: _dependencia funcional_ que veremos en un momento.
-* Debe existir una independencia entre el orden y el significado de los datos: Si cambiamos la organización de las columnas o el orden de las tuplas, la información contenida en la tabla no cambia.
+A continuación veremos de una forma no exaustiva los elementos básicos del modelo relacional. Aunque es interesante conocer estos conceptos y cómo se traducen a las bases de datos relaciones reales, considero que verlos en profundidad requiere un esfuerzo superior al beneficio que puedan aportar.
 
-**Dependencia funcional** de los atributos respecto a la clave quiere decir (de manera simplificada) que, dada una clave, se podrán obtener el resto de atributos a partir de ella.
+### Relaciones
 
-### Segunda forma normal (2FN)
+En el modelo relacional los datos se almacenan en estructuras denominadas **relaciones** (no confundir con el concepto de _relación_ utilizado en el modelo entidad-relación). **Toda la información** que contiene una base de datos estará almacenada en un conjunto de una o más **relaciones**.
 
-Una tabla estará en 2FN si está en 1FN y además:
+_**Nota:** Las **relaciones** serán lo que en las bases de datos pasaremos a llamar **tablas**._
 
-* Los atributos que no forman parte de **ninguna clave** depende de forma completa de la clave primaria.
+Las relaciones constan de dos elementos o partes: cabecera y cuerpo.
 
-La mejor forma de entender esta restricción es con un ejemplo.
+#### Cabecera
 
-Supongamos que tenemos una relación: DNI, Nombre, Apellidos, Id proyecto, Horas de trabajo. La **clave primaria** de esta relación sería `{DNI, Id proyecto}`.
-Esta relación **NO ESTARíA EN 2FN**. Pues los atributos `Nombre` y `Apellidos` **NO DEPENDEN** de la combinación `{DNI, Id proyecto}` si no que dependen únicamente de `DNI`. Para que se cumpliese la 2FN tendríamos que dividir la relación anterior en dos relaciones: 
+Toda relación consta de una **cabecera** (_heading_) y un **cuerpo**. La cabecera define los **atributos** de la relación. Cada atributo constará de un **nombre** y un **tipo de dato**. El _tipo de dato_ determinará qué valores puede tomar un atributo. Así, por ejemplo, si un atributo es de tipo _entero_ podrá almacenar valores como 1, 2, -5, 100, pero no $1.5$; si es de tipo _cadena_ (_string_) podrá contener valores alfanuméricos como "Manuel"; si es de tipo _fecha_ u _hora_ (_date_, _time_, _date-time_) contendrá valores que representen una fecha, etc.
 
-* Relación A: `DNI`, `Nombre`, `Apellidos`. Donde la clave primaria sería `DNI`.
-* Relación B: `DNI`, `Id proyecto`, `Horas de trabajo`. Donde la clave primaria sería `{DNI, Id proyecto}` (`DNI` también sería a su vez clave foránea).
+<https://github.com/fannheyward/coc-markdownlint>
 
-### Tercera forma normal (3FN)
+_**Nota:** aquí el concepto de atributo coincide con el del modelo ER solo que añadimos al mismo la restricción de **tipo de dato**. En las bases de datos se utiliza el nombre **columna** para referirnos a un atributo._
 
-Una tabla estará en 3FN cuando esté en 2FN y además _no exista ninguna **dependencia funcional transitiva** en los atributos que no son clave_.
+Cada sistema de gestión de base de datos define sus propios tipos de datos. Por ejemplo, **MySQL** define unos [24 tipos de datos](https://dev.mysql.com/doc/refman/8.4/en/data-types.html) agrupados en tipos _numéricos_ (`NUMERIC`, `INT`, `FLOAT`, etc.), _cadenas de caracteres_ (`CHAR`, `VARCHAR`, `TEXT`, etc.), _fecha y hora_ (`DATE`, `TIME`, `DATETIME`, `TIMESTAMP`), _espaciales_ ([OpenGIS](https://es.wikipedia.org/wiki/Open_Geospatial_Consortium)), etc. Por su parte la base de datos **SQLite** tiene [5 tipos de datos](https://www.sqlite.org/datatype3.html): `NULL`, `INTEGER`, `REAL`, `TEXT` y `BLOB`.
 
-De nuevo, intentemos verlo con un ejemplo en lugar de profundizar en el concepto de dependencia funcional.
+#### Cuerpo
 
-Supongamos que tenemos la relación `Estudiantes` con los atributos `Id estudiante`, `nombre`, `apellidos`, `región`, `país`, `fecha de nacimiento`. Las dependencias entre los atributos se podrán expresar de la siguiente manera:
+El **cuerpo** contiene una serie de _tuplas_. Cada tupla tendrá tantos elementos como **atributos** se hayan definido en la **cabecera**. Cada valor de la tupla se corresponderá con un único atributo. El número de tuplas será la _cardinalidad_ de la relación.
 
-* `Id estudiante` &rarr; `nombre`.
-* `Id estudiante` &rarr; `apellidos`.
-* `Id estudiante` &rarr; `región`.
-* `Id estudiante` &rarr; `fecha de nacimiento`.
-* ~~`Id estudiante` &rarr; `país`.~~
-* `región` &rarr; `país`.
+En principio no hay nada que oblige a que todos los atributos tengan valores en todas las tuplas. Es decir, si la cabecera define diez atributos todas las tuplas tendrán diez _campos_ pero alguno de dichos campos podría estar vacío o ser nulo.
 
-No todos los atributos dependen **directamente** de la clave primaria `Id estudiante` ya que `país` depende de `región`, que a su vez sí depende de `Id estudiante`. Por eso podríamos decir que `país` depende **transitivamente** de `Id estudiante` a través de la dependencia `región` &rarr; `país`. Que es lo que queremos evitar. Para ello hemos de dividir la relación en otras dos:
+_**Nota:** La **tupla** representa lo que en el modelo ER sería una **instancia** de una **entidad**. Cuando almacenamos los datos de un libro en una base de datos, los valores de sus atributos (título, autor, fecha de publicación, etc.) formarán una tupla. En las bases de datos suele utilizarse el término **registro** o **fila** en lugar de tupla._
 
-* Relación A: `Id estudiante`, `nombre`, `apellidos`, `fecha de nacimiento`, `región`. Con clave primaria `Id estudiante`
-* Relación B: `región`, `país`. Con clave primaria = `regíon`.
+### Restricciones o "constrains"
 
-Y aquí lo vamos a dejar aunque existan otras tres formas normales: [Forma normal Boyce-Codd](https://es.wikipedia.org/wiki/Forma_normal_de_Boyce-Codd), [4FN](https://es.wikipedia.org/wiki/Cuarta_forma_normal) y [5FN](https://es.wikipedia.org/wiki/Quinta_forma_normal).
+En una base de datos se pueden definir una serie de expresiones lógicas (expresiones que se pueden evaluar a **verdadero** o **falso**) que se denominarán **Restricciones**. Cuando todas las restricciones _se cumplan_, es decir, se evalúen a **verdadero**; diremos que la base de datos es **consistente**, si esto no se cumple la base de datos sería **inconsistente**. No se debe permitir que una base de datos se vuelva inconsistente.
+
+Puesto que no se puede permitir que una base de datos sea inconsistente, si intentásemos realizar una operación sobre ella que la volviese inconsistente (que provocase que alguna restricción dejase de cumplirse, pasase a _devolver_ falso) dicha modificación sería **ilegal** y no se debería de permitir.
+
+Un ejemplo de restricción sería exigir que **una clave nunca podrá estar en blanco**. Por lo que si una operación fuese a eliminar el atributo clave de una tupla sería rechazada. Otra restricción sería exigir que las **claves no se pueden repetir en una misma relación**. Por lo que intentar insertar una tupla con una clave que ya existe en la relación (_tabla_) tampoco ser permitiría.
+
+### Claves
+
+Las claves están ligadas a las relaciones. Son una forma de _interconectar_ distintas relaciones.
+
+Una **clave candidata**, o simplemente **clave**, será el subconjunto **mínimo** de atributos que pueda identificar de manera unívoca a cada **tupla** de la relación. Es decir, cata tupla de la relación ha de tener una clave **distinta** del resto de tuplas.
+
+#### Claves foráneas
+
+Una clave foránea es un atributo o conjunto de atributos de la _relación A_ que se corresponde con (es idéntica a) la clave de la _relación B_. Podemos decir que la clave foránea de cada tupla de la _relación A_ **_apuntará_** a **una única tupla** de la _relación B_.
+
+Una clave foránea es la forma de _relacionar_ una o más tuplas de una _relación_ (la que tiene la clave foránea) con una **única** tupla de otra relación (aquella donde la clave foránea es clave).
+
+### Operaciones relacionales
+
+Una operación relacional involucrará la manipulación de una o más relaciones para dar como resultado otra relación. Visto de otra forma, una operación relacional es una función de una o más relaciones que dará como resultado una única relación.
+
+Existen tres tipos de operaciones relacionales:
+
+- **Selección**: implicará obtener un subconjunto de **tuplas** de una relación que satisfagan una **condición**. La relación resultante incluirá **todos** los atributos de las tuplas seleccionadas.
+- **Proyección**: implicará _filtrar_ un subconjunto de los atributos de una relación.
+- **Combinación o _join_**: el _join_ permitirá realizar las operaciones de selección y proyección **sobre varias relaciones** a la vez. Es una forma de _encadenar_ varias relaciones.
+
+Podemos interpretar la proyección como un _filtrado de atributos_ (para coger sólo los que nos interesen), la selección como un _filtrado de tuplas (o registros)_ para _seleccionar_ los que nos interesen y la combinación como el _entrelazado de relaciones_ **que han de estar _conectadas_ mediante _claves foráneas_** para obtener los datos asociados que nos interesen.
+
+En el _mundo real_ los usuarios de una base de datos solicitarán información de la misma mediante una **consulta** (_query_). En respuesta a la consulta, la base de datos responderá con conjunto de resultados. Esta _consulta_ podrá incluir simultáneamente las tres operaciones: selección, proyección y _join_.
+
+En el lenguaje **SQL** las _consultas_ se realizarán mediante la instrucción `SELECT`. Un ejemplo de sentencia `SELECT` es la siguiente:
+
+```SQL
+SELECT (lista de atributos de la proyección) FROM (relación o relaciones a las que afecta) WHERE (condición o condiciones de selección de las tuplas);
+```
+
+Supongamos que tenemos una relación de libros. Sus atributos serán: título, autor, nº de páginas, fecha de publicación, id_libro (la clave). Si queremos mostrar el título y el autor (proyección) de los libros de más de 100 páginas (selección) escribiremos la siguiente instrucción `SELECT`:
+
+```SQL
+SELECT (título, autor) FROM libros WHERE (num_pag > 100);
+```
+
+Un ejemplo de sentencia SQL con _join_ sería:
+
+```sql
+SELECT (isbn, título, nombre, año_nacimiento) FROM Libros INNER JOIN Autores ON Libros.id_autor = Autores.id WHERE año_nacimiento >= 2000;
+```
+
+_Bueno... más o menos._
+
+#### _Join_
+
+El _join_ será una operación que se realizará entre dos o más relaciones que _compartan_ uno o más _atributos_. Generalmente estos atributos serán la **clave** de una relación y la **clave foránea** de la otra.
+
+Si hablamos de dos relaciones (para simplificar) tendremos una relación con una **clave foránea** que será **clave** de la otra relación. Si se cumple esto podremos hacer un _join_ entre dichas relaciones.
+
+Por ejemplo, si tenemos una tabla de productos (id, nombre, precio) y una tabla de ventas (id_venta, fecha, id_producto, unidades) donde la columna (o atributo) _id_producto_ de la relación de ventas se corresponde con el atributo _id_ (clave) de productos. Podremos _combinarlas_ mediante la siguiente sentencia `SELECT`:
+
+```SQL
+SELECT (fecha, nombre, unidades, precio) FROM Ventas INNER JOIN ON  Ventas.id_producto == Productos.id;
+```
+
+Existen varios tipos de join: _inner join_, _left join_, _right join_ y _outer join_. Los veremos más adelante cuando veamos las sentencias en lenguaje SQL.
+
+##### _inner join_
+
+Es el _join_ _más común. Cuando se aplica este _join_ la relación resultante incluirá **únicamente** los valores de la relación A y de la relación B cuyos valores de **clave foránea** y **clave** coincidan. Hay que tener en cuenta que en la relación A no hay nada que impida que la **clave foránea** esté en blanco.
+
+Una sentencia de _inner join_ sería la siguiente:
+
+```sql
+SELECT *
+FROM productos AS A
+INNER JOIN precios AS B
+ON A.id = B.id_producto;
+```
+
+Y una representación gráfica de un _inner join_ es la siguiente:
+
+![inner join](./images/inner_join.svg)
+
+##### _left outer join_
+
+En este caso, la relación resultante incluirá también las tuplas de la relación A cuya **clave foránea NO COINCIDA con ninguna clave** de la relación B.
+
+La sentencia sería igual a la del _inner join_ pero substituyendo `INNER JOIN` por `LEFT OUTER JOIN` o simplemente `LEFT JOIN`.
+
+La sentencia SQL para el _left outer join_ sería algo similar a:
+
+```sql
+SELECT col1, col2, ...
+FROM tabla1
+LEFT JOIN tabla2
+ON tabla1.id = tabla2.t1_id;
+```
+
+
+
+Un representación gráfica de este _join_ sería:
+
+![left outer join](.\images\left_outer_join.svg)
+
+##### _right outer join_
+
+Análogo al anterior pero ahora saldrían **todas las tuplas de la relación B**, aunque su clave no coincida con ninguna tupla de la relación A pero sólo las tuplas de A que tengan _match_ con las claves de B.
+
+La sentencia SQL que describe el _right outer join_ es análoga a la anterior:
+
+```sql
+SELECT usuarios.nombre, ventas.valor
+FROM usuarios as U
+RIGHT OUTER JOIN ventas AS V
+ON U.id = V.user_id;
+```
+
+Y su representación gráfica:
+
+![right outer join](C:\Users\mourazos\Curso 2024-2025\docs\GBD\UD 03 - Modelo relacional\images\right_outer_join.svg)
+
+##### _full outer join_
+
+Finalmente, en este _join_ saldrán **TODAS LAS TUPLAS DE A Y DE B**, haya o no _match_ entre los atributos **clave foránea** y **clave**. Obviamente, cuando haya coincidencia (_match_) se mostrarán los datos combinados pero cuando no la haya se mostrarán los atributos de A o los de B dejando el resto en blanco.
+
+La sentencia SQL que genera este _join_ sería:
+
+```sql
+SELECT columnas
+FROM tabla_a
+LEFT OUTER JOIN tabla_b
+ON tabla_a.atributo = tabla_b.atributo;
+```
+
+Una imagen que ilustre este _join_ sería:
+
+![full join](./images/full_outer_join.svg)
