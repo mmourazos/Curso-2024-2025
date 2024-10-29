@@ -254,13 +254,17 @@ commit id: "Main 02."
 #### Rebase
 
 La operación de *rebase* es una forma de, al igual de *merge*, incluir los cambios de una rama en otra. En lugar de fusionar dos ramas, se reescribe la historia de una rama sobre otra. Esto puede ser útil para mantener una historia más limpia y ordenada.
-El comando para realizar un rebase es `git rebase nombre_rama`.
+El comando para realizar un rebase es `git rebase nombre_rama`: Esto hace que **el _rebase_ se aplique DESDE la rama actual a `nombre_rama`**.
+Repitámoslo par que quede claro: Si queremos hacer un rebase **desde** la rama `develop` a la rama `main` debemos de: 
 
-Al igual que en el caso de `mergue` hemos de estar en la rama que queremos que reciba los cambios:
+* Cambiar de rama a `develop`.
+* Escribir el comando `git rebase main`.
+
+Al contrario que en el caso de `merge` hemos de estar en la rama **dese la cual** queremos que se envíen los cambios:
 
 ```git
-git checkout main
-git rebase develop
+git checkout develop
+git rebase main
 ```
 
 ```mermaid

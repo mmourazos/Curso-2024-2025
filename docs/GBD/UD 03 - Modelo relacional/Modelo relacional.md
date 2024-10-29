@@ -1,6 +1,30 @@
+---
+autor: Manuel C. Piñeiro Mourazos
+title: Modelo Relacional
+---
 # Modelo Relacional
 
-El modelo relacional es un modelo teórico que fue desarrollado por Edgar F. Codd como un modelo general de los datos. Este nombre volverá a aparecer cuando hablemos de normalización con la *forma normal Boyce-Codd*.
+<!-- toc -->
+
+- [Conceptos básicos](#conceptos-básicos)
+  - [Relaciones](#relaciones)
+    - [Cabecera](#cabecera)
+    - [Cuerpo](#cuerpo)
+  - [Restricciones o "constrains"](#restricciones-o-constrains)
+  - [Claves](#claves)
+    - [Claves foráneas](#claves-foráneas)
+  - [Operaciones relacionales](#operaciones-relacionales)
+    - [_Join_](#join)
+      - [_inner join_](#inner-join)
+      - [_left outer join_](#left-outer-join)
+      - [_right outer join_](#right-outer-join)
+      - [_full outer join_](#full-outer-join)
+
+<!-- tocstop -->
+
+El modelo relacional es un modelo teórico que fue desarrollado por Edgar F. Codd como un modelo general de los datos. Este nombre volverá a aparecer cuando hablemos de normalización con la _forma normal Boyce-Codd_.
+
+¿Qué coño está pasando aquí?
 
 ## Conceptos básicos
 
@@ -8,7 +32,7 @@ A continuación veremos de una forma no exaustiva los elementos básicos del mod
 
 ### Relaciones
 
-En el modelo relacional los datos se almacenan en estructuras denominadas **relaciones** (no confundir con el concepto de *relación* utilizado en el modelo entidad-relación). **Toda la información** que contiene una base de datos estará almacenada en un conjunto de una o más **relaciones**.
+En el modelo relacional los datos se almacenan en estructuras denominadas **relaciones** (no confundir con el concepto de _relación_ utilizado en el modelo entidad-relación). **Toda la información** que contiene una base de datos estará almacenada en un conjunto de una o más **relaciones**.
 
 _**Nota:** Las **relaciones** serán lo que en las bases de datos pasaremos a llamar **tablas**._
 
@@ -17,6 +41,8 @@ Las relaciones constan de dos elementos o partes: cabecera y cuerpo.
 #### Cabecera
 
 Toda relación consta de una **cabecera** (_heading_) y un **cuerpo**. La cabecera define los **atributos** de la relación. Cada atributo constará de un **nombre** y un **tipo de dato**. El _tipo de dato_ determinará qué valores puede tomar un atributo. Así, por ejemplo, si un atributo es de tipo _entero_ podrá almacenar valores como 1, 2, -5, 100, pero no $1.5$; si es de tipo _cadena_ (_string_) podrá contener valores alfanuméricos como "Manuel"; si es de tipo _fecha_ u _hora_ (_date_, _time_, _date-time_) contendrá valores que representen una fecha, etc.
+
+<https://github.com/fannheyward/coc-markdownlint>
 
 _**Nota:** aquí el concepto de atributo coincide con el del modelo ER solo que añadimos al mismo la restricción de **tipo de dato**. En las bases de datos se utiliza el nombre **columna** para referirnos a un atributo._
 
@@ -30,7 +56,7 @@ En principio no hay nada que oblige a que todos los atributos tengan valores en 
 
 _**Nota:** La **tupla** representa lo que en el modelo ER sería una **instancia** de una **entidad**. Cuando almacenamos los datos de un libro en una base de datos, los valores de sus atributos (título, autor, fecha de publicación, etc.) formarán una tupla. En las bases de datos suele utilizarse el término **registro** o **fila** en lugar de tupla._
 
-### Restricciones (_constrains_)
+### Restricciones o "constrains"
 
 En una base de datos se pueden definir una serie de expresiones lógicas (expresiones que se pueden evaluar a **verdadero** o **falso**) que se denominarán **Restricciones**. Cuando todas las restricciones _se cumplan_, es decir, se evalúen a **verdadero**; diremos que la base de datos es **consistente**, si esto no se cumple la base de datos sería **inconsistente**. No se debe permitir que una base de datos se vuelva inconsistente.
 
@@ -102,15 +128,69 @@ Existen varios tipos de join: _inner join_, _left join_, _right join_ y _outer j
 
 Es el _join_ _más común. Cuando se aplica este _join_ la relación resultante incluirá **únicamente** los valores de la relación A y de la relación B cuyos valores de **clave foránea** y **clave** coincidan. Hay que tener en cuenta que en la relación A no hay nada que impida que la **clave foránea** esté en blanco.
 
+Una sentencia de _inner join_ sería la siguiente:
+
+```sql
+SELECT *
+FROM productos AS A
+INNER JOIN precios AS B
+ON A.id = B.id_producto;
+```
+
+Y una representación gráfica de un _inner join_ es la siguiente:
+
+![inner join](./images/inner_join.svg)
+
 ##### _left outer join_
 
 En este caso, la relación resultante incluirá también las tuplas de la relación A cuya **clave foránea NO COINCIDA con ninguna clave** de la relación B.
+
+La sentencia sería igual a la del _inner join_ pero substituyendo `INNER JOIN` por `LEFT OUTER JOIN` o simplemente `LEFT JOIN`.
+
+La sentencia SQL para el _left outer join_ sería algo similar a:
+
+```sql
+SELECT col1, col2, ...
+FROM tabla1
+LEFT JOIN tabla2
+ON tabla1.id = tabla2.t1_id;
+```
+
+Un representación gráfica de este _join_ sería:
+
+![left outer join](.\images\left_outer_join.svg)
 
 ##### _right outer join_
 
 Análogo al anterior pero ahora saldrían **todas las tuplas de la relación B**, aunque su clave no coincida con ninguna tupla de la relación A pero sólo las tuplas de A que tengan _match_ con las claves de B.
 
+La sentencia SQL que describe el _right outer join_ es análoga a la anterior:
+
+```sql
+SELECT usuarios.nombre, ventas.valor
+FROM usuarios as U
+RIGHT OUTER JOIN ventas AS V
+ON U.id = V.user_id;
+```
+
+Y su representación gráfica:
+
+![right outer join](C:\Users\mourazos\Curso 2024-2025\docs\GBD\UD 03 - Modelo relacional\images\right_outer_join.svg)
+
 ##### _full outer join_
 
 Finalmente, en este _join_ saldrán **TODAS LAS TUPLAS DE A Y DE B**, haya o no _match_ entre los atributos **clave foránea** y **clave**. Obviamente, cuando haya coincidencia (_match_) se mostrarán los datos combinados pero cuando no la haya se mostrarán los atributos de A o los de B dejando el resto en blanco.
+
+La sentencia SQL que genera este _join_ sería:
+
+```sql
+SELECT columnas
+FROM tabla_a
+LEFT OUTER JOIN tabla_b
+ON tabla_a.atributo = tabla_b.atributo;
+```
+
+Una imagen que ilustre este _join_ sería:
+
+![full join](./images/full_outer_join.svg)
 
