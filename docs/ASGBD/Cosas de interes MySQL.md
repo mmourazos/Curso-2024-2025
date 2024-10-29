@@ -1,5 +1,31 @@
 # Recopilación de cosas interesantes de MySQL
 
+## MySQLShell `mysqlsh`
+
+Si recordáis el día que tuvisteis que editar el archivo de configuración del servidor de MySQL para permitir conexiones desde distintas direcciones IP recordaréis esto:
+
+```text
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 127.0.0.1,192.168.56.115
+mysqlx-bind-address     = 127.0.0.1
+```
+Nosotros modificamos el valor de `bind-address` añadiendo la dirección del interfaz de red de la máquina virtual desde el que queremos que _escuche_ MySQL. Ok, pero ¿qué hace lo que está debajo: `mysqlx-bind-address`? ¿Quién es `mysqlx`?
+
+`mysqlx` es un protocolo que permite la comunicación con el servidor de MySQL a través de una API (Application Programming Interface). La aplicación que hace uso de esta API es MySQLShell.
+
+[MySQLShell](https://dev.mysql.com/doc/mysql-shell/8.0/en/) nos permite conectarnos a una base de datos MySQL y ejecutar distintos tipos de scripts de matera remota.
+
+Si queremos ejecutar un _script_ SQL haremos lo siguiente:
+
+```powershell
+mysqlshell --sql -u usuario -h ip_del_servidor_mysql -f script.sql
+```
+
+_Hemos de tener en cuenta que el usuario ha de poder conectarse desde dónde lancemos MySQLShell y ha de tener permisos para ejecutar las sentencias SQL que incluya el script_. Además de ejecutar scripts SQL también podemos ejecutar scripts de JavaScript (opción `--js`) y Python (opción `--py`).
+
+Si usamos la opción `-f script` se nos abrirá una consola interactiva en la que podremos ejecutar sentencias SQL (por defecto), JavaScript o Python.
+
 ## Cuentas en MySQL
 
 Las cuentas de los usuarios de MySQL se almacenan en la base de datos `mysql.user`. Esta base de datos los siguientes campos:
