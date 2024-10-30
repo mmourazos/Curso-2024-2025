@@ -67,3 +67,10 @@ UNLOCK TABLES;
 ```
 
 Como podemos ver no lograríamos realizar multiples operaciones en una única transacción.
+
+## Bloquear filas de una tabla
+
+```sql
+SELECT * FROM tabla WHERE columna = valor FOR UPDATE;
+```
+```
