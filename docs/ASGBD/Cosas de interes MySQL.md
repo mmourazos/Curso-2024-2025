@@ -1,5 +1,17 @@
 # Recopilación de cosas interesantes de MySQL
 
+<!-- toc -->
+
+- [MySQLShell `mysqlsh`](#mysqlshell-mysqlsh)
+- [Cuentas en MySQL](#cuentas-en-mysql)
+- [¿Cómo se ha creado una tabla?](#cómo-se-ha-creado-una-tabla)
+- [No puedo acceder a MySQL como root (Ubuntu)](#no-puedo-acceder-a-mysql-como-root-ubuntu)
+  - [¿Por qué sucede esto?](#por-qué-sucede-esto)
+  - [¿Cual es la clave del usuario `root` en Ubuntu?](#cual-es-la-clave-del-usuario-root-en-ubuntu)
+  - [Conclusiones](#conclusiones)
+
+<!-- tocstop -->
+
 ## MySQLShell `mysqlsh`
 
 Si recordáis el día que tuvisteis que editar el archivo de configuración del servidor de MySQL para permitir conexiones desde distintas direcciones IP recordaréis esto:
@@ -10,6 +22,7 @@ Si recordáis el día que tuvisteis que editar el archivo de configuración del 
 bind-address            = 127.0.0.1,192.168.56.115
 mysqlx-bind-address     = 127.0.0.1
 ```
+
 Nosotros modificamos el valor de `bind-address` añadiendo la dirección del interfaz de red de la máquina virtual desde el que queremos que _escuche_ MySQL. Ok, pero ¿qué hace lo que está debajo: `mysqlx-bind-address`? ¿Quién es `mysqlx`?
 
 `mysqlx` es un protocolo que permite la comunicación con el servidor de MySQL a través de una API (Application Programming Interface). La aplicación que hace uso de esta API es MySQLShell.
@@ -41,7 +54,6 @@ Las cuentas de los usuarios de MySQL se almacenan en la base de datos `mysql.use
 La clave primaria de esta tabla es la combinación de los campos `user` y `host`. Ninguno de ellos puede ser `NULL` pero sí se admite que sean vacíos (`''`).
 
 No es _**normal**_ que un usuario tenga alguno de estos campos vacíos.
-
 
 ## ¿Cómo se ha creado una tabla?
 
@@ -96,5 +108,3 @@ Ubuntu, por defecto, no tiene una contraseña configurada para el usuario `root`
 ### Conclusiones
 
 Puesto que, en principio, no se puede hacer login como `root` en un sistema Ubuntu y como para hacer login en MySQL como `root` se usa el usuario del sistema Linux (`auth_socket`) no se puede hacer login en MySQL como `root`.
-
-
