@@ -1,16 +1,93 @@
 # Transformación de un modelo entidad-relación a un modelo relacional
 
-La conversión del modelo entidad-relación (MER) a un modelo relacional (MR) es una fase fundamental el el diseño de una base de datos. Mientras que el MER nos da una representación conceptual de los datos, el MR no dará una representación física de los mismos que podremos implementar en un sistema de gestión de bases de datos relacionales (SGBDR). Para poder llevar a cabo esta transformación, es necesario seguir una serie de pasos que se describen a continuación.
+<!-- toc -->
+
+- [Introducción](#introduccion)
+- [Entidades](#entidades)
+- [Atributos](#atributos)
+  * [Atributos multivaluados](#atributos-multivaluados)
+- [Relaciones](#relaciones)
+  * [Relación binaria con cardinalidad 1:1](#relacion-binaria-con-cardinalidad-11)
+    + [1 : 1 en ambas direcciones](#1--1-en-ambas-direcciones)
+    + [1 : 1 en una dirección y 0 : 1 en la otra](#1--1-en-una-direccion-y-0--1-en-la-otra)
+    + [0 : 1 en ambas direcciones](#0--1-en-ambas-direcciones)
+  * [Relación binaria con cardinalidad 1:N](#relacion-binaria-con-cardinalidad-1n)
+
+<!-- tocstop -->
+
+## Introducción
+
+La conversión del modelo entidad-relación (MER) a un modelo relacional (MR) es una fase fundamental en el diseño de una base de datos. Mientras que el MER nos da una representación conceptual de los datos (plasmado en forma de diagrama ER), el MR nos dará una representación física de los mismos (en forma de descripción de _relaciones_ o tablas) que podremos implementar en un sistema de gestión de bases de datos relacionales (SGBDR) real. Para poder llevar a cabo esta transformación, es necesario seguir una serie de pasos que se describen a continuación.
 
 ## Entidades
 
-Primero veremos cómo se transforman las entidades del MER en tablas del MR. Cada entidad se transformará en una tabla y cada atributo de la entidad se transformará en un campo (o columna) de la tabla. La clave primaria de la tabla será la clave primaria de la entidad.
+El primer paso consistirá en transformar las entidades del MER en tablas del MR. Cada entidad se transformará en una tabla y cada atributo de la entidad se transformará en un campo (o columna) de la tabla. La clave primaria de la tabla será la clave primaria de la entidad.
 
-Cuando tenemos una entidad **débil** (una entidad cuya existencia depende de otra entidad) la transformación es sencilla. La **clave primaria de la entidad fuerte** pasará a ser una **clave foránea en la entidad débil**.
+_**Nota:** En el modelo relacional **lo único que existirá son tablas y atributos**. Las relaciones entre las entidades se representarán mediante la inclusión de claves foráneas en las tablas correspondientes o mediante la creación de tablas que representen la relación (dependiendo de las cardinalidad de la relación)._
+
+Cuando tenemos una entidad **débil** (una entidad cuya existencia depende de otra entidad) la transformación es sencilla. La **clave primaria de la entidad fuerte** pasará a ser una **clave foránea en la entidad débil**. Cuando tenemos una relación entre una entidad débil y un fuerte siempre tendremos una relación del 1:1 o 1:N, nunca una relación N:M.
+
+```mermaid
+erDiagram
+
+Cliente ||--o{ Factura : tiene
+
+Usuario ||--|| Direccion : "vive en"
+
+Cliente {
+  int id pk
+  string nombre
+}
+
+Usuario {
+  int id pk
+  string nombre
+}
+
+Factura {
+  int id pk
+  int id_cliente fk
+}
+
+Direccion {
+  int id pk
+  int id_usuario fk
+}
+```
 
 ## Atributos
 
 Los atributos pasarán a ser campos o columnas de las tablas creadas. Habrá que tener en cuenta los posibles valores de los atributos para asignarles los tipos de datos que correspondan. Habrá que tener también en cuenta cuando un atributo es opcional u obligatorio para definir si el campo correspondiente puede ser `NULL` o no (mediante una restricción).
+
+### Atributos multivaluados
+
+Cuando una entidad tenga atributos multivaluados, estos se transformarán o no en una tabla nueva (como cualquier otra entidad) dependiendo de las siguientes consideraciones.
+
+Si el número de valores que puede tener el atributo multivaluado es fijo, se puede representar como un conjunto de campos en la tabla de la entidad a la que pertenece. Por ejemplo, si tenemos una entidad `Persona` con un atributo `teléfonos` que puede tener hasta 3 valores, se puede representar como `telefono1`, `telefono2` y `telefono3` (o `t_fijo`, `t_movil`, etc.) en la tabla `Persona`.
+
+Si el número de valores que puede tener el atributo multivaluado es variable, se creará una tabla nueva para representar este atributo que pasará a comportarse como una entidad.
+
+En esta tabla se incluirán los atributos multivaluados junto con la clave primaria de la entidad a la que pertenecen.
+
+Supongamos que decimos que un cliente puede tener multiples direcciones: 
+
+```mermaid
+erDiagram
+
+Cliente ||--|{ Direccion : "tiene"
+
+Cliente {
+  int id pk
+  string nombre
+}
+
+Direccion {
+  int id pk
+  int id_cliente fk
+  string calle
+  string numero
+}
+```
 
 ## Relaciones
 
@@ -30,8 +107,12 @@ erDiagram
 Entidad_A ||--|| Entidad_B : "relacionada con"
 
 Entidad_A {
-int id pk
-int id_b fk
+  int id pk
+  int id_b fk
+}
+
+Entidad_B {
+  int id pk
 }
 ```
 
