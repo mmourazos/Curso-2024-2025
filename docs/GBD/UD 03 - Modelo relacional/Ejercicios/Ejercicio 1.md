@@ -23,7 +23,7 @@ _Una empresa vende **productos** a varios **clientes**. Se necesita conocer los 
 ## Relaciones
 
 - **Comprar**: entre clientes y productos. Un producto puede ser comprado por varios clientes. Un cliente puede comprar varios productos.
-- **Suministar**: Los proveedores pueden suminitrar varios productos, pero un producto sólo puede ser suministrado por un proveedor.
+- **Suministrar**: Los proveedores pueden suministrar varios productos, pero un producto sólo puede ser suministrado por un proveedor.
 
 ## Diagrama ER
 
@@ -31,6 +31,7 @@ _Una empresa vende **productos** a varios **clientes**. Se necesita conocer los 
 erDiagram
 Productos {
    int codigo pk
+   string nif fk
    string nombre
    float precio_unitario
 }
@@ -66,11 +67,24 @@ Productos ||--o{ Compras : tiene
 
 Relaciones / tablas
 
-- Productos: atributos + clave foránea: nif.
-- Clientes: atributos + .
-- Proveedores: atributos + .
-- Copras: dni_cliente, cod_producto.
-
-```sql
-CREATE TABLE ()
-```
+- Productos:
+  - `codigo`: clave primaria.
+  - `nif`: clave foránea.
+  - `nombre`. 
+  - `precio_unitario`.
+- Clientes:
+  - `dni`: clave primaria.
+  - `nombre`.
+  - `apellidos`.
+  - `direccion`.
+  - `fecha_nacimiento`.
+- Compras:
+  - `cod_producto`: clave primaria y foránea.
+  - `dni_cliente`: clave primaria y foránea.
+  - `unidades`.
+  - `cuantia`.
+  - `fecha_compra`.
+- Proveedores:
+  - `nif`: clave primaria.
+  - `nombre`.
+  - `direccion`.

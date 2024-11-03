@@ -16,13 +16,16 @@ Destinatario: dirección.
 
 ## Relaciones
 
-* Llevar: Un camionero lleva paquetes. Un paquete está asignado a un camionero y cada caminonero transporta varios paquetes.
-* Counducir: Un camionero conduce varios camiones (distintas fechas) y u campión será conducido por varios camioneros.
+* Llevar: Un camionero lleva paquetes. Un paquete está asignado a un camionero y cada camionero transporta varios paquetes.
+* Conducir: Un camionero conduce varios camiones (distintas fechas) y un camión será conducido por varios camioneros.
+
+_Para la relación del camionero que conduce varios camiones, en distintas fechas, y un camión es conducido a lo largo del tiempo por distintos camioneros (relación M:N) crearé la tabla **viaje** que los relacionará a ambos._
 
 ## Diagrama ER
 
 ```mermaid
 erDiagram
+
 Camionero {
    string dni pk
    string nombre
@@ -38,8 +41,9 @@ Camion {
 
 Paquete {
    int codigo pk
+   string destinatario
    string direccion
-   int cod_provincia fk
+   int cod_poblacion fk
 }
 
 Provincia {
@@ -47,14 +51,53 @@ Provincia {
    string nombre
 }
 
-Poblaciones {
-   int codigo
-   int cod_provincia
+Poblacion {
+   int codigo pk
+   int cod_provincia fk
    string nombre
 }
 
-Camionero }o--o{ Camion: conducir
+Viaje {
+   string dni_camionero pk, fk
+   string matricula_camion pk, fk
+   datetime fecha
+}
+
+Camion ||--o{ Viaje: hace
+Camionero ||--o{ Viaje: hace
 Camionero ||--o{ Paquete: tranportar
+
+Paquete ||--o{ Poblacion: llega
+
+Provincia ||--|{ Poblacion: tiene
 ```
 
 ## Modelo Relacional / tablas
+
+Tablas, claves primarias y foráneas:
+
+* Camionero:
+  * `dni`: clave primaria.
+  * `nombre`.
+  * `telefono`.
+  * `direccion`.
+  * `salario`.
+  * `poblacion`.
+* Camion:
+  * `matricula`: clave primaria.
+* Paquete:
+  * `codigo`: clave primaria.
+  * `destinatario`.
+  * `direccion`.
+  * `cod_poblacion`: clave foránea.
+* Provincia:
+  * `codigo`: clave primaria.
+  * `nombre`.
+* Poblacion:
+  * `codigo`: clave primaria.
+  * `cod_provincia`: clave foránea.
+  * `nombre`.
+* Viaje:
+  * `dni_camionero`: clave primaria y foránea.
+  * `matricula_camion`: clave primaria y foránea.
+  * `fecha`.
