@@ -71,7 +71,7 @@ Fabrica {
   int NFabrica pk
   string Telefono
   bool Alternativa
-E}
+}
 
 Articulo {
   int NArticulo pk
