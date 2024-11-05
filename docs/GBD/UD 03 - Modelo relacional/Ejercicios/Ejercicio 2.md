@@ -43,17 +43,11 @@ Paquete {
    int codigo pk
    string destinatario
    string direccion
-   int cod_poblacion fk
+   int cod_provincia fk
 }
 
 Provincia {
    int codigo pk
-   string nombre
-}
-
-Poblacion {
-   int codigo pk
-   int cod_provincia fk
    string nombre
 }
 
@@ -67,10 +61,12 @@ Camion ||--o{ Viaje: hace
 Camionero ||--o{ Viaje: hace
 Camionero ||--o{ Paquete: tranportar
 
-Paquete ||--o{ Poblacion: llega
-
-Provincia ||--|{ Poblacion: tiene
+Paquete ||--o{ Provincia: llega
 ```
+
+La _entidad_ `Viaje` que sirve de enlace entre `Camionero` y `Camion` ha de tener como **clave primaria** la combinación de: `dni_camionero`, `matricula_camion` y `fecha`, ya que un mismo par `Camionero`, `Camión` podrá darse múltiples veces en diferentes fechas.
+
+Otra opción, para evitar tener una clave primaria compuesta por tres campos, sería darle su propio atributo clave primaria `id` a `Viaje`.
 
 ## Modelo Relacional / tablas
 

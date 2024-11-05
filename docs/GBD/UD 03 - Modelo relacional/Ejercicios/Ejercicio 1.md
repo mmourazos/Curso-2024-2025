@@ -70,7 +70,7 @@ Relaciones / tablas
 - Productos:
   - `codigo`: clave primaria.
   - `nif`: clave foránea.
-  - `nombre`. 
+  - `nombre`.
   - `precio_unitario`.
 - Clientes:
   - `dni`: clave primaria.
