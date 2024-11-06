@@ -19,7 +19,7 @@ _Se desea informatizar la gestión de una empresa de transportes que reparte **p
 * Camionero: dni, nombre, teléfono, dirección, salario, población.
 * Camión: matrícula, modelo, tipo, potencia.
 * Paquete: código, descripción, destinatario, dirección.
-* Província: código, nombre.
+* Provincia: código, nombre.
 
 Podría ser interesante añadir una entidad **destinatario** en caso de que se repita muchas veces. Lo mismo con la entidad que envía los paquetes (que podría ser **Cliente**).
 Destinatario: dirección.
