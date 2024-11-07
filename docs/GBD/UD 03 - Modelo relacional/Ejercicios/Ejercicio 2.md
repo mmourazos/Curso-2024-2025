@@ -5,7 +5,8 @@
 * [Enunciado](#enunciado)
 * [Entidades](#entidades)
 * [Relaciones](#relaciones)
-* [Diagrama ER](#diagrama-er)
+* [Diagrama ER notación pata de gallo](#diagrama-er-notación-pata-de-gallo)
+* [Diagrama ER notación de Chen](#diagrama-er-notación-de-chen)
 * [Modelo Relacional / tablas](#modelo-relacional--tablas)
 
 <!-- tocstop -->
@@ -31,7 +32,7 @@ Destinatario: dirección.
 
 _Para la relación del camionero que conduce varios camiones, en distintas fechas, y un camión es conducido a lo largo del tiempo por distintos camioneros (relación M:N) crearé la tabla **viaje** que los relacionará a ambos._
 
-## Diagrama ER
+## Diagrama ER notación pata de gallo
 
 ```mermaid
 erDiagram
@@ -79,6 +80,10 @@ La _entidad_ `Viaje` que sirve de enlace entre `Camionero` y `Camion` ha de tene
 Otra opción, para evitar tener una clave primaria compuesta por tres campos, sería darle su propio atributo clave primaria `id` a `Viaje`.
 
 Debido a la forma en que funcionan las claves en el tipo de tablas que crea MySQL ([InnoDB](https://es.wikipedia.org/wiki/InnoDB)) el hecho de que la clave primaria sea compuesta no debería suponer un problema de rendimiento. Por otro lado, si esta clave primaria compuesta se utiliza como clave foránea en otras tablas deberá de ser incluida en estas tablas como tal pudiendo causar problemas dependiendo del tamaño de la calve. En el caso que nos ocupa no debería de ser un problema.
+
+## Diagrama ER notación de Chen
+
+![Diagrama ER notación de Chen](./imagenes/Ejercicio_2.svg)
 
 ## Modelo Relacional / tablas
 

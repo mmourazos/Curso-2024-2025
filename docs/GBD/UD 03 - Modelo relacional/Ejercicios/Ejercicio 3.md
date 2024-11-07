@@ -37,7 +37,7 @@ Lista de entidades y sus atributos:
 * **Grupo**
   * Letra
 
-## Diagrama entidad-relación
+## Diagrama entidad-relación notación pata de gallo
 
 ```mermaid
 erDiagram
@@ -75,7 +75,7 @@ Curso {
 
 Grupo {
   string Letra pk
-  string codigoCurso pk,fk
+  string CodigoCurso pk,fk
   int NExpedienteDelegado fk
 }
 
@@ -83,6 +83,10 @@ Alumno ||--o| Grupo : Delegado
 
 Alumno }|--|{ Grupo : Pertenece
 ```
+
+## Diagrama entidad-relación notación de Chen
+
+![Diagrama ER notación de Chen](./imagenes/Ejercicio_3.svg)
 
 ## Modelo relacional / tablas
 
