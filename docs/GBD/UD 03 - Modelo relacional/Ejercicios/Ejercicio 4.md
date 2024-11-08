@@ -1,11 +1,22 @@
 # Ejercicio 4 - Modelo Relacional
 
+<!-- toc -->
+
+* [Enunciado](#enunciado)
+* [Entidades y Atributos](#entidades-y-atributos)
+* [Relaciones y Cardinalidades](#relaciones-y-cardinalidades)
+* [Diagrama ER](#diagrama-er)
+* [Tablas (Relaciones del Modelo Relacional)](#tablas-relaciones-del-modelo-relacional)
+  * [Restricciones](#restricciones)
+
+<!-- tocstop -->
+
 ## Enunciado
 
-Una base de datos para una pequeña empresa debe contener información acerca de **clientes**, **artículos** y **pedidos**. Hasta el momento se registran los siguientes datos en documentos varios: 
+Una base de datos para una pequeña empresa debe contener información acerca de **clientes**, **artículos** y **pedidos**. Hasta el momento se registran los siguientes datos en documentos varios:
 
-* Para cada **cliente**: _Número de cliente (único)_, _Direcciones de envío (varias por cliente)_, Saldo, Límite de crédito (depende del cliente, pero en ningún caso debe superar los 3.000.000 pts), Descuento. 
-* Para cada **artículo**: Número de artículo (único), Fábricas que lo distribuyen, Existencias de ese artículo en cada fábrica, Descripción del artículo. 
+* Para cada **cliente**: _Número de cliente (único)_, _Direcciones de envío (varias por cliente)_, Saldo, Límite de crédito (depende del cliente, pero en ningún caso debe superar los 3.000.000 pts), Descuento.
+* Para cada **artículo**: Número de artículo (único), Fábricas que lo distribuyen, Existencias de ese artículo en cada fábrica, Descripción del artículo.
 * Para cada **pedido**: Cada pedido tiene una **cabecera** y el **cuerpo** del pedido. La cabecera está formada por el número de cliente, dirección de envío y fecha del pedido. El cuerpo del pedido son varias líneas, en cada línea se especifican el número del artículo pedido y la cantidad.
 
 Además, se ha determinado que se debe almacenar la información de las **fábricas**. Sin embargo, dado el uso de distribuidores, se usará: Número de la fábrica (único) y Teléfono de contacto. _Y se desean ver cuántos artículos (en total) provee la fábrica_. También, por información estratégica, se podría incluir información de fábricas alternativas respecto de las que ya fabrican artículos para esta empresa. Nota: Una **dirección** se entenderá como _Nº, Calle, Comunidad y Ciudad_. Una fecha incluye hora. Se pide hacer el diagrama ER para la base de datos que represente esta información.
@@ -33,7 +44,7 @@ Relaciones y sus cardinalidades:
 * **Pedido** (_Número de pedido_) &rarr; **Línea de Pedido** (_Número de pedido, Número de artículo_): 1:N (Un pedido puede tener varias líneas de pedido).
 * **Dirección** (_Número de cliente_) &rarr; **Cliente** (_Direcciones_): 1:N (Un cliente puede tener varias direcciones).
 
-## Diagrama ER
+## Diagrama ER notación pata de gallo
 
 ```mermaid
 erDiagram
@@ -71,7 +82,7 @@ Fabrica {
   int NFabrica pk
   string Telefono
   bool Alternativa
-E}
+}
 
 Articulo {
   int NArticulo pk
@@ -98,8 +109,11 @@ Fabricante {
 Fabrica ||--|{ Fabricante : Distribuye
 
 Fabricante }|--|| Articulo : Provee
-
 ```
+
+## Diagrama ER notación de Chen
+
+![Diagrama ER notación de Chen](./imagenes/Ejercicio_4.svg)
 
 ## Tablas (Relaciones del Modelo Relacional)
 
@@ -142,4 +156,3 @@ Relación de tablas, atributos (columnas) y sus tipos:
 
 * La dirección de envío de un pedido debe ser una de las direcciones del cliente.
 * El límite de crédito no debe superar los 3.000.000 pts.
-

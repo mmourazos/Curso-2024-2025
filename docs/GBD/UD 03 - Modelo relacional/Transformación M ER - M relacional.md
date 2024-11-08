@@ -2,16 +2,16 @@
 
 <!-- toc -->
 
-- [Introducción](#introduccion)
-- [Entidades](#entidades)
-- [Atributos](#atributos)
+* [Introducción](#introducción)
+* [Entidades](#entidades)
+* [Atributos](#atributos)
   * [Atributos multivaluados](#atributos-multivaluados)
-- [Relaciones](#relaciones)
-  * [Relación binaria con cardinalidad 1:1](#relacion-binaria-con-cardinalidad-11)
-    + [1 : 1 en ambas direcciones](#1--1-en-ambas-direcciones)
-    + [1 : 1 en una dirección y 0 : 1 en la otra](#1--1-en-una-direccion-y-0--1-en-la-otra)
-    + [0 : 1 en ambas direcciones](#0--1-en-ambas-direcciones)
-  * [Relación binaria con cardinalidad 1:N](#relacion-binaria-con-cardinalidad-1n)
+* [Relaciones](#relaciones)
+  * [Relación binaria con cardinalidad 1:1](#relación-binaria-con-cardinalidad-11)
+    * [1 : 1 en ambas direcciones](#1--1-en-ambas-direcciones)
+    * [1 : 1 en una dirección y 0 : 1 en la otra](#1--1-en-una-dirección-y-0--1-en-la-otra)
+    * [0 : 1 en ambas direcciones](#0--1-en-ambas-direcciones)
+  * [Relación binaria con cardinalidad uno a muchos](#relación-binaria-con-cardinalidad-uno-a-muchos)
 
 <!-- tocstop -->
 
@@ -69,7 +69,7 @@ Si el número de valores que puede tener el atributo multivaluado es variable, s
 
 En esta tabla se incluirán los atributos multivaluados junto con la clave primaria de la entidad a la que pertenecen.
 
-Supongamos que decimos que un cliente puede tener multiples direcciones: 
+Supongamos que decimos que un cliente puede tener multiples direcciones:
 
 ```mermaid
 erDiagram
@@ -161,7 +161,7 @@ Entidad_A ||--o| "Relación": "participa en"
 Entidad_B |o--|| "Relación": "participa en"
 ```
 
-### Relación binaria con cardinalidad 1:N
+### Relación binaria con cardinalidad uno a muchos
 
 En este caso vuelve a ser relevante si la es 1:N en ambas direcciones o en una sola. En el caso de que sea 1:N en una sola dirección, la clave foránea se incluirá en la tabla de la entidad que tiene la cardinalidad 1 (ó 0:1).
 

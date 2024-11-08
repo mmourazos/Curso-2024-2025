@@ -39,7 +39,13 @@ Una forma más fácil de instalar Maven en Windows es utilizar un gestor de paqu
 choco install maven
 ```
 
-**_Nota: para instalar paquetes con Chocolatey necesitamos tener permisos de administrador._**
+```java
+public static void main(String[] args) {
+    System.out.println("Hello, World!");
+}
+```
+
+***Nota: para instalar paquetes con Chocolatey necesitamos tener permisos de administrador.***
 
 Otra forma de instalar Maven en Windows es utilizando [Scoop](https://scoop.sh/). Para instalar Maven con Scoop ejecutamos el siguiente comando:
 
@@ -179,7 +185,7 @@ Volamos una vez más sobre las secciones del `pom.xml` y sus significados.
 
 En todo fichero `pom.xml` es necesario definir la sección de identificación del proyecto. Esta sección se compone de los siguientes elementos:
 
-- `groupId`: identificador del grupo al que pertenece el proyecto. Por ejemplo `gal.edu.xunta`. **No** es necesario que siga la notación de _puntos_ o de paquetes de Java (aunque se considera una buena práctica).
+- `groupId`: identificador del grupo al que pertenece el proyecto. Por ejemplo `gal.edu.xunta`. **No** es necesario que siga la notación de *puntos* o de paquetes de Java (aunque se considera una buena práctica).
 - `artifactId`: identificador del proyecto. Normalmente coincide con el nombre con el que se conocerá el proyecto. Este identificador es, en combinación con el `groupId`, la clave que identifica de forma única un proyecto respecto a todos los demás.
 - `version`: versión del proyecto.
 
@@ -207,13 +213,13 @@ Es uno de los elementos fundamentales de un fichero `pom.xml`. En esta sección 
   - `compile` (el valor por defecto): la dependencia será necesaria para poder construir el proyecto.
   - `test`: la dependencia sólo será necesaria cuando se deseen realizar tests.
 
-Como vimos antes hay más _scopes_.
+Como vimos antes hay más *scopes*.
 
 ### Sección `build`
 
 Esta es la sección dedicada a indicar cómo se debe construir el proyecto. En esta sección se pueden definir los plugins que se utilizarán para construir el proyecto.
 
-#### Sección plugins
+### Sección plugins
 
 Los plugins son elementos que añaden funcionalidades a Maven, principalmente para compilar y probar el proyecto pero también para generar documentación, informes, etc. Los plugins se definen dentro de la etiqueta `<plugins>` y cada plugin se define mediante la etiqueta `<plugin>`.
 
