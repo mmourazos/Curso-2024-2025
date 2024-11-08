@@ -44,7 +44,7 @@ Relaciones y sus cardinalidades:
 * **Pedido** (_Número de pedido_) &rarr; **Línea de Pedido** (_Número de pedido, Número de artículo_): 1:N (Un pedido puede tener varias líneas de pedido).
 * **Dirección** (_Número de cliente_) &rarr; **Cliente** (_Direcciones_): 1:N (Un cliente puede tener varias direcciones).
 
-## Diagrama ER
+## Diagrama ER notación pata de gallo
 
 ```mermaid
 erDiagram
@@ -109,8 +109,11 @@ Fabricante {
 Fabrica ||--|{ Fabricante : Distribuye
 
 Fabricante }|--|| Articulo : Provee
-
 ```
+
+## Diagrama ER notación de Chen
+
+![Diagrama ER notación de Chen](./imagenes/Ejercicio_4.svg)
 
 ## Tablas (Relaciones del Modelo Relacional)
 
