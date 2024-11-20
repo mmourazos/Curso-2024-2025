@@ -101,8 +101,6 @@ Respecto a la relación entre factura y cliente, **aunque la he reflejado en el 
 
 Si queremos _complicarlo aún más_ podríamos plantearnos si un vehículo puede pertenecer a varios clientes (el coche de una familia o un coche que ha sido vendido). En este caso no lo hemos considerado.
 
-Una re
-
 ```mermaid
 erDiagram
 
