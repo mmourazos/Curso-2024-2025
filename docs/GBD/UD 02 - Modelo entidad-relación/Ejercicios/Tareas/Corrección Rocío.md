@@ -20,4 +20,6 @@ Nos queda sin asinar el atributo _Cantidad_. Para que tenga sentido tendremos qu
 
 ## Apartado 3
 
-
+* La **Factura** debería tener una relación con **Mesas** ya que se nos indica en el enunciado que la **Factura** tiene el atributo **Número Mesa**. Esto nos indica que una factura se asocia a una mesa. Hemos de tener en cuenta que **Número Mesa** **no es la clave primaria** de mesa. Se nos indica que la clave primaria está compuesta por _Cod. Comedor_ y _Número Mesa_.
+* Una **Factura** estará asociada a uno o más **Platos** pero los **Platos** también aparecerán en múltiples facturas. Por tanto, la relación entre **Factura** y **Plato** es N:M. Es decir, un **Plato** puede estar en múltiples facturas y una **Factura** puede tener múltiples platos.
+* No representas la relación que hay entre **Camarero** y **Mesa**. Se nos dice que una **Mesa** tiene asignado un único **Camarero** (y un camarero atiende a una o más mesas).

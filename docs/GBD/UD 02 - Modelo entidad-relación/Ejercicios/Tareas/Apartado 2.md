@@ -2,8 +2,8 @@
 
 <!-- toc -->
 
-* [Enunciado del segundo apartado](#enunciado-del-segundo-apartado)
-* [Solución](#solución)
+- [Enunciado del segundo apartado](#enunciado-del-segundo-apartado)
+- [Solución](#solución)
 
 <!-- tocstop -->
 
@@ -27,5 +27,5 @@ La forma de pasar a 3FN sería crear cuatro relaciones (tablas) diferentes, una 
 
 * **Proveedor** (CodProveedor, NombreProveedor, DirecciónProveedor).
 * **Producto** (CodProducto, NombreProducto, PrecioProducto, CodProveedor).
-* **Pedido** (NumPedido, FechaPedido, CodProducto, Cantidad).
+* **Pedido** (NumPedido, FechaPedido).
 * **LineaPedido** (NumPedido, CodProducto, Cantidad).
