@@ -87,7 +87,7 @@ Respecto a la **Reserva** se dice que se le asignan **Mesas** por lo que una res
 
 Un **Plato** estará compuesto por uno o más **Productos** y un **Producto** podrá formar parte de distintos **Platos**. Por tanto, la relación entre **Plato** y **Producto** es de tipo M:N. Todo produto ha de ser provisto por (al menos) un **Proveedor**. Por tanto, la relación entre **Producto** y **Proveedor** N:1 (consideraremos que cada producto sólo puede ser provisto por un único proveedor y que un proveedor pude proveer varios productos).
 
-Una **Factura** estará compuesta por uno o más **Platos** y un **Plato** podrá formar parte de varias **Facturas**. Por tanto, la relación entre **Factura** y **Plato** es de tipo M:N. A su vez una factura estará asociada a una única mesa pero una mesa podrá tener varias facturas (a distintas horas, reservas). Por tanto, la relación entre **Factura** y **Mesa** es de tipo N:1.
+Una **Factura** estará compuesta por uno o más **Platos** y un **Plato** podrá formar parte de varias **Facturas**. Por tanto, la relación entre **Factura** y **Plato** es de tipo M:N. A su vez una **factura** estará asociada a una única **mesa** pero una **mesa** podrá tener varias facturas (a distintas horas, en distintas reservas). Por tanto, la relación entre **Factura** y **Mesa** es de tipo N:1.
 
 #### Cocineros y platos
 

@@ -85,7 +85,7 @@ _RecambiosOrden_ y _Recambios_ tienen un funcionamiento análogo a _ActuaciónOr
 
 ### Relaciones
 
-Los **Clientes** pueden tener **uno o más Vehículos**. No tiene sentido que tengamos un cliente en el taller si no le estamos (o ya le hemos) reparado algún vehículo. A su vez, a cada **vehículo** le corresponderán **una o más Órdenes** (reparaciones).
+Los **Clientes** pueden tener **uno o más Vehículos**. No tiene sentido que tengamos un cliente en el taller si no le estamos (o ya le hemos) reparado algún vehículo. A su vez, a cada **vehículo** le corresponderán **una o más Órdenes** (de reparaicón / reparaciones).
 
 _También podríamos tener en cuenta que un **Vehículo** podría pertenecer a varios **Clientes** a lo largo de tiempo (por ejemplo, un coche que ha sido vendido) o constar como que es de varias personas (el coche de una familia y hoy trae uno de los miembros y otro día otro). En dicho caso la relación sería M:N y habría que indicar la fecha en que se constató la **pertenencia**. En esta solución no lo hemos considerado._
 
@@ -93,11 +93,15 @@ Con respecto a los **Empleados**, en el enunciado se de información contradicto
 
 Como he dicho, cada **Orden** tendrá una o más **Actuaciones** y cada **Actuación** podrá formar parte de una o más **Órdenes**, por lo que tendremos que crear una tabla intermedia **ActuaciónOrden** que las conecte.
 
+En esta solución he tomado la decisión de que un **Empleado** realiza una o más **Actuaciones** por cada **Orden**, pero cada **Actuación** de cada **Orden** será realizada por un único **Empleado**. En **ActuaciónOrden** se guardará el tiempo que ha empleado cada empleado en cada actuación de cada orden. Para saber el tiempo total que dedica un empleado a una **Orden** se podrían sumar las horas de todas las actuaciones de esa orden que ha realizado dicho empleado.
+
 La relación **Jefe** **Mecánicos** no la represento, incluyo un ejemplo de cómo podría hacerse algo por el estilo al final de la solución. No la incluyo pues, aparentemente, sólo hay un jefe y no se menciona que tenga ninguna función especial (salvo asignar órdenes de trabajo) relevante para el diseño de la base de datos, ya que no se dice que se guarde dicha información en ningún lado. Además no habría distintos grupos de mecánicos cada uno con su jefe, si no que habría un único jefe para todos los mecánicos. Si queremos reflejar esto podría crear un campo _EsJefe_ booleano en la tabla _Empleados_ que sea cierto si el empleado es jefe.
 
-Respecto a la relación entre factura y cliente, **aunque la he reflejado en el diagrama** no sería necesario. Pues se puede llegar desde la factura al cliente a partir de la **Orden** y el _Vehículo_.
+Respecto a la relación entre factura y cliente, **aunque la he reflejado en el diagrama** no sería necesario. Pues se puede llegar desde la factura al cliente a partir de la **Orden** y el _Vehículo_ (si decidimos que un vehículo lo es de un único cliente).
 
 Si queremos _complicarlo aún más_ podríamos plantearnos si un vehículo puede pertenecer a varios clientes (el coche de una familia o un coche que ha sido vendido). En este caso no lo hemos considerado.
+
+Una re
 
 ```mermaid
 erDiagram
