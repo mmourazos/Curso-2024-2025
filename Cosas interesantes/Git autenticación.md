@@ -1,4 +1,4 @@
-# ¿Cómo atenticarse en Git?
+# ¿Cómo autenticarse en Git?
 
 ## ¿Cuántas formas hay de autenticarse en Git?
 
