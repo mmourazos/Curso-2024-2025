@@ -85,7 +85,7 @@ _RecambiosOrden_ y _Recambios_ tienen un funcionamiento análogo a _ActuaciónOr
 
 ### Relaciones
 
-Los **Clientes** pueden tener **uno o más Vehículos**. No tiene sentido que tengamos un cliente en el taller si no le estamos (o ya le hemos) reparado algún vehículo. A su vez, a cada **vehículo** le corresponderán **una o más Órdenes** (de reparaicón / reparaciones).
+Los **Clientes** pueden tener **uno o más Vehículos**. No tiene sentido que tengamos un cliente en el taller si no le estamos (o ya le hemos) reparado algún vehículo. A su vez, a cada **vehículo** le corresponderán **una o más Órdenes** (de reparación / reparaciones).
 
 _También podríamos tener en cuenta que un **Vehículo** podría pertenecer a varios **Clientes** a lo largo de tiempo (por ejemplo, un coche que ha sido vendido) o constar como que es de varias personas (el coche de una familia y hoy trae uno de los miembros y otro día otro). En dicho caso la relación sería M:N y habría que indicar la fecha en que se constató la **pertenencia**. En esta solución no lo hemos considerado._
 
