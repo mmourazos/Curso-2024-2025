@@ -5,6 +5,8 @@ caca
 Un párrafo. Algo en __negrita__ __negrita también__.
 Si quieres escribir *cursiva*.
 
+## Otro párrafo
+
 * Una cosa.
 * Otra cosa.
   * El segundo nivel.
