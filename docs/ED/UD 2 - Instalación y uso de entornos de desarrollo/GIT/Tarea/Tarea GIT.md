@@ -5,6 +5,7 @@
 * [Enunciado](#enunciado)
 * [Notas](#notas)
   * [Imágenes](#imágenes)
+  * [Dudas](#dudas)
 
 <!-- tocstop -->
 
@@ -14,9 +15,9 @@ Crea una cuenta en [GitHub](https://github.com/), [Bitbucket](https://bitbucket.
 
 Documenta el proceso.
 
-* El proyecto debe tener un fichero **markdown** con el nombre `README.md` en el directorio raíz del proyecto.
+* El proyecto debe tener un fichero [**markdown**](https://www.markdownguide.org/) con el nombre `README.md` en el directorio raíz del proyecto.
 * El fichero `README.md` contendrá la _documentación del proceso de realización de la tarea_ incluyendo:
-  * Capturas de pantalla (si fuesen necesarias). 
+  * Capturas de pantalla (si fuesen necesarias).
   * Explicación de los comandos utilizados (si procede).
   * Ha de incluir al menos una imagen.
 * El proyecto debe tener al menos tres commits.
@@ -36,11 +37,11 @@ La entrega se realizará comunicando la URL al proyecto para que se pueda verifi
 Para que las imágenes se muestren en el `README.md` (y suponiendo que se ha seguido la instrucción de incluirlas dentro del directorio `img`) se ha de introducir el siguiente código markdown:
 
 ```markdown
-![Texto a mostrar si la imagen falla](/img/miImagen.png)
+![Texto a mostrar si la imagen falla](./images/miImagen.png)
 ```
 
 Obviamente indicando el nombre y extensión (jpg, svg, etc.) de la imagen que se haya incluido.
 
- ### Dudas
+### Dudas
 
 Ante cualquier duda respecto a la realización de cualquier apartado, como siempre, no dudéis en poneros en contacto conmigo y veremos de resolverla juntos. Igualmente podéis usar el foro para el mismo fin.
