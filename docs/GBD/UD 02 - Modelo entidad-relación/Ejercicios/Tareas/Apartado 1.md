@@ -27,18 +27,19 @@ Cuando viene el cliente a retirar su vehículo se prepara la **factura** que rec
 
 Los datos que será necesario recoger en nuestra base de datos son:
 
-Datos del cliente: DNI, Apellidos, Nombre, Dirección y Teléfono. Se le asigna además un Código de Cliente.
-Datos del vehículo: Matrícula, Marca, Modelo, color y la Fecha de matriculación.
-Datos previos, relativos a la reparación que se quiere efectuar que son:
-Fecha de la entrada
-Los km que tiene el coche.
-La descripción de la posible avería
+* Datos del cliente: DNI, Apellidos, Nombre, Dirección y Teléfono. Se le asigna además un Código de Cliente.
+* Datos del vehículo: Matrícula, Marca, Modelo, color y la Fecha de matriculación.
+* Datos previos, relativos a la reparación que se quiere efectuar que son:
+  * Fecha de la entrada
+  * Los km que tiene el coche.
+  * La descripción de la posible avería
+
 Una vez efectuada la reparación se añade lo siguiente:
 
-Fecha de finalización
-Horas totales empleadas en la reparación.
-Si está reparado o no
-Las observaciones que se consideren necesarias
+* Fecha de finalización.
+* Horas totales empleadas en la reparación.
+* Si está reparado o no.
+* Las observaciones que se consideren necesarias.
 
 Además se necesita saber para cada reparación:
 
@@ -48,8 +49,8 @@ Además se necesita saber para cada reparación:
 * Finalmente para elaborar la factura se necesita incluir en el encabezado: Numero de factura y fecha de la factura. El resto de los datos de la factura se obtendrán a partir del los que ya hemos recogido en la reparación.
 Se pide:
 
-Obtener el modelo Entidad-Relación: Entidades, relaciones, atributos, claves principales, cardinalidades, tipos de correspondencia, etc.
-Obtener el modelo Relacional: pasar del modelo entidad-relación al modelo relacional aplicando correctamente las reglas de transformación, justificando la solución elegida cuando se considere necesario.
+* Obtener el modelo Entidad-Relación: Entidades, relaciones, atributos, claves principales, cardinalidades, tipos de correspondencia, etc.
+* Obtener el modelo Relacional: pasar del modelo entidad-relación al modelo relacional aplicando correctamente las reglas de transformación, justificando la solución elegida cuando se considere necesario.
 
 ## Solución
 
@@ -59,9 +60,9 @@ La solución no es única ya que en este enunciado hay elementos que se prestan 
 
 Las entidades que se pueden identificar son:
 
-* Clientes, con los atributos CodigoCliente, DNI, Apellidos, Nombre, Dirección y Teléfono.
-* Vehículos, con los atributos Matrícula, Marca, Modelo, Color, FechaMatriculación y CodigoCliente.
-* Empleados, con los atributos CodigoEmpleado, DNI, Nombre, Apellidos, Dirección, Teléfono, CP, FechaAlta y Categoría.
+* **Clientes**, con los atributos CodigoCliente, DNI, Apellidos, Nombre, Dirección y Teléfono.
+* **Vehículos**, con los atributos Matrícula, Marca, Modelo, Color, FechaMatriculación y CodigoCliente.
+* **Empleados**, con los atributos CodigoEmpleado, DNI, Nombre, Apellidos, Dirección, Teléfono, CP, FechaAlta y Categoría.
 
 Con respecto a **Empleados** se podrían considerar varias opciones. Podemos entender que hay varios tipos de empleados: Administrativos, Mecánicos y Jefes de mecánicos. En este caso tendríamos una entidad Empleados y tres entidades más, una para cada tipo de empleado. El problema con esta solución es que **no hay ningún atributo especial que distinga a los empleados de un tipo u otro**.
 
@@ -69,17 +70,17 @@ Otra opción sería considerar que hay un único tipo de empleado y que hay un c
 
 Puesto que **sólo se menciona la existencia de un jefe** tampoco tendría mucho sentido reflejar el hecho en la base de datos. No se especifica un mecanismo para que el jefe asigne las reparaciones (órdenes en nuestro diseño) al resto ni en qué se distingue el jefe de cualquier otro mecánico.
 
-En cualquier caso, se pueden considerar las dos opciones. En el mundo real necesita más información para decidir cuál es la mejor opción.
+En cualquier caso, se pueden considerar las dos opciones. En el mundo real necesita más información para decidir cuál es la mejor opción o si than siquiera hay que aplica
 
-* Órdenes, con los atributos NumeroOrden, FechaEntrada, Kms, DescripciónAvería, FechaSalida, HorasTotales, Reparado, Observaciones, CodigoCliente y Matrícula.
-* ActuaciónOrden, con los atributos NumeroOrden, CodigoEmpleado, Referencia y Horas.
-* Actuaciónes, con los atributos Referencia, Descripción, TiempoEstimado y Precio.
+* **Órdenes**, con los atributos: NumeroOrden, FechaEntrada, Kms, DescripciónAvería, FechaSalida, HorasTotales, Reparado, Observaciones, CodigoCliente y Matrícula.
+* **ActuaciónOrden**, con los atributos: NumeroOrden, CodigoEmpleado, Referencia y Horas.
+* **Actuaciónes**, con los atributos: Referencia, Descripción, TiempoEstimado y Precio.
 
-He decidido llamar a la _reparación_ **Orden**. Una reparación estará asociada a un vehículo y estará formada por una o más actuaciones. Cada actuación de la orde (__ActuaciónOrden_) será realizada por un único empleado y tendrá que ser una de las actuaciones predefinidas (_Actuaciones_). De esta forma podremos saber cuantos _Empleados_ han participado en una reparación _repasando_ las _ActuacionesOrden_ de la misma.
+He decidido llamar a la _reparación_ **Orden**. Una reparación estará asociada a un vehículo y estará formada por una o más actuaciones. Cada actuación de la orden (_ActuaciónOrden_) será realizada por un único empleado y tendrá que ser una de las actuaciones predefinidas (_Actuaciones_). De esta forma podremos saber cuantos _Empleados_ han participado en una reparación _repasando_ las _ActuacionesOrden_ de la misma.
 
-* RecambiosOrden, con los atributos NumeroOrden, CodigoRecambio y Unidades.
-* Recambios, con los atributos Código, Descripción, UnidadBase, Stock y PrecioReferencia.
-* Facturas, con los atributos NumeroFactura, NumeroOrden, CodigoCliente y FechaFactura.
+* **RecambiosOrden**, con los atributos: NumeroOrden, CodigoRecambio y Unidades.
+* **Recambios**, con los atributos: Código, Descripción, UnidadBase, Stock y PrecioReferencia.
+* **Facturas**, con los atributos: NumeroFactura, NumeroOrden, CodigoCliente y FechaFactura.
 
 Con respecto a la _Facturas_, **no es necesario** que se relacione directamente con el cliente. Puesto la que factura está ya asociada a una _Ordenes_ y esta a su vez a un _Clientes_ podemos obtener la información del cliente a partir de la _Ordenes_.
 
@@ -89,19 +90,18 @@ _RecambiosOrden_ y _Recambios_ tienen un funcionamiento análogo a _ActuaciónOr
 
 Los **Clientes** pueden tener **uno o más Vehículos**. No tiene sentido que tengamos un cliente en el taller si no le estamos (o ya le hemos) reparado algún vehículo. A su vez, a cada **vehículo** le corresponderán **una o más Órdenes** (de reparación / reparaciones).
 
-_También podríamos tener en cuenta que un **Vehículo** podría pertenecer a varios **Clientes** a lo largo de tiempo (por ejemplo, un coche que ha sido vendido) o constar como que es de varias personas (el coche de una familia y hoy trae uno de los miembros y otro día otro). En dicho caso la relación sería M:N y habría que indicar la fecha en que se constató la **pertenencia**. En esta solución no lo hemos considerado._
+_También podríamos tener en cuenta que un **Vehículo** podría pertenecer a varios **Clientes** a lo largo de tiempo (por ejemplo, un coche que ha sido vendido) o constar como que es de varias personas (el coche de una familia que hoy trae uno de los miembros y otro día, otro). En dicho caso la relación sería M:N y habría que indicar la fecha en que se constató la **pertenencia**. En esta solución no la hemos considerado._
 
-Con respecto a los **Empleados**, en el enunciado se de información contradictoria (hasta cierto punto) pues se dice que: _"el jefe de los mecánicos se la adjudica (la orden de reparación) a un empleado para que efectúe la reparación, entregándole una copia de la misma (orden)"_. Esto podría interpretarse como que cada _reparación_ la realiza un único empleado pero más adelante se da a entender que pueden ser varios: _para cada reparación (se necesita saber): Empleados que han intervenido y las horas que interviene cada uno._ La solución por la que he optado es que una _Orden de reparación_ esté compuesta de **una o más Actuaciones** y que cada **Actuación** esté asociada a un único **Empleado**.
+Con respecto a los **Empleados**, en el enunciado se de información _hasta cierto punto_ contradictoria, pues se dice que: _"el jefe de los mecánicos se la adjudica (la orden de reparación) a un empleado para que efectúe la reparación, entregándole una copia de la misma (orden)"_. Esto podría interpretarse como que cada _reparación_ la realiza un único empleado pero más adelante se da a entender que pueden ser varios: _"para cada reparación (se necesita saber): Empleados que han intervenido y las horas que interviene cada uno."_ La solución por la que he optado es que una _Orden de reparación_ esté compuesta de **una o más Actuaciones** y que cada **Actuación** esté asociada a un único **Empleado**.
+De este modo sabremos qué empleados han participado en una reparación (a través de sus actuaciones) quién ha hecho qué (aunque no se pida) y cuanto tiempo ha dedicado cada uno.
 
-Como he dicho, cada **Orden** tendrá una o más **Actuaciones** y cada **Actuación** podrá formar parte de una o más **Órdenes**, por lo que tendremos que crear una tabla intermedia **ActuaciónOrden** que las conecte.
+Como he dicho, cada **Orden** tendrá una o más **Actuaciones** y cada **Actuación** podrá formar parte de una o más **Órdenes**, por lo que tendremos que crear una tabla intermedia **ActuaciónOrden** que las conecte. _En esta tabla se indicará también el empleado que ha realizado la actuación y el tiempo que ha empleado en ella._
 
-En esta solución he tomado la decisión de que un **Empleado** realiza una o más **Actuaciones** por cada **Orden**, pero cada **Actuación** de cada **Orden** será realizada por un único **Empleado**. En **ActuaciónOrden** se guardará el tiempo que ha empleado cada empleado en cada actuación de cada orden. Para saber el tiempo total que dedica un empleado a una **Orden** se podrían sumar las horas de todas las actuaciones de esa orden que ha realizado dicho empleado.
+En esta solución he tomado la decisión de que un **Empleado** realiza una o más **Actuaciones** por cada **Orden**, pero cada **Actuación** de cada **Orden** será realizada por un único **Empleado**. En **ActuaciónOrden** se guardará el tiempo que ha empleado cada empleado en cada actuación de cada orden. Para saber el tiempo total que dedica un empleado a una **Orden** se podrían sumar las horas de todas las actuaciones que ha realizado dicho empleado asociadas a dicha **Orden**.
 
-La relación **Jefe** **Mecánicos** no la represento, incluyo un ejemplo de cómo podría hacerse algo por el estilo al final de la solución. No la incluyo pues, aparentemente, sólo hay un jefe y no se menciona que tenga ninguna función especial (salvo asignar órdenes de trabajo) relevante para el diseño de la base de datos, ya que no se dice que se guarde dicha información en ningún lado. Además no habría distintos grupos de mecánicos cada uno con su jefe, si no que habría un único jefe para todos los mecánicos. Si queremos reflejar esto podría crear un campo _EsJefe_ booleano en la tabla _Empleados_ que sea cierto si el empleado es jefe.
+La relación **Jefe** **Mecánicos** no la represento, incluyo un ejemplo de cómo podría hacerse algo por el estilo al final de la solución. No la incluyo pues, aparentemente, sólo hay un jefe y no se menciona que tenga ninguna función especial (salvo asignar órdenes de trabajo) relevante para el diseño de la base de datos, ya que no se dice que se guarde dicha información en ningún lado. Además no se habla de distintos grupos de mecánicos cada uno con su jefe, si no que habría un único jefe para todos los mecánicos. Si queremos reflejar esto podría crear un campo _EsJefe_ booleano en la tabla _Empleados_ que sea cierto si el empleado es jefe.
 
 Respecto a la relación entre factura y cliente, **aunque la he reflejado en el diagrama** no sería necesario. Pues se puede llegar desde la factura al cliente a partir de la **Orden** y el _Vehículo_ (si decidimos que un vehículo lo es de un único cliente).
-
-Si queremos _complicarlo aún más_ podríamos plantearnos si un vehículo puede pertenecer a varios clientes (el coche de una familia o un coche que ha sido vendido). En este caso no lo hemos considerado.
 
 ```mermaid
 erDiagram
