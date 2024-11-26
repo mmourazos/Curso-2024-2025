@@ -15,7 +15,7 @@
 
 Vamos a informatizar la gestión del Restaurante Mouro. Se trata de un restaurante de tres plantas, que ofrece distintos servicios a sus clientes. Inicialmente vamos a describir su funcionamiento:
 
-* El restaurante tiene una serie de **comedores**, cada uno de ellos con un número fijo de **mesas** disponibles. De cada comedor interesa: Código y nombre del comedor, capacidad máxima de comensales, número de mesas, localización. Por ejemplo: MA, es el salón "Mar Abierto", está en la planta baja, tiene 60 mesas y capacidad para 300 comensales
+* El restaurante tiene una serie de **comedores**, cada uno de ellos con un número fijo de **mesas** disponibles. De cada comedor interesa: Código y nombre del comedor, capacidad máxima de comensales, número de mesas, localización. Por ejemplo: MA, es el salón "Mar Abierto", está en la planta baja, tiene 60 mesas y capacidad para 300 comensales.
 * En cada comedor hay una serie de **mesas**. De las mesas guardamos el número de asientos y quien es el **camarero** que la atiende. Las mesas se numeran consecutivamente, de forma que será necesario que se añada al propio código el del comedor al que corresponden. Por ejemplo: MA, 01 es la mesa 1 del salón Mar Abierto.
 * Los **empleados** realizan funciones distintas según sean personal de cocina, camareros o personal de administración del negocio.
 
@@ -32,8 +32,13 @@ No se da el caso de que una misma persona realice más de una función. Existen,
 Entre los camareros existen una serie de encargados que supervisan a otros camareros.
 
 * Para organizar mejor el trabajo se admiten **reservas** de los clientes. Cuando se recibe una llamada para hacer una reserva recogemos:
-
-Número de reserva, Fecha y hora de la reserva, Nombre de la persona que hace la reserva, la fecha y hora para la que se hace la reserva, si se trata de comida o cena , el número de personas y otros datos que puedan ser de interés.
+  * Número de reserva.
+  * Fecha y hora de la reserva.
+  * Nombre de la persona que hace la reserva.
+  * La fecha y hora para la que se hace la reserva.
+  * Tipo: Si se trata de comida o cena.
+  * El número de personas.
+  * Otros datos que puedan ser de interés.
 
 Automáticamente se adjudican las mesas necesarias para cubrir la reserva añadiendo el número de personas que se sentarán en cada mesa.
 
@@ -44,7 +49,7 @@ Automáticamente se adjudican las mesas necesarias para cubrir la reserva añadi
 
 Se pide:
 
-Obtener el modelo Entidad-Relación: Entidades, relaciones, atributos, claves principales, cardinalidades, tipos de correspondencia, etc.
+Obtener el modelo Entidad-Relación: Entidades, relaciones, atributos, claves principales, cardinalidades, tipos de correspondencia, etc.\
 Obtener el modelo Relacional: pasar del modelo entidad-relación al modelo relacional aplicando correctamente las reglas de transformación, justificando la solución cuando se considere necesario.
 
 ## Solución
@@ -53,37 +58,37 @@ Obtener el modelo Relacional: pasar del modelo entidad-relación al modelo relac
 
 A partir del enunciado, se pueden identificar las siguientes entidades:
 
-* **Comedor** (Código, Nombre, Capacidad, NúmeroMesas, Localización).
-* **Mesa** (Código, NúmeroAsientos, DNICamarero).
-* **Empleado** (DNI, Nombre, Apellidos, Dirección, Ciudad, CP, Teléfono, FechaAlta, Categoría, Salario)
+* **Comedor** (<ins>Código</ins>, Nombre, Capacidad, NúmeroMesas, Localización).
+* **Mesa** (<ins>Código</ins>, NúmeroAsientos, DNICamarero).
+* **Empleado** (<ins>DNI</ins>, Nombre, Apellidos, Dirección, Ciudad, CP, Teléfono, FechaAlta, Categoría, Salario)
 
 Los empleados se dividen en tres sub-entidades (especialización):
 
-* **Camarero** (DNIEmpleado, Turno, AñosExperiencia).
-* **Cocinero** (DNIEmpleado, Puesto, Especialidad).
-* **PersonalAdministración** (DNIEmpleado, Cargo).
+* **Camarero** (<ins>DNIEmpleado</ins>, Turno, AñosExperiencia).
+* **Cocinero** (<ins>DNIEmpleado</ins>, Puesto, Especialidad).
+* **PersonalAdministración** (<ins>DNIEmpleado</ins>, Cargo).
 
 El caso de los **ayudantes** es confuso pues no se indica si son empleados o no. Se asume que sí lo son, por lo que se añade la entidad **Ayudante** (DNIEmpleado).
 
 * **Ayudante** (DNIEmpleado).
 
-* **Reserva** (NumReserva, FechaHora, NombreReserva, FechaHoraReserva, Tipo, NumPersonas, Notas).
+* **Reserva** (<ins>NumReserva</ins>, FechaHora, NombreReserva, FechaHoraReserva, Tipo, NumPersonas, Notas).
 
 Puesto que sólo existe una única carta no tiene sentido crear dicha entidad. Todos los platos son parte de la carta.
 
-* **Plato** (Código, Nombre, Tipo, Descripción, Precio).
-* **Producto** (Código, Descripción, Stock, UnidadBase, PrecioUnidad, Categoría).
-* **Proveedor** (Código, Nombre, Dirección, CP, Teléfono, Fax, PersonaContacto).
-* **Factura** (NumFactura, Fecha, NumMesa).
+* **Plato** (<ins>Código</ins>, Nombre, Tipo, Descripción, Precio).
+* **Producto** (<ins>Código</ins>, Descripción, Stock, UnidadBase, PrecioUnidad, Categoría).
+* **Proveedor** (<ins>Código</ins>, Nombre, Dirección, CP, Teléfono, Fax, PersonaContacto).
+* **Factura** (<ins>NumFactura</ins>, Fecha, NumMesa).
 
 ### Relaciones
 
 Un **Comedor** estará compuesto de varias **Mesas**. Por tanto, la relación entre ambas entidades es de tipo 1:N.
-Los **Empleados** pueden ser **Camareros**, **Cocineros** o **PersonalAdministración**. Por tanto, la relación entre **Empleado** y cada una de las sub-entidades es de tipo N:1. Cada **Empleado** será de un tipo y dada tipo tendrá uno o más **Empleados**.
+Los **Empleados** pueden ser **Camareros**, **Cocineros** o **PersonalAdministración**. Por tanto, la relación entre **Empleado** y cada una de las sub-entidades es de tipo N:1. Cada **Empleado** será de un tipo y cada tipo tendrá uno o más **Empleados**.
 
 Dejemos a parte por el momento a los **Ayudantes**.
 
-Respecto a la **Reserva** se dice que se le asignan **Mesas** por lo que una reserva tendrá una o más mesas, además se indicará que, para cada **Reserva** una mesa estará ocupada por un número específico de personas. Por tanto, la relación entre **Reserva** y **Mesa** es de tipo N:M. Una mesa puede estar ocupada por varias reservas y una reserva puede ocupar varias mesas.
+Respecto a la **Reserva** se dice que se le asignan **Mesas** por lo que una reserva tendrá una o más mesas, además se indicará que, para cada **Reserva** una mesa estará ocupada por un número específico de personas. Por tanto, la relación entre **Reserva** y **Mesa** es de tipo N:M. Una mesa puede estar asociada a varias reservas y una reserva puede ocupar varias mesas.
 
 Un **Plato** estará compuesto por uno o más **Productos** y un **Producto** podrá formar parte de distintos **Platos**. Por tanto, la relación entre **Plato** y **Producto** es de tipo M:N. Todo produto ha de ser provisto por (al menos) un **Proveedor**. Por tanto, la relación entre **Producto** y **Proveedor** N:1 (consideraremos que cada producto sólo puede ser provisto por un único proveedor y que un proveedor pude proveer varios productos).
 
@@ -93,7 +98,7 @@ Una **Factura** estará compuesta por uno o más **Platos** y un **Plato** podr�
 
 En el enunciado no se nos indica nada respecto a la relación entre cocineros y platos, pero podemos asumir que un cocinero puede preparar varios platos y un plato puede ser preparado por varios cocineros. Por tanto, la relación entre **Cocinero** y **Plato** es de tipo M:N.
 
-En cualquier cualquier caso, como no se nos dice nada al respecto, no añadiremos la relación entre **Cocinero** y **Plato**. Si añadimos cosas que no se nos piden corremos dos riesgos, el de crear tablas que no se necesitas (y probablemente no se pueden rellenar) y, al complicar más el modelo habrá más posibilidades de cometer errores.
+En cualquier caso, en el enunciado no se hace referencia alguna a esta posible relación ni se especifica ninguna información relativa a la misma. Por este motivo no añadiremos la relación entre **Cocinero** y **Plato**. Si añadimos cosas que no se nos piden corremos dos riesgos, el de crear tablas que no se necesitas (y probablemente no se pueden rellenar) y, al complicar más el modelo habrá más posibilidades de cometer errores.
 
 ### Diagrama Entidad-Relación
 
@@ -205,7 +210,7 @@ Factura }|--|{ Plato : "compuesta"
 Factura }|--|| Mesa : "corresponde"
 ```
 
-El diagrama relacional se obtendría del anterior _deshaciendo_ las relaciones M:N y definiendo todas la claves foráneas que falten:
+El diagrama relacional se obtendría del anterior _deshaciendo_ las relaciones M:N (creando una nueva tabla que _interconecte_ las entidades implicadas) y definiendo todas la claves foráneas que falten:
 
 ```mermaid
 erDiagram
