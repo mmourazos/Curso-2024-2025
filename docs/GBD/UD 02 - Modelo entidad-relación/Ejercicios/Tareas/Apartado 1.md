@@ -65,7 +65,9 @@ Las entidades que se pueden identificar son:
 
 Con respecto a **Empleados** se podrían considerar varias opciones. Podemos entender que hay varios tipos de empleados: Administrativos, Mecánicos y Jefes de mecánicos. En este caso tendríamos una entidad Empleados y tres entidades más, una para cada tipo de empleado. El problema con esta solución es que **no hay ningún atributo especial que distinga a los empleados de un tipo u otro**.
 
-Otra opción sería considerar que hay un único tipo de empleado y que hay un campo en la entidad Empleados que nos indica el tipo de empleado que es. TipoEmpleado podría tener tres valores posibles: Mecánico, Jefe de mecánicos o Administrativo. En este caso tendríamos una única entidad Empleados. Puesto que **sólo se menciona la existencia de un jefe** tampoco tendría mucho sentido reflejar el hecho en la base de datos. No se especifica un mecanismo para que el jefe asigne las reparaciones (órdenes en nuestro diseño) al resto ni en qué se distingue el jefe de cualquier otro mecánico.
+Otra opción sería considerar que hay un único tipo de empleado y que hay un campo en la entidad Empleados que nos indica el tipo de empleado que es. TipoEmpleado podría tener tres valores posibles: Mecánico, Jefe de mecánicos o Administrativo. En este caso tendríamos una única entidad Empleados.
+
+Puesto que **sólo se menciona la existencia de un jefe** tampoco tendría mucho sentido reflejar el hecho en la base de datos. No se especifica un mecanismo para que el jefe asigne las reparaciones (órdenes en nuestro diseño) al resto ni en qué se distingue el jefe de cualquier otro mecánico.
 
 En cualquier caso, se pueden considerar las dos opciones. En el mundo real necesita más información para decidir cuál es la mejor opción.
 
@@ -143,7 +145,6 @@ Ordenes {
   int HorasTotales
   boolean Reparado
   string Observaciones
-  int CodigoCliente fk
   string Matricula fk
 }
 
@@ -161,7 +162,7 @@ Actuaciones {
   float Precio
 }
 
-RecambiosOrden {
+RecambiosActuacion {
   int NumeroOrden pk,fk
   string CodigoRecambio pk,fk
   int Unidades
@@ -190,15 +191,52 @@ Clientes ||--|{ Vehiculos : "es propietario de"
 Vehiculos ||--|{ Ordenes : "tiene"
 
 Ordenes ||--|| Facturas : "genera"
-Ordenes ||--|{ ActuacionOrden : "tiene"
-Ordenes ||--|{ RecambiosOrden : "tiene"
+ActuacionOrden }|--|| Ordenes : "tiene"
+ActuacionOrden ||--o{ RecambiosActuacion: "tiene"
 
 Empleados ||--|{ ActuacionOrden : "realiza"
 
 ActuacionOrden }|--|| Actuaciones : "se corresponde"
 
-RecambiosOrden }|--|| Recambios : "se corresponde"
+RecambiosActuacion  e}|--|| Recambios : "se corresponde"
+```
 
+Si queremos relacionar a los mecánicos directamente con las reparaciones:
+
+```mermaid
+erDiagram
+
+Empleados {
+  int CodigoEmpleado pk
+  string DNI
+  string Nombre
+  string Apellidos
+  string Direccion
+  string Telefono
+  int CP
+  date FechaAlta
+}
+
+Ordenes {
+  int NumeroOrden pk
+  date FechaEntrada
+  int Kms
+  string DescripcionAveria
+  date FechaSalida
+  int HorasTotales
+  boolean Reparado
+  string Observaciones
+  string Matricula fk
+}
+
+EmpleadosOrden {
+  int CodigoEmpleado pk,fk
+  int NumeroOrden pk,fk
+  int Horas
+}
+
+Empleados ||--|{ EmpleadosOrden : "realiza"
+Ordenes ||--|{ EmpleadosOrden : "tiene"
 ```
 
 Si queremos distinguir entre los empleados (administrativos, mecánicos y jefes):
