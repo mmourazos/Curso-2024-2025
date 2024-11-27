@@ -56,13 +56,20 @@ Se pide:
 
 La solución no es única ya que en este enunciado hay elementos que se prestan a interpretaciones distintas. En cualquier caso, la solución que se propone es la siguiente:
 
+### Vídeo de la solución
+
+[Vídeo de la solución](https://www.youtube.com/embed/rkBYL2f2q1U?si=zNhjdfdq2HHc77HA)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rkBYL2f2q1U?si=zNhjdfdq2HHc77HA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
 ### Entidades
 
 Las entidades que se pueden identificar son:
 
-* **Clientes**, con los atributos CodigoCliente, DNI, Apellidos, Nombre, Dirección y Teléfono.
-* **Vehículos**, con los atributos Matrícula, Marca, Modelo, Color, FechaMatriculación y CodigoCliente.
-* **Empleados**, con los atributos CodigoEmpleado, DNI, Nombre, Apellidos, Dirección, Teléfono, CP, FechaAlta y Categoría.
+* **Clientes**, con los atributos: CodigoCliente, DNI, Apellidos, Nombre, Dirección y Teléfono.
+* **Vehículos**, con los atributos: Matrícula, Marca, Modelo, Color, FechaMatriculación y CodigoCliente.
+* **Empleados**, con los atributos: CodigoEmpleado, DNI, Nombre, Apellidos, Dirección, Teléfono, CP, FechaAlta y Categoría.
 
 Con respecto a **Empleados** se podrían considerar varias opciones. Podemos entender que hay varios tipos de empleados: Administrativos, Mecánicos y Jefes de mecánicos. En este caso tendríamos una entidad Empleados y tres entidades más, una para cada tipo de empleado. El problema con esta solución es que **no hay ningún atributo especial que distinga a los empleados de un tipo u otro**.
 
@@ -192,13 +199,13 @@ Vehiculos ||--|{ Ordenes : "tiene"
 
 Ordenes ||--|| Facturas : "genera"
 ActuacionOrden }|--|| Ordenes : "tiene"
-ActuacionOrden ||--o{ RecambiosActuacion: "tiene"
+ActuacionOrden ||--o{ RecambiosActuacion : "tiene"
 
 Empleados ||--|{ ActuacionOrden : "realiza"
 
 ActuacionOrden }|--|| Actuaciones : "se corresponde"
 
-RecambiosActuacion  e}|--|| Recambios : "se corresponde"
+RecambiosActuacion }|--|| Recambios : "se corresponde"
 ```
 
 Si queremos relacionar a los mecánicos directamente con las reparaciones:

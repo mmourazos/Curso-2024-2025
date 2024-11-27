@@ -4,6 +4,7 @@
 
 * [Enunciado del tercer apartado](#enunciado-del-tercer-apartado)
 * [Solución](#solución)
+  * [Vídeo de la solución](#vídeo-de-la-solución)
   * [Entidades](#entidades)
   * [Relaciones](#relaciones)
     * [Cocineros y platos](#cocineros-y-platos)
@@ -25,7 +26,7 @@ Cuando se trata de **camareros** queremos saber además en que turno trabaja y l
 
 De los **cocineros** necesitamos saber cuál es su puesto en la cocina y su especialidad (carnes, pescados, postres, etc.)
 
-Del **personal de administración** necesitamos conocer el cargo que tiene.
+Del **personal de administración** _(administrativos)_ necesitamos conocer el cargo que tiene.
 
 No se da el caso de que una misma persona realice más de una función. Existen, además otras personas contratadas temporalmente como **ayudantes** que no se recogen en la anterior descripción.
 
@@ -53,6 +54,12 @@ Obtener el modelo Entidad-Relación: Entidades, relaciones, atributos, claves pr
 Obtener el modelo Relacional: pasar del modelo entidad-relación al modelo relacional aplicando correctamente las reglas de transformación, justificando la solución cuando se considere necesario.
 
 ## Solución
+
+### Vídeo de la solución
+
+[Enlace al vídeo (YouTube)](https://www.youtube.com/embed/wRqa82GSepA?si=ociQr7kw8u9DLI3u)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wRqa82GSepA?si=ociQr7kw8u9DLI3u" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Entidades
 
@@ -346,3 +353,51 @@ Plato ||--|{ FacturaPlato : "compuesta"
 
 Factura }|--|| Mesa: "corresponde"
 ```
+
+Representar a los _camareros **encargados**_ que supervisan a otros camareros: Un _supervisor_ supervisará a uno o más camareros y todo camarero será supervisado por... aquí tenemos varias opciones:
+
+* Un _supervisor_ supervisará a todos los camareros (que no sean supervisores): En este caso crearíamos un atributo _Supervisor_ que sería verdadero para los supervisores y falso para los supervisados.
+* Un _supervisor_ supervisará a un conjunto de camareros y sólo a ellos. En este caso crearíamos un atributo _DNISupervisor_ en la entidad **Camarero** que sería clave foránea de la entidad **Camarero** y nos indicaría quien es el supervisor de cada camarero (los supervisores tendría dicho atributo a nulo).
+* Un _supervisor_ supervisará a un conjunto de camareros pero dichos conjuntos se solapan en grupos. En este caso necesitaríamos una entidad intermedia que relacione a los supervisores con los supervisados **CamareroSupervisor**.
+
+```mermaid
+erDiagram
+
+Camarero {
+  string DNIEmpleado pk
+  enum Turno
+  int AnosExperiencia
+  boolean Supervisor
+}C
+
+Camarero ||--o{ Camarero : "supervisa"
+```
+
+```mermaid
+erDiagram
+
+Camarero {
+  string DNIEmpleado pk
+  enum Turno
+  int AnosExperiencia
+  string DNISupervisor fk
+}
+
+Camarero ||--o{ Camarero : "supervisa"
+```
+
+```mermaid
+erDiagram
+
+Camarero {
+  string DNIEmpleado pk
+  enum Turno
+  int AnosExperiencia
+}
+
+Camarero }|--o{ CamareroSupervisor : "participa en"
+
+CamareroSupervisor {
+  string DNICamSupervisor pk, fk
+  string DNICamSupervidado pk, fk
+}

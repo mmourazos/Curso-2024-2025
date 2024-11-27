@@ -36,7 +36,7 @@ PEDIDO (NumPedido, FechaPedido, CodProveedor, NombreProveedor, DirecciónProveed
 
 Podríamos interpretar que la dirección es un atributo compuesto o atómico. Si lo tomamos como compuesto simplemente habría que descomponerlo en sus elementos y ya estaría en 1FN.
 
-_**OJO**: La clave primaria aquí sería la combinación de TODOS los campos de la tabla. Ya que se nos indica que cada pedido incluye varios productos y cada producto puede ser suministrado por más de un proveedor._
+_**OJO**: La clave primaria aquí sería la combinación de los campos **NumPedido**, **CodProducto** y **CodProveedor**._
 
 ### Paso a 2FN
 
@@ -45,7 +45,7 @@ Volviendo a los apuntes:
 > Una tabla está en segunda forma normal o 2FN cuando está en 1FN y además todos los atributos que no forman parte de la clave principal tienen dependencia funcional completa de la clave y no de parte de ella.
 > Es obvio que una tabla que esté en 1FN y cuya clave esté compuesta por un único atributo, estará en 2FN.
 
-En nuestra tabla en la que (en este momento) la clave primara es la combinación de todo lo anterior no se cumple:
+En nuestra tabla, en la que (en este momento) la clave primara es la combinación de todo lo anterior, no se cumple:
 
 * _FechaPedido_ depende únicamente de _NumPedido_.
 * _NombreProveedor_ y _DirecciónProveedor_ dependen de _CodProveedor_.
