@@ -6,7 +6,7 @@ En esta sección vamos a ver el proceso que hay desde la escritura de código en
 
 ## Código compilado
 
-En primer lugar veremos varios ejemplos de lenguajes cuyo código se compila: C, Go y Rust. Los ejemplos los haremos en línea de comandos y el código simplemente imprimirá los números del 1 al 10. No es la intención de esta sección enseñar a programar en estos lenguajes si no mostrar el proceso de compilación y ejecución de un programa por lo que no te preocupes si no entiendes el código.
+En primer lugar veremos varios ejemplos de lenguajes cuyo código se compila: C y Go. Los ejemplos los haremos en línea de comandos y el código simplemente imprimirá los números del 1 al 10. No es la intención de esta sección enseñar a programar en estos lenguajes si no mostrar el proceso de compilación y ejecución de un programa por lo que no te preocupes si no entiendes el código.
 
 ### C
 
@@ -91,8 +91,6 @@ go build .
 ```
 
 Y como resultado de este proceso obtendremos un ejecutable llamado `cuenta.exe` que podemos ejecutar.
-
-### Rust
 
 ### Caso especial: Lenguajes que compilan a _bytecode_
 

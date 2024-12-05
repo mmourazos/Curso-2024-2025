@@ -35,3 +35,44 @@ Un SGBD debe garantizar la seguridad de los datos almacenados en la base de dato
 Esto se puede hacer a nivel de permisos de usuario, roles, perfiles, etc.
 
 En resumen, un SGBD es una herramienta que permite gestionar de forma eficiente y segura la información almacenada en una base de datos. Proporciona funciones para definir, manipular, controlar y proteger los datos, facilitando así su acceso y uso por parte de los usuarios.
+
+```php
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PHP Test</title>
+</head>
+
+<body>
+    Esto es algo.<br/>
+    <?php
+     for ($x = 0; $x <= 10; $x++) {
+        echo "El número pasa a ser: $x.<br>";
+        }
+        ?>
+</body>
+
+</html>
+```
+
+```mermaid
+erDiagram
+    ORDER ||--|{ LINE-ITEM : contains
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER {
+        string name
+        string address
+        key name
+    }
+    ORDER {
+        int order-number
+        date order-date
+        key order-number
+    }
+    LINE-ITEM {
+        int quantity
+        float price
+        key quantity
+    }
+```
