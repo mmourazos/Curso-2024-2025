@@ -225,6 +225,13 @@ Para más información sobre éste y otros comandos de Git podemos consultar la 
 
 La fusión de ramas es el proceso de combinar dos ramas en una sola con el objetivo de **integrar los cambios de una rama en la otra**. Para fusionar una rama con la rama actual, usamos el comando `git merge nombre_rama` o bien `git merge nombre_rama nombre_rama_base`.
 
+El merge se aplicará *sobre* la rama actual, por lo que es importante estar en la rama que queremos que reciba los cambios. Si queremos fusionar la rama `develop` con la rama `main`:
+
+```git
+git checkout main
+git merge develop
+```
+
 Si hay conflictos, debemos resolverlos manualmente.
 
 ```mermaid
@@ -247,7 +254,18 @@ commit id: "Main 02."
 #### Rebase
 
 La operación de *rebase* es una forma de, al igual de *merge*, incluir los cambios de una rama en otra. En lugar de fusionar dos ramas, se reescribe la historia de una rama sobre otra. Esto puede ser útil para mantener una historia más limpia y ordenada.
-El comando para realizar un rebase es `git rebase nombre_rama`.
+El comando para realizar un rebase es `git rebase nombre_rama`: Esto hace que **el _rebase_ se aplique DESDE la rama actual a `nombre_rama`**.
+Repitámoslo par que quede claro: Si queremos hacer un rebase **desde** la rama `develop` a la rama `main` debemos de: 
+
+* Cambiar de rama a `develop`.
+* Escribir el comando `git rebase main`.
+
+Al contrario que en el caso de `merge` hemos de estar en la rama **dese la cual** queremos que se envíen los cambios:
+
+```git
+git checkout develop
+git rebase main
+```
 
 ```mermaid
 ---
