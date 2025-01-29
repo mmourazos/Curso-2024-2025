@@ -1,23 +1,12 @@
 # Enunciado tareas unidad didáctica 4 - Consultas
 
-<!-- toc -->
-
-* [Esquema relacional](#esquema-relacional)
-* [restricciones](#restricciones)
-* [Consultas](#consultas)
-  * [Consulta 1](#consulta-1)
-    * [Pistas consulta 1](#pistas-consulta-1)
-  * [Consulta 2](#consulta-2)
-
-<!-- tocstop -->
-
 La Asociación Andaluza de Vídeo Juegos y E-Sports gestiona diferentes campeonatos de juegos online mediante una base de datos denominada `campeonatos` que almacena información sobre los `concursante`, sus `equipo` y los diferentes `juego` en los que `participa`n los `concursante`s.
 
 A partir de la base de datos CAMPEONATO formada por las tablas CONCURSANTE, JUEGO, EQUIPO  y PARTICIPA, relacionadas tal y como muestra el esquema relacional de la imagen, debes realizar las siguientes consultas indicadas más abajo.
 
 ## Esquema relacional
 
-El esquema relaciónal de la base de datos `campeonatos` es el siguiente:
+El esquema relacional de la base de datos `campeonatos` es el siguiente:
 
 ```mermaid
 erDiagram
@@ -78,7 +67,7 @@ Realiza las siguientes consultas y responde indicando el código SQL que genera 
 
 ### Consulta 1
 
-Devuelve el **código**, **nombre**, **fecha de inscripción** y **cuota** de los **concursantes** **masculinos** cuya cuota de inscrición se encuentre entre 50 y 100 € (ambos inclusive), su año de inscripción seal 2019 y el mes entre marzo y septiembre (ambos inclusive). Los resultados deben de estar **ordenados por cuota** de mayor a menor (`desc`). 
+Devuelve el **código**, **nombre**, **fecha de inscripción** y **cuota** de los **concursantes** **masculinos** cuya cuota de inscrición se encuentre entre 50 y 100 € (ambos inclusive), su año de inscripción seal 2019 y el mes entre marzo y septiembre (ambos inclusive). Los resultados deben de estar **ordenados por cuota** de mayor a menor (`desc`).
 
 El encabezado de la tabla debe ser `Código, Jugador, Fecha, Cuota`.
 
@@ -93,4 +82,3 @@ Han de realizarse **dos versiones**. La primera sin utilizar el operador `BETWEE
 Devuelve código, nombre, comunidad y año de fundación de los equipos de concursantes que son de Andalucía, Murcia o Galicia y su año de fundación es el 2019. Ordena por comunidad alfabéticamente.
 Redacta dos versiones:
 a)Usando IN() donde sea posible b) Sin usar IN().
-
