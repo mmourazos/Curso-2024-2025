@@ -79,6 +79,21 @@ Han de realizarse **dos versiones**. La primera sin utilizar el operador `BETWEE
 
 ### Consulta 2
 
-Devuelve código, nombre, comunidad y año de fundación de los equipos de concursantes que son de Andalucía, Murcia o Galicia y su año de fundación es el 2019. Ordena por comunidad alfabéticamente.
+Devuelve un listado con el código, nombre, comunidad y año de fundación de los equipos de concursantes que son de Andalucía, Murcia o Galicia y su año de fundación es el 2019. Ordena por comunidad alfabéticamente.
+
 Redacta dos versiones:
-a)Usando IN() donde sea posible b) Sin usar IN().
+
+* Usando el operador "IN()" donde sea posible.
+* Sin usa "IN()".
+
+### Consulta 3
+
+Obtén un listado con código, nombre, dificultad y megusta de los juegos con **más `megusta`**.
+
+#### Pista consulta 3
+
+Han de utilizarse subconsultas.
+
+### Consulta 4
+
+Muestra todos los juegos que **no tengan un valor nulo en `megusta`
