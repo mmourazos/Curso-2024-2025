@@ -1,4 +1,4 @@
-# Soluciones Tarea 1 UD 5 - Consultas SQL
+# Soluciones Tarea 1 UD 5 - ConsultAS SQL
 
 ## Apartado 1
 
@@ -132,5 +132,21 @@ SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media punt
 Modifica la consulta anterior para que se muestre también el código y nombre del ídolo de cada concursante. Limita el resultado a los 5 concursantes con mayor media.
 
 ```SQL
-SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media puntos" FROM concursante AS c, concursante, participa AS p WHERE c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY "media puntos" DESC;
+SELECT c.cdconcur AS "cd. concursante", c.nombre, round(avg(p.puntos), 2) AS "media puntos", c.cdidolo AS "cd. ídolo", cc.nombre AS "nombre ídolo" from concursante AS c INNER JOIN concursante AS cc ON c.cdidolo = cc.cdconcur INNER JOIN participa AS p ON c.cdconcur = p.cdconcur GROUP BY c.cdconcur;
+```
+
+## Apartado 11
+
+Obtén un listado de todos los juegos cuyo nombre incluya la palabra "Empire" mostrando: los `megusta`, dificultad, y el número de concursantes que participan en el mismo. Ordena por número de concursantes de mayor a menor.
+
+```SQL
+SELECT j.nombre, j.megusta, j.dificultad, count(p.cdconcur) AS "número de concursantes" FROM juego AS j, participa AS p WHERE j.cdjuego = p.cdjuego AND j.nombre LIKE "%Empire%" GROUP BY j.cdjuego ORDER BY "número de concursantes" DESC;
+```
+
+## Apartado 12
+
+Muestra un listado con el código de juego y total de concursantes que participan en cada juego. En el listado mostrar solo los juegos en los que participan 2 o más concursantes. Ordenar de más  menos participación.
+
+```SQL
+SELECT j.cdjuego AS "código de juego", count(p.cdconcur) AS "total de concursantes" FROM juego AS j, participa AS p WHERE j.cdjuego = p.cdjuego GROUP BY j.cdjuego HAVING count(p.cdconcur) >= 2 ORDER BY "total de concursantes" DESC;
 ```

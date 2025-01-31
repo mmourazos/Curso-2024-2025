@@ -158,3 +158,44 @@
 ```
 
 ## Apartado 10
+
+```text
++-----------------+---------------+--------------+-----------+----------------+
+| cd. concursante | nombre        | media puntos | cd. ídolo | nombre ídolo  |
++-----------------+---------------+--------------+-----------+----------------+
+| A14             | Manuel Verde  |        30.00 | NULL      | Benita Naranja |
+| A33             | Ismael Rojo   |        40.00 | NULL      | Benita Naranja |
+| B99             | Carlos Rojo   |        35.00 | NULL      | Benita Naranja |
+| C01             | Juan Amarillo |        45.00 | A22       | Ismael Rojo    |
+| C02             | Marta Rosa    |        60.00 | A22       | Ismael Rojo    |
+| C03             | Alvaro Rojo   |        20.00 | A22       | Ismael Rojo    |
+| C04             | Eva Verde     |       200.00 | A22       | Elvira Blanco  |
+| C88             | Javier Blanco |        49.50 | A22       | Carlos Rojo    |
++-----------------+---------------+--------------+-----------+----------------+
+```
+
+## Apartado 11
+
+```text
++------------------+---------+------------+------------------------+
+| nombre           | megusta | dificultad | número de concursantes |
++------------------+---------+------------+------------------------+
+| Forge of Empires |       4 | alta       |                      3 |
+| Goodgame Empire  |    NULL | alta       |                      1 |
++------------------+---------+------------+------------------------+
+```
+
+## Apartado 12
+
+```text
++-----------------+-----------------------+
+| código de juego | total de concursantes |
++-----------------+-----------------------+
+| CON             |                     2 |
+| FOE             |                     3 |
+| HAB             |                     2 |
+| LOL             |                     2 |
+| MUO             |                     2 |
+| VIK             |                     3 |
++-----------------+-----------------------+
+```
