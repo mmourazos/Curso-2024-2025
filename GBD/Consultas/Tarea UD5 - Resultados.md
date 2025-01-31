@@ -138,3 +138,23 @@
 | X03    | Andrés Rojas    | NULL         | sin juego           | 0                     |
 +--------+-----------------+--------------+---------------------+-----------------------+
 ```
+
+## Apartado 9
+
+```text
++--------+----------------+--------------+
+| código | nombre         | media puntos |
++--------+----------------+--------------+
+| A14    | Manuel Verde   |        30.00 |
+| A22    | Benita Naranja |        27.50 |
+| A33    | Ismael Rojo    |        40.00 |
+| B99    | Carlos Rojo    |        35.00 |
+| C01    | Juan Amarillo  |        45.00 |
+| C02    | Marta Rosa     |        60.00 |
+| C03    | Alvaro Rojo    |        20.00 |
+| C04    | Eva Verde      |       200.00 |
+| C88    | Javier Blanco  |        49.50 |
++--------+----------------+--------------+
+```
+
+## Apartado 10

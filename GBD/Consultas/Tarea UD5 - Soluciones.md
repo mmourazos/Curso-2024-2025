@@ -118,3 +118,19 @@ Para _renombrar_ los valores nulos hemos de utilizar la _función_ `IFNULL()` a 
 ```SQL
 SELECT c.cdconcur AS "código", c.nombre AS "n. concursante", e.nombre AS "n. equipo", IFNULL(j.nombre, "sin juego") AS "n. juego", IFNULL(p.puntos, "0") FROM concursante AS c LEFT OUTER JOIN participa AS p ON c.cdconcur = p.cdconcur LEFT OUTER JOIN equipo AS e ON c.cdequipo = e.cdequipo LEFT OUTER JOIN juego AS j ON p.cdjuego = j.cdjuego;
 ```
+
+## Apartado 9
+
+Mostrar el código de concursante, nombre y la media de puntos (en los juegos en los que ha participado). Se ha de redondear la media mostrando dos decimales y ordenar de mayor a menor número de puntos.
+
+```SQL
+SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media puntos" FROM concursante AS c, participa AS p WHERE c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY "media puntos" DESC;
+```
+
+## Apartado 10
+
+Modifica la consulta anterior para que se muestre también el código y nombre del ídolo de cada concursante. Limita el resultado a los 5 concursantes con mayor media.
+
+```SQL
+SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media puntos" FROM concursante AS c, concursante, participa AS p WHERE c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY "media puntos" DESC;
+```

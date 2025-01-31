@@ -97,3 +97,24 @@ Han de utilizarse subconsultas.
 ### Consulta 4
 
 Muestra todos los juegos que **no tengan un valor nulo en `megusta`
+
+### Consulta 5
+
+Mostrar los nombres, dificultad, _megusta_ y código de equipo de los juegos organizados por el equipo que ha organizado el juego de nombre `Elvenar`.
+
+### Consulta 6
+
+Haz que la consulta anterior muestre también el **nombre del equipo y la comunidad a la que pertenece**.
+
+### Consulta 7
+
+Mostrar el código, nombre del concursante, código de juego, fecha de inicio y puntos. Ordenar por código de concursante.
+
+### Consulta 8
+
+Muestra el código y nombre del concursante, el nombre de su equipos y nombre de los juegos en los que participa y sus puntos. Los concursantes que no participan también aparecerán mostrando "sin juego" y en puntos un cero.
+
+### Consulta 9
+
+Mostrar el código de concursante, nombre y la media de puntos (en los juegos en los que ha participado). Se ha de redondear la media mostrando dos decimales y ordenar de mayor a menor número de puntos.
+
