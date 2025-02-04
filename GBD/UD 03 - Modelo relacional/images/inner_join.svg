@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="42.164753mm"
+   height="31.250685mm"
+   viewBox="0 0 42.164753 31.250685"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:export-bgcolor="#f2f2f2ff">
+    <inkscape:page
+       x="-2.9921967e-14"
+       y="0"
+       width="42.164749"
+       height="31.250685"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-11.933363,-10.136793)">
+    <g
+       id="g39"
+       inkscape:export-filename="inner_join.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <text
+         xml:space="preserve"
+         style="font-size:5.64444px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="23.08444"
+         y="14.177197"
+         id="text8"><tspan
+           sodipodi:role="line"
+           id="tspan8"
+           style="stroke-width:0.264583"
+           x="23.08444"
+           y="14.177197">Inner join</tspan></text>
+      <circle
+         style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+         id="path1"
+         cx="41.12318"
+         cy="28.412542"
+         r="12.724936" />
+      <circle
+         style="fill:none;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+         id="circle1"
+         cx="24.908298"
+         cy="28.337244"
+         r="12.724936" />
+      <path
+         id="circle11"
+         style="fill:#000080;fill-opacity:0.521964;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round"
+         d="m 33.0755,18.582328 a 12.724936,12.724936 0 0 0 -4.677233,9.830408 12.724936,12.724936 0 0 0 4.567163,9.747725 12.724936,12.724936 0 0 0 4.667932,-9.823173 12.724936,12.724936 0 0 0 -4.557862,-9.75496 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="19.531883"
+         y="27.304405"
+         id="text18"><tspan
+           sodipodi:role="line"
+           id="tspan18"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="19.531883"
+           y="27.304405">relación</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="19.531883"
+           y="30.83218"
+           id="tspan22">(tabla) A</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="46.394867"
+         y="27.304405"
+         id="text24"><tspan
+           sodipodi:role="line"
+           id="tspan23"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="46.394867"
+           y="27.304405">relación</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;font-family:'Arial Nova';-inkscape-font-specification:'Arial Nova, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="46.394867"
+           y="30.83218"
+           id="tspan24">(tabla) B</tspan></text>
+    </g>
+  </g>
+</svg>
