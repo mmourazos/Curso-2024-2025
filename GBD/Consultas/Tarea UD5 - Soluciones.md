@@ -75,7 +75,7 @@ SELECT cdjuego AS "código", nombre, dificultad, megusta FROM juego WHERE megust
 Obtén un listado de todos los juegos cuyo valor de `megusta` **no es nulo**. Incluye también el nombre del **equipo** que organiza dicho juego.
 
 ```SLQ
-SELECT *, e.nombre AS "equipo organizador" FROM juego AS j, equipo AS e WHERE j.megusta IS NOT null AND j.cdequipo = e.cdequipo;
+SELECT j.*, e.nombre AS "equipo organizador" FROM juego AS j, equipo AS e WHERE j.megusta IS NOT null AND j.cdequipo = e.cdequipo;
 ```
 
 ## Apartado 5
@@ -124,7 +124,7 @@ SELECT c.cdconcur AS "código", c.nombre AS "n. concursante", e.nombre AS "n. eq
 Mostrar el código de concursante, nombre y la media de puntos (en los juegos en los que ha participado). Se ha de redondear la media mostrando dos decimales y ordenar de mayor a menor número de puntos.
 
 ```SQL
-SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media puntos" FROM concursante AS c, participa AS p WHERE c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY "media puntos" DESC;
+SELECT c.cdconcur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media puntos" FROM concursante AS c, participa AS p WHERE c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY AVG(p.puntos) DESC;
 ```
 
 ## Apartado 10
@@ -132,7 +132,7 @@ SELECT c.cdcondur AS "código", c.nombre, ROUND(AVG(p.puntos), 2) AS "media punt
 Modifica la consulta anterior para que se muestre también el código y nombre del ídolo de cada concursante. Limita el resultado a los 5 concursantes con mayor media.
 
 ```SQL
-SELECT c.cdconcur AS "cd. concursante", c.nombre, round(avg(p.puntos), 2) AS "media puntos", c.cdidolo AS "cd. ídolo", cc.nombre AS "nombre ídolo" from concursante AS c INNER JOIN concursante AS cc ON c.cdidolo = cc.cdconcur INNER JOIN participa AS p ON c.cdconcur = p.cdconcur GROUP BY c.cdconcur;
+SELECT c.cdconcur AS "cd. concursante", c.nombre, round(avg(p.puntos), 2) AS "media puntos", c.cdidolo AS "cd. ídolo", cc.nombre AS "nombre ídolo" from concursante AS c INNER JOIN concursante AS cc ON c.cdidolo = cc.cdconcur INNER JOIN participa AS p ON c.cdconcur = p.cdconcur GROUP BY c.cdconcur ORDER BY avg(p.puntos) DESC LIMIT 5;
 ```
 
 ## Apartado 11

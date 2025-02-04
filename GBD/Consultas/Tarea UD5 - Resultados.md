@@ -37,18 +37,18 @@
 ## Apartado 4
 
 ```txt
-+---------+---------------------+------------+---------+----------+----------+----------------+-----------+------------+--------------------+
-| cdjuego | nombre              | dificultad | megusta | cdequipo | cdequipo | nombre         | comunidad | anio_funda | equipo organizador |
-+---------+---------------------+------------+---------+----------+----------+----------------+-----------+------------+--------------------+
-| CON     | Conflict of Nations | alta       |       3 | 03       | 03       | Amadeus        | Galicia   |       2018 | Amadeus            |
-| ELV     | Elvenar             | baja       |       3 | 01       | 01       | La marmota     | Andalucía |       2017 | La marmota         |
-| FOE     | Forge of Empires    | alta       |       4 | 06       | 06       | Los increibles | Andalucía |       2020 | Los increibles     |
-| GW2     | Guild Wars 2.       | baja       |       5 | 01       | 01       | La marmota     | Andalucía |       2017 | La marmota         |
-| HAB     | HABBO Hotel         | media      |       4 | 02       | 02       | Los rebeldes   | Murcia    |       2019 | Los rebeldes       |
-| LOL     | League of Legends.  | media      |       5 | 03       | 03       | Amadeus        | Galicia   |       2018 | Amadeus            |
-| VIK     | Vikings             | media      |       5 | 01       | 01       | La marmota     | Andalucía |       2017 | La marmota         |
-| WOW     | World of Warcraft   | baja       |       3 | 03       | 03       | Amadeus        | Galicia   |       2018 | Amadeus            |
-+---------+---------------------+------------+---------+----------+----------+----------------+-----------+------------+--------------------+
++---------+---------------------+------------+---------+----------+--------------------+
+| cdjuego | nombre              | dificultad | megusta | cdequipo | equipo organizador |
++---------+---------------------+------------+---------+----------+--------------------+
+| CON     | Conflict of Nations | alta       |       3 | 03       | Amadeus            |
+| ELV     | Elvenar             | baja       |       3 | 01       | La marmota         |
+| FOE     | Forge of Empires    | alta       |       4 | 06       | Los increibles     |
+| GW2     | Guild Wars 2.       | baja       |       5 | 01       | La marmota         |
+| HAB     | HABBO Hotel         | media      |       4 | 02       | Los rebeldes       |
+| LOL     | League of Legends.  | media      |       5 | 03       | Amadeus            |
+| VIK     | Vikings             | media      |       5 | 01       | La marmota         |
+| WOW     | World of Warcraft   | baja       |       3 | 03       | Amadeus            |
++---------+---------------------+------------+---------+----------+--------------------+
 ```
 
 ## Apartado 5
@@ -145,15 +145,15 @@
 +--------+----------------+--------------+
 | código | nombre         | media puntos |
 +--------+----------------+--------------+
-| A14    | Manuel Verde   |        30.00 |
-| A22    | Benita Naranja |        27.50 |
+| C04    | Eva Verde      |       200.00 |
+| C02    | Marta Rosa     |        60.00 |
+| C88    | Javier Blanco  |        49.50 |
+| C01    | Juan Amarillo  |        45.00 |
 | A33    | Ismael Rojo    |        40.00 |
 | B99    | Carlos Rojo    |        35.00 |
-| C01    | Juan Amarillo  |        45.00 |
-| C02    | Marta Rosa     |        60.00 |
+| A14    | Manuel Verde   |        30.00 |
+| A22    | Benita Naranja |        27.50 |
 | C03    | Alvaro Rojo    |        20.00 |
-| C04    | Eva Verde      |       200.00 |
-| C88    | Javier Blanco  |        49.50 |
 +--------+----------------+--------------+
 ```
 
@@ -163,14 +163,11 @@
 +-----------------+---------------+--------------+-----------+----------------+
 | cd. concursante | nombre        | media puntos | cd. ídolo | nombre ídolo  |
 +-----------------+---------------+--------------+-----------+----------------+
-| A14             | Manuel Verde  |        30.00 | NULL      | Benita Naranja |
-| A33             | Ismael Rojo   |        40.00 | NULL      | Benita Naranja |
-| B99             | Carlos Rojo   |        35.00 | NULL      | Benita Naranja |
-| C01             | Juan Amarillo |        45.00 | A22       | Ismael Rojo    |
-| C02             | Marta Rosa    |        60.00 | A22       | Ismael Rojo    |
-| C03             | Alvaro Rojo   |        20.00 | A22       | Ismael Rojo    |
-| C04             | Eva Verde     |       200.00 | A22       | Elvira Blanco  |
-| C88             | Javier Blanco |        49.50 | A22       | Carlos Rojo    |
+| C04             | Eva Verde     |       200.00 | A44       | Elvira Blanco  |
+| C02             | Marta Rosa    |        60.00 | A33       | Ismael Rojo    |
+| C88             | Javier Blanco |        49.50 | B99       | Carlos Rojo    |
+| C01             | Juan Amarillo |        45.00 | A33       | Ismael Rojo    |
+| A33             | Ismael Rojo   |        40.00 | A22       | Benita Naranja |
 +-----------------+---------------+--------------+-----------+----------------+
 ```
 
