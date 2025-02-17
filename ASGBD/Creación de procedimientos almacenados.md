@@ -16,7 +16,7 @@ END;
 
 ### Comando `DELIMITER`
 
-Para evitar que se ejecuten las sentencias SQL durante el proceso de definición del procedimiento, se utiliza el comando `DELIMITER` para cambiar el delimitador de sentencias de `;` a otro carácter, por ejemplo `//`.
+Para evitar que se ejecuten las sentencias SQL durante el proceso de definición del procedimiento utilizaremos el comando `DELIMITER` que permite cambiar el delimitador de sentencias de `;` a otro carácter, por ejemplo `//`.
 
 De este modo el ejemplo anterior quedaría de la siguiente manera:
 
@@ -27,7 +27,7 @@ COMMENT 'Comentario del procedimiento'
 LANGUAGE SQL
 SQL SECURITY INVOKER -- O DEFINER. Define con qué identidad se ejecutará el procedimiento, lo explicaremos más adelante.
 BEGIN
-    -- Cuerpo del procedimiento
+    -- Cuerpo del procedimiento, CON SENTENCIAS TERMINADES EN ; QUE NO SE EJECUTARÁN.
 END// -- Usameos el nuevo delimitador // para finalizar la definición del procedimiento.
 DELIMITER ; -- Volvemos a establecer el delimitador por defecto.
 ```
