@@ -8,8 +8,6 @@ BEGIN
   DECLARE gr1, gr2 CHAR(3);
   DECLARE pt1, pt2 INT;
 
-  DECLARE cd_cursor CHAR(3);
-
   DECLARE jugador_grupo CURSOR FOR
   SELECT c.grupo, SUM(j.tantos_marcados) AS suma FROM Baloncesto.jugadores AS j, Baloncesto.clases AS c
   WHERE j.clase = c.codigo GROUP BY j.clase ORDER BY suma DESC;
@@ -31,7 +29,6 @@ BEGIN
   SELECT gr1 AS "grupo 1", pt1 AS "puntos 1";
   SELECT gr2 AS "grupo 2", pt2 AS "puntos 2";
 
-END
-#
+END #
 
 delimiter ;
