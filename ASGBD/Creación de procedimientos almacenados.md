@@ -1,5 +1,21 @@
 # Creación de procedimientos almacenados
 
+<!-- toc -->
+
+- [Creación del procedimiento](#creacion-del-procedimiento)
+  * [Comando `DELIMITER`](#comando-delimiter)
+  * [Declaración de variables](#declaracion-de-variables)
+    + [Tipos de variables en MySQL](#tipos-de-variables-en-mysql)
+      - [Variables de sistema](#variables-de-sistema)
+      - [Variables de usuario](#variables-de-usuario)
+      - [Variables de procedimiento](#variables-de-procedimiento)
+  * [Sección `COMMENT`](#seccion-comment)
+  * [Sección `SQL SECURITY`](#seccion-sql-security)
+- [Permisos relacionados con procedimientos almacenados](#permisos-relacionados-con-procedimientos-almacenados)
+- [Mostrar procedimientos almacenados](#mostrar-procedimientos-almacenados)
+
+<!-- tocstop -->
+
 ## Creación del procedimiento
 
 Para crear un procedimiento almacenado en MySQL, se utiliza la siguiente sintaxis:
@@ -16,21 +32,58 @@ END;
 
 ### Comando `DELIMITER`
 
-Para evitar que se ejecuten las sentencias SQL durante el proceso de definición del procedimiento utilizaremos el comando `DELIMITER` que permite cambiar el delimitador de sentencias de `;` a otro carácter, por ejemplo `//`.
+Para evitar que se ejecuten las sentencias SQL (lo harían cada vez que el intérprete encuentre un carácter `;`) durante el proceso de definición del procedimiento utilizaremos el comando `DELIMITER` que permite cambiar el delimitador de sentencias de `;` a otro carácter, por ejemplo `//`.
 
 De este modo el ejemplo anterior quedaría de la siguiente manera:
 
 ```sql
 DELIMITER // -- Cambiamos el delimitador de sentencias.
+
 CREATE PROCEDURE nombre_procedimiento()
 COMMENT 'Comentario del procedimiento'
 LANGUAGE SQL
 SQL SECURITY INVOKER -- O DEFINER. Define con qué identidad se ejecutará el procedimiento, lo explicaremos más adelante.
 BEGIN
     -- Cuerpo del procedimiento, CON SENTENCIAS TERMINADES EN ; QUE NO SE EJECUTARÁN.
-END// -- Usameos el nuevo delimitador // para finalizar la definición del procedimiento.
+END// -- Usamos el nuevo delimitador, //, para finalizar la definición del procedimiento.
 DELIMITER ; -- Volvemos a establecer el delimitador por defecto.
 ```
+
+### Declaración de variables
+
+Cuando vayamos a escribir un procedimiento almacenado, es importante tener en cuenta que las variables se declaran al principio del procedimiento. Por ejemplo:
+
+```sql
+CREATE PROCEDURE nombre_procedimiento()
+
+-- Declaración de variables
+DECLARE variable INT;
+
+-- Resto del código.
+SELECT cduser FROM usuario WHERE birthdate > 2000 ORDER BY name INTO variable;
+```
+
+#### Tipos de variables en MySQL
+
+En MySQL tenemos tres tipos de variables: variables de usuario, variables de sistema y variables de procedimiento.
+
+##### Variables de sistema
+
+Las variables de sistema se utilizan para almacenar información sobre el entorno de ejecución de MySQL. Por ejemplo, `@@version` nos devuelve la versión de MySQL que estamos utilizando. Para acceder a una variable de sistema hay que precederla de `@@`. Por ejemplo, `SELECT @@version`.
+
+##### Variables de usuario
+
+Las variables definidas por el usuario se utilizan para almacenar valores que se pueden utilizar en las consultas. Para _crear_ las variables de usuario hay que precederlas de `@`. Por ejemplo, `SELECT @variable := 1`. Con la sentencia anterior estamos asignando el valor `1` a la variable `@variable`.
+Otra forma de establecer el valor de una variable es mediante la sentencia `SET`. Por ejemplo, `SET @variable = 1`.
+Otra forma de asignar un valor a una variable es mediante una consulta. Por ejemplo, `SELECT cduser FROM usuario WHERE birthdate > 2000 ORDER BY name INTO @variable`.
+
+##### Variables de procedimiento
+
+Las variables de procedimiento se utilizan para almacenar valores temporales que se pueden utilizar en el procedimiento. Para declarar una variable de procedimiento hay que que utilizar la sentencia `DECLARE`. Por ejemplo, `DECLARE variable INT;`.
+
+Al utilizar la variable en el cuerpo del procedimiento, no es necesario precederla de `@` ni de `@@`. Por ejemplo, `SELECT cduser FROM usuario WHERE birthdate > 2000 ORDER BY name INTO variable;`.
+
+**La diferencia entre las variables de usuario y de procedimiento es que mientras las primeras mantienen su valor durante toda la sesión, las segundas solo mantienen su valor durante la ejecución del procedimiento.**
 
 ### Sección `COMMENT`
 
@@ -63,11 +116,13 @@ De este modo es importante tener en cuenta quién será el usuario que ejecutar�
 
 ## Permisos relacionados con procedimientos almacenados
 
+Supongamos que `'admin@'localhost'` es el usuario que crea el procedimiento y tiene permisos de acceso y modificación sobre las bases de datos.
+
 Los permisos relacionados con los procedimientos almacenados son los siguientes:
 
-* `CREATE ROUTINE`: Permite crear procedimientos almacenados y funciones.
-* `ALTER ROUTINE`: Permite modificar procedimientos almacenados y funciones.
-* `EXECUTE`: Permite ejecutar procedimientos almacenados y funciones.
+* `CREATE ROUTINE`: Permite **crear** procedimientos almacenados y funciones.
+* `ALTER ROUTINE`: Permite **modificar** procedimientos almacenados y funciones.
+* `EXECUTE`: Permite **ejecutar** procedimientos almacenados y funciones.
 
 De este modo podemos tener un usuario que es el encargado de crear los procedimientos almacenados, otro usuario con permisos de acceso o modificación sobre distintas bases de datos (que podemos usar en `DEFINER`) y otro usuario que puede ejecutar los procedimientos almacenados sin que tenga permisos de acceso o modificación sobre las bases de datos.
 
@@ -80,8 +135,36 @@ END//
 DELIMITER ;
 ```
 
-Supongamos que `'admin@'localhost'` es el usuario que crea el procedimiento y tiene permisos de acceso y modificación sobre las bases de datos.
-
 Si creamos un usuario (`'usuario'@'%'`) **sin permiso sobre ninguna base de datos** pero con permiso de ejecución sobre el procedimiento, podrá ejecutar el procedimiento sin problemas:
 
 `GRANT EXECUTE ON PROCEDURE Cliente.mantenimiento TO 'usuario'@'%';`
+
+## Mostrar procedimientos almacenados
+
+Para listar los procedimientos almacenados de una base de datos, podemos utilizar la siguiente consulta:
+
+```sql
+SHOW PROCEDURE STATUS WHERE Db = 'nombre_base_datos';
+```
+
+Si quisiéramos ver las _funciones_ almacenadas habremos de cambiar `PROCEDURE` por `FUNCTION` respectivamente:
+
+```SQL
+SHOW FUNCTION STATUS WHERE Db = 'nombre_base_datos';
+```
+
+Y para mostrar los _triggers_ que se han definido:
+
+```sql
+SHOW TRIGGERS FROM 'nombre_base_datos';
+```
+
+Si queremos ver los _triggers_ asociados a una tabla en concreto:
+
+```sql
+SHOW TRIGGERS FROM 'nombre_base_datos' WHERE `Table` = 'nombre_tabla';
+```
+
+**Nótese que la palabra `Table` está entre comillas invertidas (`) porque es una palabra reservada de MySQL.**
+
+En MySQL se usan las comillas invertidas para referirse a nombres de tablas, columnas, etc. **cuando coincidan con palabras reservadas del sistema**.
