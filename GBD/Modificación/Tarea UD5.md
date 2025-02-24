@@ -111,4 +111,6 @@ Inserta los siguientes monitores:
 
 Inserta un monitor de nombre 'Amarillo Rojo, Luís', DNI: '80808080', gimnasio: 30 y categoría 'YOGA'.
 
-
+```sql
+INSERT INTO monitores (dni, nombre, cod_gim, catego) SELECT '80808080', 'Amarillo Rojo, Luís', 30, cod_cat FROM categorias WHERE nombre = "YOGA";
+```
