@@ -203,84 +203,46 @@ print(f"{sol.validPalindrome(p3)}.")
 class Sol2:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
-        solutions = dict()
+        solutions = set()
 
         idx = 0
-        banned = set()
 
         while nums[idx] <= 0:
             target = -nums[idx]
             while True:
-                solution, banned = self.findTwo(nums, target, banned)
+                solution = self.findTwo(nums[idx + 1 :], target)
                 if solution == []:
                     break
                 solution.append(nums[idx])
                 solutions.update({str(solution): solution})
             idx += 1
 
-        return solutions.values()
+        return list(solutions)
 
     def findTwo(
-        self, nums: list[int], target: int, banned: set[int]
-    ) -> tuple[list[int], set[int]]:
+        self,
+        nums: list[int],
+        target: int,
+    ) -> list[int]:
         idx1 = 0
         idx2 = 1
 
         solution = []
 
-        while idx1 < len(nums):
-            if idx1 in banned:
-                idx1 += 1
-                continue
-            while idx2 < len(nums):
-                if idx2 in banned:
-                    idx2 += 1
-                    continue
+        for idx1 in range(len(nums)):
+            for idx2 in range(idx1 + 1, len(nums)):
                 if nums[idx1] + nums[idx2] == target:
                     print(
                         f"checking [{idx1}] = {nums[idx1]} and [{idx2}] = {nums[idx2]}."
                     )
                     solution = [nums[idx1], nums[idx2]]
-                    banned.add(idx1)
-                    banned.add(idx2)
-                    return solution, banned
+                    return solution
 
-                idx2 += 1
-            idx1 += 1
-            idx2 = idx1 + 1
-
-        return solution, banned
+        return solution
 
 
 nums = [-5, 1, 2, 3, 4, 5]
 target = 7
 
 s2 = Sol2()
-banned = set()
-solutions = []
-print(f"nums: {nums}, target: {target}")
-while True:
-    solution, banned = s2.findTwo(nums, target, banned)
-    solutions.append(solution)
-    if solution == []:
-        break
-
-print(f"solutions: {solutions}, banned: {banned}.")
-
-print(f"solutions: {s2.threeSum(nums)}.")
-
-def getArea(lh: int, rh: int, w: int) -> int:
-    return max(lh, rh) * w
-
-
-def maxArea(heights: list[int]) -> int:
-    maxArea = 0
-    
-    for idx1 in range(len(heights)):
-        for idx2 in range(idx1 + 1, len(heights)):
-            area = getArea(heights[idx1], heights[idx2], idx2 - idx1)
-            if area > maxArea:
-                maxArea = area
-    return maxArea
-
-max
+print(f"nums: {nums}, sums: {s2.threeSum(nums)}.")
