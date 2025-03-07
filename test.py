@@ -203,40 +203,46 @@ print(f"{sol.validPalindrome(p3)}.")
 class Sol2:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
-        solutions = set()
 
+        solution = []
         idx = 0
 
-        while nums[idx] <= 0:
+        for idx, value in enumerate(nums):
+            # Si llegamos a un valor positivo, no tiene sentido seguir buscando.
+            if value > 0:
+                break
+            # Saltamos valores repetidos hasta encontrar uno nuevo.
+            if idx > 0 and value == nums[idx - 1]:
+                continue
+
             target = -nums[idx]
             while True:
                 solution = self.findTwo(nums[idx + 1 :], target)
                 if solution == []:
                     break
                 solution.append(nums[idx])
-                solutions.update({str(solution): solution})
             idx += 1
 
         return list(solutions)
 
-    def findTwo(
-        self,
-        nums: list[int],
-        target: int,
-    ) -> list[int]:
-        idx1 = 0
-        idx2 = 1
-
+    def findTwo(self, nums: list[int], targetIdx: int) -> list[list[int]]:
         solution = []
+        lIdx = targetIdx + 1
+        rIdx = len(nums) - 1
 
-        for idx1 in range(len(nums)):
-            for idx2 in range(idx1 + 1, len(nums)):
-                if nums[idx1] + nums[idx2] == target:
-                    print(
-                        f"checking [{idx1}] = {nums[idx1]} and [{idx2}] = {nums[idx2]}."
-                    )
-                    solution = [nums[idx1], nums[idx2]]
-                    return solution
+        while lIdx < rIdx:
+            if nums[lIdx] + nums[rIdx] < nums[targetIdx]:
+                lIdx += 1
+            elif nums[lIdx] + nums[rIdx] > nums[targetIdx]:
+                rIdx -= 1
+            else:
+                solution.append([nums[targetIdx], nums[lIdx], nums[rIdx]])
+                lIdx += 1
+                rIdx -= 1
+            while nums[lIdx - 1] == nums[lIdx] and lIdx < rIdx:
+                lIdx += 1
+
+        return solution
 
         return solution
 
