@@ -207,29 +207,45 @@ class Sol2:
 
         idx = 0
 
+        # Solo puede darse que nums[idx] + nums[idx + 1] + nums[idx + 2] = 0 si al menos uno de los tres números es negativo.
+        # Por lo tanto si, en una lista ordenada, alcanzamos el primer número positivo ya no se podrán encontrar soluciones.
         while nums[idx] <= 0:
             target = -nums[idx]
-            while True:
-                solution = self.findTwo(nums[idx + 1 :], target)
-                if solution == []:
+            start = idx + 1
+            solution = self.findTwo(
+                nums,
+                target,
+                start,
+            )
+            # Si no se encuentra una solución, se pasa al siguiente número.
+            if len(solution) == 0:
+                idx += 1
+                continue
+            # Si se ha encontrado una solución, se añade al conjunto de soluciones.
+            # (En forma de tupla pues no se pueden añadir listas a un conjunto.)
+            # (De esta forma evitamos duplicados.)
+            solution.append(idx)
+            solutions.add(tuple(solution))
+            # Se incrementa el índice para buscar más soluciones.
+            start += 1
+            # Buscar más soluciones con el mismo número.
+            while len(solution) != 0:
+                # Reducimos el rango de búsqueda pues si no siempre devolverá la misma solución.
+                solution = self.findTwo(nums, target, start)
+                if len(solution) == 0:
                     break
                 solution.append(nums[idx])
-                solutions.update({str(solution): solution})
+                solutions.add(tuple(solution))
+                start += 1
             idx += 1
 
-        return list(solutions)
+        return list(map(lambda item: list(item), solutions))
 
-    def findTwo(
-        self,
-        nums: list[int],
-        target: int,
-    ) -> list[int]:
-        idx1 = 0
-        idx2 = 1
-
+    def findTwo(self, nums: list[int], target: int, desp: int) -> list[int]:
+        print(f"Buscando en {nums[desp:]} (desp: {desp}), target: {target}.")
         solution = []
 
-        for idx1 in range(len(nums)):
+        for idx1 in range(desp, len(nums)):
             for idx2 in range(idx1 + 1, len(nums)):
                 if nums[idx1] + nums[idx2] == target:
                     print(
