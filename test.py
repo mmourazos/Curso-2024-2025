@@ -216,9 +216,28 @@ class Sol2:
                 continue
 
             target = -nums[idx]
-            while True:
-                solution = self.findTwo(nums[idx + 1 :], target)
-                if solution == []:
+            start = idx + 1
+            solution = self.findTwo(
+                nums,
+                target,
+                start,
+            )
+            # Si no se encuentra una solución, se pasa al siguiente número.
+            if len(solution) == 0:
+                idx += 1
+                continue
+            # Si se ha encontrado una solución, se añade al conjunto de soluciones.
+            # (En forma de tupla pues no se pueden añadir listas a un conjunto.)
+            # (De esta forma evitamos duplicados.)
+            solution.append(idx)
+            solutions.add(tuple(solution))
+            # Se incrementa el índice para buscar más soluciones.
+            start += 1
+            # Buscar más soluciones con el mismo número.
+            while len(solution) != 0:
+                # Reducimos el rango de búsqueda pues si no siempre devolverá la misma solución.
+                solution = self.findTwo(nums, target, start)
+                if len(solution) == 0:
                     break
                 solution.append(nums[idx])
             idx += 1
