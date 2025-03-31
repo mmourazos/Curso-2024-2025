@@ -216,33 +216,50 @@ class Sol2:
                 continue
 
             target = -nums[idx]
-            while True:
-                solution = self.findTwo(nums[idx + 1 :], target)
-                if solution == []:
+            start = idx + 1
+            solution = self.findTwo(
+                nums,
+                target,
+                start,
+            )
+            # Si no se encuentra una solución, se pasa al siguiente número.
+            if len(solution) == 0:
+                idx += 1
+                continue
+            # Si se ha encontrado una solución, se añade al conjunto de soluciones.
+            # (En forma de tupla pues no se pueden añadir listas a un conjunto.)
+            # (De esta forma evitamos duplicados.)
+            solution.append(idx)
+            solutions.add(tuple(solution))
+            # Se incrementa el índice para buscar más soluciones.
+            start += 1
+            # Buscar más soluciones con el mismo número.
+            while len(solution) != 0:
+                # Reducimos el rango de búsqueda pues si no siempre devolverá la misma solución.
+                solution = self.findTwo(nums, target, start)
+                if len(solution) == 0:
                     break
                 solution.append(nums[idx])
+                solutions.add(tuple(solution))
+                start += 1
             idx += 1
 
-        return list(solutions)
+        return list(map(lambda item: list(item), solutions))
 
-    def findTwo(self, nums: list[int], targetIdx: int) -> list[list[int]]:
+    def findTwo(self, nums: list[int], target: int, desp: int) -> list[int]:
+        print(f"Buscando en {nums[desp:]} (desp: {desp}), target: {target}.")
         solution = []
         lIdx = targetIdx + 1
         rIdx = len(nums) - 1
 
-        while lIdx < rIdx:
-            if nums[lIdx] + nums[rIdx] < nums[targetIdx]:
-                lIdx += 1
-            elif nums[lIdx] + nums[rIdx] > nums[targetIdx]:
-                rIdx -= 1
-            else:
-                solution.append([nums[targetIdx], nums[lIdx], nums[rIdx]])
-                lIdx += 1
-                rIdx -= 1
-            while nums[lIdx - 1] == nums[lIdx] and lIdx < rIdx:
-                lIdx += 1
-
-        return solution
+        for idx1 in range(desp, len(nums)):
+            for idx2 in range(idx1 + 1, len(nums)):
+                if nums[idx1] + nums[idx2] == target:
+                    print(
+                        f"checking [{idx1}] = {nums[idx1]} and [{idx2}] = {nums[idx2]}."
+                    )
+                    solution = [nums[idx1], nums[idx2]]
+                    return solution
 
         return solution
 
