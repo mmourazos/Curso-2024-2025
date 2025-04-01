@@ -285,9 +285,74 @@ END$$
 DELIMITER ;
 ```
 
+## Cursores
+
+Antes de continuar explicando como crear rutinas almacenadas es conveniente explicar el concepto de _cursor_. Es bastante común que en una rutina almacenada necesitemos recorrer un conjunto de filas devueltas por una consulta SQL. Para ello utilizamos un _cursor_.
+
+### ¿Qué es un cursor?
+
+De manera informal podemos decir que un _cursor_ es una _variable_ que almacena un conjunto de filas devueltas por una consulta SQL. Se entiende, por lo tanto, que un _cursor_ estará siempre asociado a una consulta SQL. En este sentido, un _cursor_ es similar a una tabla temporal que se crea en memoria y que se puede recorrer fila a fila.
+
+En realidad, un _cursor_ es un objeto que permite recorrer fila a fila el resultado de una consulta SQL. Un _cursor_ se puede utilizar para realizar operaciones en cada fila del conjunto de resultados, como actualizar o eliminar filas.
+
+La sintaxis para declarar un _cursor_ es la siguiente:
+
+```txt
+DECLARE cursor_name CURSOR FOR select_statement
+```
+
+Un ejemplo más concreto dentro de un procedimiento almacenado sería el siguiente:
+
+```sql
+DELI$MITER $$
+
+USE sakila$$
+
+CREATE PROCEDURE test_cursor()
+BEGIN
+
+    -- Declaramos unas variables para almacenar los valores de ciertas columnas.
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE actor_id INT;
+    DECLARE actor_name VARCHAR(255);
+
+    -- Declaramos el cursor.
+    DECLARE actor_cursor CURSOR FOR SELECT actor_id, first_name FROM actor;
+
+    -- Declarar el manejador para cerrar el cursor. Este manejador detectará si
+    -- se procude un error de `NOT FOUND` (cuando no hay más filas que leer) y,
+    -- como respuesta establecerá la variable `done` a `TRUE` (que se utilizará
+    -- para decidir si salir del bucle o no).
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Abrir el cursor
+    OPEN actor_cursor;
+
+    -- Bucle para recorrer el cursor.
+    -- Utilizamos un bucle LOOP para recorrer el cursor.
+    read_loop: LOOP
+        -- Obtener la siguiente fila del cursor:
+        FETCH actor_cursor INTO actor_id, actor_name;
+
+        -- Si en la sentencia anterior no se ha podido obtener una fila habrá 
+        -- saltado el error `NOT FOUND`, y el manejador habrá establecido la
+        -- variable `done` a `TRUE`.
+        IF done THEN
+            -- Utilizamos una sentencia `LEAVE` para salir del bucle.
+            LEAVE read_loop;
+        END IF;
+        SELECT CONCAT('Actor ID: ', actor_id, ', Actor Name: ', actor_name);
+    END LOOP;
+
+    -- Cerrar el cursor
+    CLOSE actor_cursor;
+
+END$$
+```
+
 ## Procedimientos almacenados, funciones, eventos y triggers
 
-En MySQL, estas estructuras permiten encapsular lógica y automatizar tareas dentro de la base de datos:
+En $MySQL, estas estructuras permiten encapsular lógica y automatizar tareas dentro de la base de datos:
 
 * **Procedimientos almacenados**: Bloques de código que se almacenan en la base de datos y se ejecutan mediante un nombre específico utilizando `CALL`.
 * **Funciones**: Similares a los procedimientos, pero devuelven un valor y se pueden usar en consultas SQL. Se invocan con la sentencia `SELECT` o dentro de otras funciones o procedimientos.
