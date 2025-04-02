@@ -8,6 +8,8 @@
     + [Logs](#logs)
       - [Tipos de logs](#tipos-de-logs)
       - [¿Cómo activar los logs en mySQL?](#%C2%BFcomo-activar-los-logs-en-mysql)
+    + [Alertas](#alertas)
+  * [Parámetros a monitorizar](#parametros-a-monitorizar)
 
 <!-- tocstop -->
 
@@ -31,9 +33,23 @@ MySQL tienes diversos tipos de logs:
 
 ##### ¿Cómo activar los logs en mySQL?
 
-1. Localizar el fichero de configuración de mySQL (my.cnf o my.ini)
-2. Linux: el fichero se encuentra en /etc/my.cnf o /etc/mysql/my.cnf.
+1. Localizar el fichero de configuración de MySQL (my.cnf o my.ini)
+2. Linux: la configuración se buscará por orden en las siguientes rutas: `/etc/my.cnf`, `/etc/mysql/my.cnf`, `~/.my.cnf`.
+   - Si no se encuentra en ninguna de estas rutas, se buscará en el directorio de instalación de MySQL.
+   - En Debian, el fichero de configuración se encuentra en `/etc/mysql/my.cnf`.
+   - En Ubuntu, el fichero de configuración se encuentra en `/etc/mysql/mysql.conf.d/mysqld.cnf`.
 3. Windows: el fichero se encuentra en la carpeta de instalación de mySQL.
+
+Hay que tener en cuenta que dentro de un fichero de confirguación se puede indicar rutas a otros ficheros de configuación:
+
+```txt
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+```
+
+Esto haría que se incluyeran todos los ficheros de configuración que se encuentren dentro de las carpetas `conf.d` y `mysql.conf.d`.
+
+Una vez localizado el fichero de configuración podremos localizar la sección dedicada a la configuración de las operaciones de _logging_:
 
 ```txt
 # * Logging and Replication
@@ -64,7 +80,9 @@ log_error = /var/log/mysql/error.log
 max_binlog_size   = 100M
 # binlog_do_db          = include_database_name
 # binlog_ignore_db      = include_database_name
+```
+
 #### Alertas
 
 ### Parámetros a monitorizar
-```
+
