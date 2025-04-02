@@ -36,19 +36,13 @@
 
 ## Apartado 4
 
-```txt
-+---------+---------------------+------------+---------+----------+--------------------+
-| cdjuego | nombre              | dificultad | megusta | cdequipo | equipo organizador |
-+---------+---------------------+------------+---------+----------+--------------------+
-| CON     | Conflict of Nations | alta       |       3 | 03       | Amadeus            |
-| ELV     | Elvenar             | baja       |       3 | 01       | La marmota         |
-| FOE     | Forge of Empires    | alta       |       4 | 06       | Los increibles     |
-| GW2     | Guild Wars 2.       | baja       |       5 | 01       | La marmota         |
-| HAB     | HABBO Hotel         | media      |       4 | 02       | Los rebeldes       |
-| LOL     | League of Legends.  | media      |       5 | 03       | Amadeus            |
-| VIK     | Vikings             | media      |       5 | 01       | La marmota         |
-| WOW     | World of Warcraft   | baja       |       3 | 03       | Amadeus            |
-+---------+---------------------+------------+---------+----------+--------------------+
+```text
++---------+-----------------+------------+---------+----------+--------------------+
+| cdjuego | nombre          | dificultad | megusta | cdequipo | equipo organizador |
++---------+-----------------+------------+---------+----------+--------------------+
+| GOE     | Goodgame Empire | alta       |    NULL | 01       | La marmota         |
+| MUO     |  MU online      | alta       |    NULL | 04       | Aries              |
++---------+-----------------+------------+---------+----------+--------------------+
 ```
 
 ## Apartado 5
