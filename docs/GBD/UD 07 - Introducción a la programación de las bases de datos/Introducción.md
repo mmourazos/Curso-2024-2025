@@ -2,10 +2,10 @@
 
 Elementos que puede crear un usuario en MySQL:
 
-* Procedimientos almacenados
-* Funciones
+* Procedimientos almacenados `CALL`
+* Funciones `SELECT`
 * Eventos
-* Triggers
+* Triggers o disparadores asociadas a INSERT, UPDATE o DELETE
 
 ## Descripción de la programación
 
@@ -87,7 +87,7 @@ Se pueden _encadenar_ instrucciones `IF` utilizando la cláusula `ELSEIF` para e
 ```sql
 IF resultados > limit THEN
     SELECT CONCAT('Hay más de ', limit, ' resultados');
-ESLIF resultados = limit THEN
+ELSEIF resultados = limit THEN
     SELECT CONCAT('Hay exactamente ', limit, ' resultados');
 ELSE
     SELECT CONCAT('Hay menos de ', limit, ' resultados');

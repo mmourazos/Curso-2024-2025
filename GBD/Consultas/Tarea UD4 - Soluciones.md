@@ -75,7 +75,7 @@ SELECT cdjuego AS "código", nombre, dificultad, megusta FROM juego WHERE megust
 Obtén un listado de todos los juegos cuyo valor de `megusta` **no es nulo**. Incluye también el nombre del **equipo** que organiza dicho juego.
 
 ```SLQ
-SELECT j.*, e.nombre AS "equipo organizador" FROM juego AS j, equipo AS e WHERE j.megusta IS NOT null AND j.cdequipo = e.cdequipo;
+SELECT j.*, e.nombre AS "equipo organizador" FROM juego AS j, equipo AS e WHERE j.megusta IS null AND j.cdequipo = e.cdequipo;
 ```
 
 ## Apartado 5
