@@ -1,0 +1,5256 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mmourazos.github.io/Curso-2024-2025/ED/UD%202%20-%20Instalaci%C3%B3n%20y%20uso%20de%20entornos%20de%20desarrollo/GIT/Apuntes%20de%20GIT/">
+      
+      
+        <link rel="prev" href="../../Introducci%C3%B3n/">
+      
+      
+        <link rel="next" href="../Tarea/Tarea%20GIT/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>Apuntes de Git - Apuntes de informática</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#apuntes-de-git" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../.." title="Apuntes de informática" class="md-header__button md-logo" aria-label="Apuntes de informática" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes de informática
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Apuntes de Git
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mmourazos/Curso-2024-2025" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Sobre este sitio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Cosas%20interesantes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cosas interesantes que me voy encontrando
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../apuntes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Apuntes de informática 2024/2025
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../ASGBD/Cosas%20de%20interes%20MySQL/" class="md-tabs__link">
+          
+  
+  
+  ASGBD
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../1%20Introducci%C3%B3n/" class="md-tabs__link">
+          
+  
+  
+  ED
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../GBD/Introducci%C3%B3n/" class="md-tabs__link">
+          
+  
+  
+  GBD
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Apuntes de informática" class="md-nav__button md-logo" aria-label="Apuntes de informática" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apuntes de informática
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mmourazos/Curso-2024-2025" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sobre este sitio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Cosas%20interesantes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cosas interesantes que me voy encontrando
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../apuntes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de informática 2024/2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ASGBD
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            ASGBD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/Cosas%20de%20interes%20MySQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Recopilación de cosas interesantes de MySQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/Estructura%20del%20curso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Estructura del curso
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 1   Instalación de un SGBD
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            UD 1   Instalación de un SGBD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/0%20Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Una cosa
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/1%20Instalaci%C3%B3n%20y%20configuraci%C3%B3n%20de%20un%20SGBD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instalación y configuración de un Sistema Gestor de Base de Datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/2%20Funciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Funciones del SGBD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/3%20Arquitectura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Arquitectura del SGBD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/4%20Interfaces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Interfaces estándar: ODBC y JDBC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/5%20Diccionario%20de%20datos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    El diccionario de datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%201%20-%20Instalaci%C3%B3n%20de%20un%20SGBD/Instalaci%C3%B3n%20y%20configuraci%C3%B3n%20de%20un%20Sistema%20Gestor%20de%20Base%20de%20Datos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instalación y configuración de un Sistema Gestor de Base de Datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 2   Gestión de usuarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            UD 2   Gestión de usuarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%202%20-%20Gesti%C3%B3n%20de%20usuarios/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gestión de usuarios
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%202%20-%20Gesti%C3%B3n%20de%20usuarios/Lock%20tables%20y%20transacciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cosas sobre LOCK TABLES
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%202%20-%20Gesti%C3%B3n%20de%20usuarios/Vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vistas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 3   Seguridad
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            UD 3   Seguridad
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%203%20-%20Seguridad/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 4   Monitorización y optimización
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            UD 4   Monitorización y optimización
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%204%20-%20Monitorizaci%C3%B3n%20y%20optimizaci%C3%B3n/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Monitorización y optimización
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 6   Disponibilidad del SGBD
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            UD 6   Disponibilidad del SGBD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/UD%206%20-%20Disponibilidad%20del%20SGBD/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tareas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_9">
+            <span class="md-nav__icon md-icon"></span>
+            Tareas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ASGBD/tareas/Tarea%20UD2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea UD2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    ED
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            ED
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%20Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1 Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 1   Desarrollo de software
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            UD 1   Desarrollo de software
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%201%20-%20Desarrollo%20de%20software/Apuntes%20UD1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de la UD1 - Desarrollo de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%201%20-%20Desarrollo%20de%20software/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_3" id="__nav_5_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Del código al programa
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Del código al programa
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%201%20-%20Desarrollo%20de%20software/Del%20c%C3%B3digo%20al%20programa/Del%20c%C3%B3digo%20al%20programa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Del código al programa
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 2   Instalación y uso de entornos de desarrollo
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            UD 2   Instalación y uso de entornos de desarrollo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_2" id="__nav_5_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    GIT
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            GIT
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de Git
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de Git
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es Git?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Qué es Git?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-un-sistema-de-control-de-versiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es un sistema de control de versiones?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilidad-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilidad de GIT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caracteristicas-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Características de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Características de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tres-estados-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tres estados de GIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tres-areas-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tres áreas de GIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-basico-en-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flujo de trabajo básico en GIT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instalación de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalación de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#en-linux-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      En Linux (Ubuntu)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#en-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      En Windows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuración de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      .gitignore
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comandos-basicos-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comandos básicos de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comandos básicos de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inicializar-un-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inicializar un repositorio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ver-el-estado-de-los-archivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ver el estado de los archivos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clonar-un-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clonar un repositorio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anadir-archivos-al-area-de-preparacion-staging-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir archivos al área de preparación (staging area)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#realizar-un-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Realizar un commit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remotos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remotos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remotos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-un-repositorio-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir un repositorio remoto
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-subir-los-cambios-a-un-repositorio-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Para subir los cambios a un repositorio remoto
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ramas-en-git-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ramas en Git (Branches)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ramas en Git (Branches)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fusionar-ramas-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusionar ramas (Merge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rebase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deshacer-cambios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deshacer cambios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolucion-de-conflictos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resolución de conflictos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resolución de conflictos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-un-conflicto" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es un conflicto?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guis-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUIs de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GUIs de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Desktop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gitkraken" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitKraken
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lazygit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lazygit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_2_2" id="__nav_5_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tarea
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tarea
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tarea/Tarea%20GIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea GIT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_3" id="__nav_5_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Gradle
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Gradle
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Gradle/Apuntes%20de%20gradle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de gradle
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_4" id="__nav_5_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Maven
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Maven
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Maven/Apuntes%20de%20maven/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Apuntes de Maven
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 3   Diseño y realización de pruebas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            UD 3   Diseño y realización de pruebas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%203%20-%20Dise%C3%B1o%20y%20realizaci%C3%B3n%20de%20pruebas/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 4   Optimización y documentación
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            UD 4   Optimización y documentación
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%204%20-%20Optimizaci%C3%B3n%20y%20documentaci%C3%B3n/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%204%20-%20Optimizaci%C3%B3n%20y%20documentaci%C3%B3n/Notaci%C3%B3n%20Big-O/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Notación Big-O
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 5   Diseño orientado a objetos. Diagramas estructurales
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            UD 5   Diseño orientado a objetos. Diagramas estructurales
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%205%20-%20Dise%C3%B1o%20orientado%20a%20objetos.%20Diagramas%20estructurales/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción a la programación orientada a objetos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 6   Diseño orientado a objetos. Diagramas de comportamiento
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            UD 6   Diseño orientado a objetos. Diagramas de comportamiento
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../UD%206%20-%20Dise%C3%B1o%20orientado%20a%20objetos.%20Diagramas%20de%20comportamiento/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    GBD
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            GBD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    La introducción de la asignatura de GBD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Notificaci%C3%B3n%20primera%20eval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sobre la primera evaluación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Sobre%20SQLite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cosas sobre SQLite
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tareas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Tareas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4_1" id="__nav_6_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tareas UD2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tareas UD2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Tareas/Tareas%20UD2/Tarea%201%20-%20Apartado%201/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Solución Tarea 1 UD2 - Apartado 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Tareas/Tareas%20UD2/Tarea%201%20-%20Apartado%202/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Solución a la tarea 1 - Apartado 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Tareas/Tareas%20UD2/Tarea%201%20-%20Apartado%203/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Solución a la tarea 1 - Apartado 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/Tareas/Tareas%20UD2/Tareas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tareas UD2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 01   Sistemas de almacenamiento de la información
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            UD 01   Sistemas de almacenamiento de la información
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2001%20-%20Sistemas%20de%20almacenamiento%20de%20la%20informaci%C3%B3n/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 02   Modelo entidad relación
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            UD 02   Modelo entidad relación
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Gu%C3%ADa%20v%C3%ADdeos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guía para los vídeos del Modelo Entidad-Relación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Modelo%20entidad-relaci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo entidad relación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6_4" id="__nav_6_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Dudas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Dudas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Dudas/cardinalidades%200-1%200-N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cardinalidades 0-1 0-N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6_5" id="__nav_6_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ejercicios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            Ejercicios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Ejercicio%2001%20-%20modelo%20er/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 10 Modelo Entidad-Relación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Ejercicio%2002%20-%20modeo%20er/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 02   modeo er
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6_5_3" id="__nav_6_6_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tareas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_6_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Tareas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Apartado%201/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 1 - Apartado 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Apartado%202/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 1 - Apartado 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Apartado%203/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 1 - Apartado 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20Diego%20Sebasti%C3%A1n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Diego Sebastián
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20Jes%C3%BAs%20Rozas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección Jesús Rozas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20Roc%C3%ADo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección Rocío
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Alejandro%20Fojo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Alejandro Fojo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Alejandro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Alejandro
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Breixo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Breixo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Edgar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Edgar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Laura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Laura
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Maneiro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Manuel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Manuel
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Mart%C3%ADn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Martín
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Pilar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Pilar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Sequeira/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Sequeira
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correcci%C3%B3n%20de%20Steven/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corrección de Steven
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Ejercicios/Tareas/Correci%C3%B3n%20de%20Brahim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Correción de Brahim
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6_6" id="__nav_6_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tareas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            Tareas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Tareas/Tarea%201/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea 1 - Modelo entidad-relación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Tareas/Tarea%202/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea 2 - Modelo entidad-relación - Empresa genérica Obtén el diagrama entidad-relación a partir de la siguiente descripción:
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Tareas/Tarea%203/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2002%20-%20Modelo%20entidad-relaci%C3%B3n/Tareas/Tarea%204/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tarea 3: Modelo entidad-relación: App de recetas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 03   Modelo relacional
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            UD 03   Modelo relacional
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Modelo%20relacional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modelo Relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Normalizaci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalización en el modelo relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Transformaci%C3%B3n%20M%20ER%20-%20M%20relacional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformación de un modelo entidad-relación a un modelo relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Workbench%20-%20reverse%20engeneer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Comprobar correspondencia script y modelo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_7_5" id="__nav_6_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ejercicios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            Ejercicios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Ejercicios/Ejercicio%201/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Ejercicios/Ejercicio%202/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Ejercicios/Ejercicio%203/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Ejercicios/Ejercicio%204/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio 4 - Modelo Relacional
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2003%20-%20Modelo%20relacional/Ejercicios/Ejercicio%20norm%2001/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ejercicio norm 01
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_8" id="__nav_6_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 04   Diseño físico de la base de datos (DDL)
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            UD 04   Diseño físico de la base de datos (DDL)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2004%20-%20Dise%C3%B1o%20f%C3%ADsico%20de%20la%20base%20de%20datos%20%28DDL%29/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instalación de un SGBDR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 05   Recuperar informacion de la base de datos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            UD 05   Recuperar informacion de la base de datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2005%20-%20Recuperar%20informacion%20de%20la%20base%20de%20datos/Enunciado%20corregido%20tarea/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enunciado tareas unidad didáctica 4 - Consultas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2005%20-%20Recuperar%20informacion%20de%20la%20base%20de%20datos/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hola
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_10" id="__nav_6_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 06   Modificación de la información de la base de datos (DML). Transacciones (TPL)
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_10">
+            <span class="md-nav__icon md-icon"></span>
+            UD 06   Modificación de la información de la base de datos (DML). Transacciones (TPL)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2006%20-%20Modificaci%C3%B3n%20de%20la%20informaci%C3%B3n%20de%20la%20base%20de%20datos%20%28DML%29.%20Transacciones%20%28TPL%29/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 07   Introducción a la programación de las bases de datos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_11">
+            <span class="md-nav__icon md-icon"></span>
+            UD 07   Introducción a la programación de las bases de datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2007%20-%20Introducci%C3%B3n%20a%20la%20programaci%C3%B3n%20de%20las%20bases%20de%20datos/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_12" id="__nav_6_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 08   Procedimientos almacenados
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_12">
+            <span class="md-nav__icon md-icon"></span>
+            UD 08   Procedimientos almacenados
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2008%20-%20Procedimientos%20almacenados/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_13" id="__nav_6_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 09   Funciones definidas por el usuario
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_13">
+            <span class="md-nav__icon md-icon"></span>
+            UD 09   Funciones definidas por el usuario
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2009%20-%20Funciones%20definidas%20por%20el%20usuario/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_14" id="__nav_6_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD 11   Seguridad de los datos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_14">
+            <span class="md-nav__icon md-icon"></span>
+            UD 11   Seguridad de los datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../GBD/UD%2011%20-%20Seguridad%20de%20los%20datos/Introducci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es Git?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Qué es Git?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-un-sistema-de-control-de-versiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es un sistema de control de versiones?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilidad-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilidad de GIT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caracteristicas-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Características de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Características de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tres-estados-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tres estados de GIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tres-areas-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tres áreas de GIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-basico-en-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flujo de trabajo básico en GIT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instalación de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalación de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#en-linux-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      En Linux (Ubuntu)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#en-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      En Windows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuración de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      .gitignore
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comandos-basicos-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comandos básicos de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comandos básicos de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inicializar-un-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inicializar un repositorio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ver-el-estado-de-los-archivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ver el estado de los archivos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clonar-un-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clonar un repositorio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anadir-archivos-al-area-de-preparacion-staging-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir archivos al área de preparación (staging area)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#realizar-un-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Realizar un commit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remotos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remotos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remotos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-un-repositorio-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir un repositorio remoto
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-subir-los-cambios-a-un-repositorio-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Para subir los cambios a un repositorio remoto
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ramas-en-git-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ramas en Git (Branches)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ramas en Git (Branches)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fusionar-ramas-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fusionar ramas (Merge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rebase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deshacer-cambios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deshacer cambios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolucion-de-conflictos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resolución de conflictos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resolución de conflictos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-un-conflicto" class="md-nav__link">
+    <span class="md-ellipsis">
+      ¿Qué es un conflicto?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guis-de-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      GUIs de GIT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GUIs de GIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Desktop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gitkraken" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitKraken
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lazygit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lazygit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="apuntes-de-git">Apuntes de Git</h1>
+<div class="toc">
+<ul>
+<li><a href="#apuntes-de-git">Apuntes de Git</a><ul>
+<li><a href="#que-es-git">¿Qué es Git?</a><ul>
+<li><a href="#que-es-un-sistema-de-control-de-versiones">¿Qué es un sistema de control de versiones?</a></li>
+</ul>
+</li>
+<li><a href="#utilidad-de-git">Utilidad de GIT</a></li>
+<li><a href="#caracteristicas-de-git">Características de GIT</a><ul>
+<li><a href="#tres-estados-de-git">Tres estados de GIT</a></li>
+<li><a href="#tres-areas-de-git">Tres áreas de GIT</a></li>
+<li><a href="#flujo-de-trabajo-basico-en-git">Flujo de trabajo básico en GIT</a></li>
+</ul>
+</li>
+<li><a href="#instalacion-de-git">Instalación de GIT</a><ul>
+<li><a href="#en-linux-ubuntu">En Linux (Ubuntu)</a></li>
+<li><a href="#en-windows">En Windows</a></li>
+</ul>
+</li>
+<li><a href="#configuracion-de-git">Configuración de GIT</a><ul>
+<li><a href="#gitignore">.gitignore</a></li>
+</ul>
+</li>
+<li><a href="#comandos-basicos-de-git">Comandos básicos de GIT</a><ul>
+<li><a href="#inicializar-un-repositorio">Inicializar un repositorio</a></li>
+<li><a href="#ver-el-estado-de-los-archivos">Ver el estado de los archivos</a></li>
+<li><a href="#clonar-un-repositorio">Clonar un repositorio</a></li>
+<li><a href="#anadir-archivos-al-area-de-preparacion-staging-area">Añadir archivos al área de preparación (staging area)</a></li>
+<li><a href="#realizar-un-commit">Realizar un commit</a></li>
+<li><a href="#remotos">Remotos</a><ul>
+<li><a href="#anadir-un-repositorio-remoto">Añadir un repositorio remoto</a></li>
+<li><a href="#para-subir-los-cambios-a-un-repositorio-remoto">Para subir los cambios a un repositorio remoto</a></li>
+</ul>
+</li>
+<li><a href="#ramas-en-git-branches">Ramas en Git (Branches)</a><ul>
+<li><a href="#fusionar-ramas-merge">Fusionar ramas (Merge)</a></li>
+<li><a href="#rebase">Rebase</a></li>
+</ul>
+</li>
+<li><a href="#deshacer-cambios">Deshacer cambios</a></li>
+<li><a href="#resolucion-de-conflictos">Resolución de conflictos</a><ul>
+<li><a href="#que-es-un-conflicto">¿Qué es un conflicto?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#guis-de-git">GUIs de GIT</a><ul>
+<li><a href="#github-desktop">GitHub Desktop</a></li>
+<li><a href="#gitkraken">GitKraken</a></li>
+<li><a href="#lazygit">Lazygit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="que-es-git">¿Qué es Git?</h2>
+<p>Git es un sistemas de control de versiones que surgió en el 2005. Su desarrollo surgió a raíz de la necesidad de un sistema de control de versiones que permitiera gestionar el desarrollo del kernel de Linux. Aunque existen otros sistemas de control de versiones, Git se ha convertido en uno de los más populares y extendidos en la actualidad.</p>
+<p>Los objetivos que se buscaban con la creación de Git eran los siguientes:</p>
+<ul>
+<li>Velocidad.</li>
+<li>Diseño sencillo.</li>
+<li>Soporte para desarrollo no lineal (miles de ramas paralelas).</li>
+<li>Totalmente distribuido.</li>
+<li>Capaz de manejar grandes proyectos como el kernel de Linux eficientemente.</li>
+</ul>
+<h3 id="que-es-un-sistema-de-control-de-versiones">¿Qué es un sistema de control de versiones?</h3>
+<p>Un sistema de control de versiones (VCS: Version Control System) es un sistema que registra los cambios en un conjunto de archivos (un proyecto) en forma de instantáneas a lo largo del tiempo. Estas instantáneas nos permiten conocer quién ha realizado un cambio, cuándo se ha realizado y qué se ha cambiado. Si necesitamos retroceder a una versión anterior de un fichero o de un proyecto completo, podemos hacerlo.</p>
+<p>También hemos de tener en cuenta que este registro no tiene como objetivo ser un histórico de los cambios, sino una forma de colaborar con otros desarrolladores en un proyecto. Por tanto, se pueden alterar tanto en contenido como la estructura de las <em>instantáneas</em>.</p>
+<p>Aunque los VCS son muy utilizados en el desarrollo de software, también se pueden utilizar en otros ámbitos, como el diseño gráfico, la redacción de documentos, etc.</p>
+<h2 id="utilidad-de-git">Utilidad de GIT</h2>
+<p>GIT es un sistema de control de versiones distribuido, es decir, todos aquellos que participen en un proyecto gestionado mediante Git podrán disponer de una copia del mismo. Esto permite tanto trabajar sin conexión a Internet como tener una copia de seguridad del proyecto. Si el <em>repositorio</em> central falla, se puede recuperar el proyecto a partir de cualquiera de las copias locales. Es decir, no hay un único punto de fallo.</p>
+<p>Un <em>repositorio</em> en Git es un directorio (oculto) que contiene todas las <em>versiones</em> de los archivos de un proyecto, así como los metadatos necesarios para gestionar el proyecto. En un proyecto gestionado con Git, cada usuario tiene una copia completa del repositorio (de ahí que Git se considere distribuido).</p>
+<h2 id="caracteristicas-de-git">Características de GIT</h2>
+<ul>
+<li>Git es un sistema de control de versiones distribuido de manera que no tiene un único punto de fallo.</li>
+<li>Cada usuario tiene una copia local <strong>completa</strong> del repositorio.</li>
+<li>Git es Open Source y gratuito.</li>
+<li>Está diseñado para manejar proyectos de cualquier tamaño con rapidez y eficiencia.</li>
+<li>Casi todas las operaciones son locales (aunque posteriormente se pueden sincronizar con un servidor remoto).</li>
+<li>No es necesario estar conectado para trabajar.</li>
+<li>Git <em>siempre</em> añade datos. Nunca los borra.</li>
+<li>Esto es importante porque si borramos algo por error, siempre podemos recuperarlo. <strong>Y si lo <em>subimos</em> por error, no siempre podemos borrarlo</strong> (al menos fácilmente).</li>
+</ul>
+<h3 id="tres-estados-de-git">Tres estados de GIT</h3>
+<p>Todo archivo gestionado en un repositorio de GIT puede estar en tres estados:</p>
+<ul>
+<li>Modificado (<em>modified</em>): hemos cambiado un fichero pero no lo hemos guardado en la base de datos.</li>
+<li>Preparado (<em>staged</em>): hemos marcado un fichero modificado en su versión actual para que vaya en la próxima instantánea (<em>commit</em>).</li>
+<li>Confirmado (<em>committed</em>): hemos guardado los cambios (de los ficheros previamente marcados, <em>staged</em>) en la base de datos como una <em>instantánea</em>.</li>
+</ul>
+<h3 id="tres-areas-de-git">Tres áreas de GIT</h3>
+<ul>
+<li>Directorio de trabajo (<em>working directory</em>): donde se encuentran los archivos de nuestro proyecto. Aquí podremos tener los ficheros <em>vigilados</em> (<em>tracked</em>) por Git o <em>no vigilados</em> (<em>untracked</em>).</li>
+<li>Área de preparación (<em>staging area</em>): donde se encuentran los archivos marcados (<em>staged</em>) para la próxima instantánea (<em>commit</em>).</li>
+<li>Directorio Git (<em>Git directory</em>): donde GIT guarda los metadatos y la base de datos de los cambios. Aquí se encuentra la historia del proyecto. De nuevo, recordar que la historia se puede modificar.</li>
+</ul>
+<p>Los ficheros con los que estamos trabajando, es decir, editando, modificando, compilando, etc. son los que se encuentran el el <strong>directorio de trabajo</strong>.</p>
+<h3 id="flujo-de-trabajo-basico-en-git">Flujo de trabajo básico en GIT</h3>
+<p>Git no prescribe un flujo de trabajo concreto, si no que proporciona las herramientas necesarias para que cada equipo de desarrollo pueda definir su propio flujo de trabajo.</p>
+<p>Una forma básica de usar Git podría ser la siguiente (aunque hay muchas otras formas):</p>
+<ol>
+<li>Realizamos cambios en los archivos de nuestro proyecto.</li>
+<li>Selecciones los archivos que queremos incluir (<em>staged</em>) en la siguiente instantánea (<em>commit</em>).</li>
+<li>Realizamos el <em>commit</em> para salvar los cambios en forma de una instantánea.</li>
+</ol>
+<h2 id="instalacion-de-git">Instalación de GIT</h2>
+<h3 id="en-linux-ubuntu">En Linux (Ubuntu)</h3>
+<p>Git está incluido en la mayoría de gestores de paquetes de las distribuciones de Linux. Para instalarlo en Ubuntu, usamos el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git
+</code></pre></div>
+<h3 id="en-windows">En Windows</h3>
+<p>La forma más sencilla de instalar git en Windows (versiones 11 y algunas de Windows 10) es usar la herramienta de línea de comandos <code>winget</code>. Para ello, usamos el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code><span class="n">winget</span> <span class="n">install</span> <span class="n">git</span><span class="p">.</span><span class="n">git</span>
+</code></pre></div>
+<h2 id="configuracion-de-git">Configuración de GIT</h2>
+<p>Git necesita saber quién eres para poder registrar los cambios que realizas en un proyecto. Por tanto, es necesario configurar tu nombre y tu dirección de correo electrónico antes de poder realizar un <em>commit</em>. Para ello, usamos los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;mourazos&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;mourazos@iessanclemente.net&quot;</span>
+</code></pre></div>
+<p>Esto no es estrictamente necesario si utilizamos Git para proyectos personales sin usar un repositorio <em>remoto</em>. Pero como el uso más común de Git es colaborativo, es necesario establecer estos valores.</p>
+<h3 id="gitignore"><code>.gitignore</code></h3>
+<p>Es importante evitar que Git incluya en nuestro proyecto ficheros que <strong>no queremos compartir</strong> o hacer públicos (como ficheros temporales, ficheros de configuración, tokens, claves, etc.). Esto es especialmente importante si tenemos pensado compartir nuestro proyecto en un repositorio público en alguno de los servicios de alojamiento de repositorios (como GitHub, GitLab, Bitbucket, etc.).</p>
+<p>Para indicar a Git qué ficheros o directorios ha de <em>ignorar</em>, podemos crear un fichero llamado <code>.gitignore</code> en la raíz del proyecto. En este fichero podemos incluir los nombres de los ficheros o directorios que queremos que Git ignore.</p>
+<p>Por ejemplo, si queremos que Git ignore los ficheros ejecutables o el directorio <code>node_modules</code> (que contiene las dependencias de un proyecto Node.js), podemos añadir las siguientes líneas al fichero <code>.gitignore</code>:</p>
+<div class="highlight"><pre><span></span><code># Ignora los ficheros con extensión .exe, .sh y .bat
+*.exe
+*.sh
+*.bat
+
+# Ignora el directorio node_modules
+node_modules/
+</code></pre></div>
+<p>Se puede consultar una referencia de los patrones a usar dentro de <code>.gitignore</code> en la <a href="https://git-scm.com/docs/gitignore">documentación de Git</a>.</p>
+<h2 id="comandos-basicos-de-git">Comandos básicos de GIT</h2>
+<h3 id="inicializar-un-repositorio">Inicializar un repositorio</h3>
+<p>Para inicializar un repositorio en un directorio, usamos el comando <code>git init</code>.</p>
+<p>Esta instrucción crea un directorio <code>.git</code> en el directorio actual. Este directorio contiene todos los metadatos y la base de datos de los cambios del proyecto. Si borramos este directorio, perderemos todo el historial del proyecto.</p>
+<h3 id="ver-el-estado-de-los-archivos">Ver el estado de los archivos</h3>
+<p>Para ver el estado de los archivos en un repositorio, usamos el comando <code>git status</code>.</p>
+<h3 id="clonar-un-repositorio">Clonar un repositorio</h3>
+<p>Para clonar un repositorio, usamos el comando <code>git clone url_repositorio directorio_destino</code>.</p>
+<p>Este comando crea en el directorio de destino una copia completa del repositorio indicado en la URL.</p>
+<h3 id="anadir-archivos-al-area-de-preparacion-staging-area">Añadir archivos al área de preparación (staging area)</h3>
+<p>Para añadir un archivo al área de preparación, usamos el comando <code>git add nombre_archivo</code>.</p>
+<p>Si queremos añadir todos los archivos modificados al área de preparación, usamos el comando <code>git add .</code>.</p>
+<h3 id="realizar-un-commit">Realizar un commit</h3>
+<p>Para realizar un commit, usamos el comando <code>git commit -m "mensaje_commit"</code>.</p>
+<p>Si queremos añadir todos los archivos modificados al área de preparación y realizar un commit, podemos usar el comando <code>git commit -am "mensaje_commit"</code>.</p>
+<h3 id="remotos">Remotos</h3>
+<p>Los repositorios remotos son versiones de tu proyecto que se encuentran alojadas en Internet o en una red. Puedes tener varios repositorios remotos, cada uno de los cuales puede ser de solo lectura o de lectura/escritura.</p>
+<p>Para ver los repositorios remotos de un proyecto, usamos el comando <code>git remote -v</code>.</p>
+<h4 id="anadir-un-repositorio-remoto">Añadir un repositorio remoto</h4>
+<p>Para añadir un repositorio remoto, usamos el comando <code>git remote add nombre_repositorio url_repositorio</code>.</p>
+<p>Es común que el repositorio remoto principal se llame <code>origin</code>, de modo que el comando quedaría <code>git remote add origin url_repositorio</code>.</p>
+<h4 id="para-subir-los-cambios-a-un-repositorio-remoto">Para subir los cambios a un repositorio remoto</h4>
+<p>Para subir los cambios a un repositorio remoto, usamos el comando <code>git push origin nombre_rama</code>.</p>
+<h3 id="ramas-en-git-branches">Ramas en Git (Branches)</h3>
+<p>Las ramas en Git son simplemente apuntadores móviles a uno de los <em>commits</em>. Por defecto, cuando creamos un nuevo proyecto, se crea una rama principal llamada <code>master</code> (o <code>main</code> dependiendo de la versión). Al crear una nueva rama, se crea un nuevo apuntador que podemos mover a cualquier <em>commit</em>. Esto nos permite trabajar en paralelo en diferentes funcionalidades o versiones de nuestro proyecto.
+Cuando decimos que una rama <em>apunta a un commit</em> significa que los cambios (y <em>commits</em>) que hagamos en esa rama se añadirán a partir de ese <em>commit</em>.</p>
+<pre class="mermaid"><code>---
+title: Ejemplo de ramas en Git
+---
+gitGraph
+commit id: "Commit inicial"
+commit id: "Algunos cambios."
+branch develop
+checkout develop
+commit id: "Cambios en develop."
+commit id: "Más cambios en develop."
+checkout main
+commit id: "Cambios en rama main."
+commit id: "Más cambios en main."</code></pre>
+<p>La rama en uso (o activa) se llama <code>HEAD</code>. Cuando creamos un nuevo <em>commit</em>, <code>HEAD</code> se mueve al nuevo <em>commit</em>. Si cambiamos de rama <code>HEAD</code> se mueve a la nueva rama (a su último <em>commit</em>).</p>
+<p>El comando para crear una nueva rama es:</p>
+<div class="highlight"><pre><span></span><code>git branch nombre_rama
+</code></pre></div>
+<p>Y si queremos <em>movernos</em> a dicha rama usaríamos el comando:</p>
+<div class="highlight"><pre><span></span><code>git checkout nombre_rama
+</code></pre></div>
+<p>Estos dos comandos son tan comunes que se pueden combinar en uno solo:</p>
+<div class="highlight"><pre><span></span><code>git checkout -b nueva_rama
+</code></pre></div>
+<p>Que crea una nueva rama y se cambia a ella.</p>
+<p><strong>Nota:</strong> Desde la versión 2.23 de Git, se recomienda usar <code>git switch</code> en lugar de <code>git checkout</code> para cambiar de rama.</p>
+<p>Así:</p>
+<div class="highlight"><pre><span></span><code>git switch nombre_rama
+</code></pre></div>
+<p>Cambia de rama y ...</p>
+<div class="highlight"><pre><span></span><code>git switch -c nueva_rama
+</code></pre></div>
+<p>Crea una nueva rama y se cambia a ella.</p>
+<p>Para más información sobre éste y otros comandos de Git podemos consultar la <a href="https://git-scm.com/docs/git-switch">página de documentación de Git</a>.</p>
+<h4 id="fusionar-ramas-merge">Fusionar ramas (Merge)</h4>
+<p>La fusión de ramas es el proceso de combinar dos ramas en una sola con el objetivo de <strong>integrar los cambios de una rama en la otra</strong>. Para fusionar una rama con la rama actual, usamos el comando <code>git merge nombre_rama</code> o bien <code>git merge nombre_rama nombre_rama_base</code>.</p>
+<p>El merge se aplicará <em>sobre</em> la rama actual, por lo que es importante estar en la rama que queremos que reciba los cambios. Si queremos fusionar la rama <code>develop</code> con la rama <code>main</code>:</p>
+<div class="highlight"><pre><span></span><code>git checkout main
+git merge develop
+</code></pre></div>
+<p>Si hay conflictos, debemos resolverlos manualmente.</p>
+<pre class="mermaid"><code>---
+title: Ejemplo de fusión de ramas en Git
+---
+gitGraph
+commit id: "Commit inicial"
+commit id: "Algunos cambios."
+branch develop
+checkout develop
+commit id: "Develop 01."
+commit id: "Develop 02."
+checkout main
+commit id: "Main 01."
+merge develop
+commit id: "Main 02."</code></pre>
+<h4 id="rebase">Rebase</h4>
+<p>La operación de <em>rebase</em> es una forma de, al igual de <em>merge</em>, incluir los cambios de una rama en otra. En lugar de fusionar dos ramas, se reescribe la historia de una rama sobre otra. Esto puede ser útil para mantener una historia más limpia y ordenada.
+El comando para realizar un rebase es <code>git rebase nombre_rama</code>: Esto hace que <strong>el <em>rebase</em> se aplique DESDE la rama actual a <code>nombre_rama</code></strong>.
+Repitámoslo par que quede claro: Si queremos hacer un rebase <strong>desde</strong> la rama <code>develop</code> a la rama <code>main</code> debemos de: </p>
+<ul>
+<li>Cambiar de rama a <code>develop</code>.</li>
+<li>Escribir el comando <code>git rebase main</code>.</li>
+</ul>
+<p>Al contrario que en el caso de <code>merge</code> hemos de estar en la rama <strong>dese la cual</strong> queremos que se envíen los cambios:</p>
+<div class="highlight"><pre><span></span><code>git checkout develop
+git rebase main
+</code></pre></div>
+<pre class="mermaid"><code>---
+title: Ejemplo de rebase en Git
+---
+gitGraph
+commit id: "Commit inicial"
+commit id: "Algunos cambios."
+branch develop
+checkout develop
+commit id: "Develop 01."
+commit id: "Develop 02."
+checkout main
+commit id: "Main 01."
+commit id: "Main 02."
+commit id: "Develop 01 (a main)."
+commit id: "Develop 02 (a main)."</code></pre>
+<h3 id="deshacer-cambios">Deshacer cambios</h3>
+<p>Las instrucciones que podemos usar para deshacer cambios en Git son:</p>
+<ul>
+<li><code>git checkout ref_commit</code>: deshace los cambios en un archivo que no ha sido añadido al área de preparación.</li>
+<li><code>git reset nombre_archivo</code>: deshace los cambios en un archivo que ha sido añadido al área de preparación.</li>
+<li><code>git revert ref_commit</code>: deshace los cambios hasta un <em>commit</em> concreto.</li>
+</ul>
+<h3 id="resolucion-de-conflictos">Resolución de conflictos</h3>
+<h4 id="que-es-un-conflicto">¿Qué es un conflicto?</h4>
+<p>En Git se producen conflictos cuando dos o más personas han cambiado las mismas líneas de un fichero o si alguien borra un fichero mientras otro usuarios lo está modificando.
+En estos casos Git no puede decidir <em>quién tiene la razón</em> por lo que marca el fichero como conflicto y detiene el proceso de fusión. Es entonces responsabilidad del desarrollador resolver el conflicto.</p>
+<p><strong>Nota:</strong> Los conflictos sólo afectan al desarrollador que realiza la fusión, el resto del equipo no es consciente del conflicto.</p>
+<p>Para resolver el conflicto Git incluye ambas versiones en el fichero y marca las diferencias con <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code> y <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> donde:</p>
+<ul>
+<li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> marca el inicio de la versión actual.</li>
+<li><code>=======</code> marca el inicio de la versión en conflicto.</li>
+<li><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> marca el final de la versión en conflicto.</li>
+</ul>
+<p>Nosotros hemos de editar el fichero para decidir qué versión queremos mantener y eliminar las marcas de conflicto. Una vez resuelto el conflicto, debemos añadir el fichero al área de preparación y realizar un <em>commit</em>: <code>git add nombre_fichero</code> y <code>git commit -m "mensaje_commit"</code>.</p>
+<h2 id="guis-de-git">GUIs de GIT</h2>
+<p>Las interfaces gráficas de usuario (GUIs) de Git son herramientas que nos permiten gestionar los repositorios de Git de forma gráfica.</p>
+<h3 id="github-desktop"><a href="https://desktop.github.com/">GitHub Desktop</a></h3>
+<p>Es una herramienta desarrollada por GitHub para gestionar repositorios de Git. Es una herramienta muy sencilla y fácil de usar, pero no tiene todas las funcionalidades de Git. Es muy sencilla y fácil de usar, pero no tiene todas las funcionalidades de Git.</p>
+<p><img alt="GitHub Desktop" src="../images/gitdesktop.png" /></p>
+<h3 id="gitkraken"><a href="https://www.gitkraken.com/">GitKraken</a></h3>
+<p>ES una herramienta de pago, aunque dispone de versiones gratuitas con algunas limitaciones. Es una herramienta muy potente y completa.</p>
+<p><img alt="GitKraken" src="../images/gitkraken.png" /></p>
+<h3 id="lazygit"><a href="https://github.com/jesseduffield/lazygit">Lazygit</a></h3>
+<p>Es una herramienta gráfica de terminal (TUI) para Git. Es muy sencilla y fácil de usar.</p>
+<p><img alt="Lazygit" src="../images/lazygit.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mmourazos/Curso-2024-2025" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tabs"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
