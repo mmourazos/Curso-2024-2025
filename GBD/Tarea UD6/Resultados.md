@@ -146,3 +146,115 @@ CALL TalleresFaber.a3_proc('0000 XXX', @num_rep);
 _En este apartado se nos pide que indiquemos una fecha. Hemos de comprobar si hay reparaciones con `FechaSalida` igual a esa fecha, ese será el valor a devolver._
 
 _Para las reparaciones cuya `FechaSalida` sea igual a la fecha indicada, se ha de actualizar el campo `Reparado` a `1`._
+
+La función que se nos pide crear es `NOT DETERMINISTIC` ya que no se puede garantizar que el resultado sea el mismo cada vez que se ejecute.
+
+MySQL no nos permitirá crear una función `NOT DETERMINISTIC` por lo que tendremos varias alternativas:
+
+* _Mentir_ y decir que es `DETERMINISTIC`.
+* Modificar el valor de la variable global `log_bin_trust_function_creators` de `0` a `1`.
+
+Si optamos por la segunda opción hemos de usar la siguiente sentencia:
+
+```sql
+set global log_bin_trust_function_creators = 1;
+```
+
+Se nos indica que debemos mirar esta variable en el error que nos da MySQL al intentar crear la función.
+
+Para más información sobre dicha variable se puede consultar [log_bin_trust_function_creators](https://dev.mysql.com/doc/refman/8.4/en/replication-options-binary-log.html#sysvar_log_bin_trust_function_creators).
+
+Para analizar el resultado de la función deberíamos comprobar los valores de `FechaSalida` y `Reparado` de las reparaciones antes y después de ejecutar la función.
+
+Antes:
+
+```txt
++-------------+----------+
+| fechasalida | reparado |
++-------------+----------+
+| 2011-01-01  |        1 |
+| 2011-01-02  |        1 |
+| 2011-01-03  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-06  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-07  |        1 |
+| 2011-01-08  |        0 |
+| NULL        |        0 |
++-------------+----------+
+```
+
+```sql
+SELECT TalleresFaber.a4_func('2011-01-01') AS Reparados;
+```
+
+Nos dará el siguiente resultado:
+
+```txt
++-----------+
+| Reparados |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.0010 sec)
+```
+
+Y no habrá cambiado nada en la tabla `REPARACIONES` ya que su valor de `Reparado` ya era `1`.
+
+```txt
++-------------+----------+
+| fechasalida | reparado |
++-------------+----------+
+| 2011-01-01  |        1 |
+| 2011-01-02  |        1 |
+| 2011-01-03  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-06  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-04  |        1 |
+| 2011-01-07  |        1 |
+| 2011-01-08  |        0 |
+| NULL        |        0 |
++-------------+----------+
+```
+
+Si invocamos la función con la fecha `2011-01-08`:
+
+```sql
+SELECT TalleresFaber.a4_func('2011-01-08') AS Reparados;
+```
+
+Obtendremos el siguiente resultado:
+
+```txt
++-----------+
+| Reparados |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.0160 sec)
+```
+
+Y esta vez sí se habrá actualizado el valor de `Reparado` a `1` para la fecha `2011-01-08`.
+
+```txt
+| 2011-01-07  |        1 |
+| 2011-01-08  |        1 |
+| NULL        |        0 |
++-------------+----------+
+```
+
+## Apartado 5
+
+> Crea un procedimiento para dar de alta una nueva reparación para un vehículo y un cliente que no tenemos registrado. Llama al procedimiento ReparacionClienteNuevo.
+>
+> Incluye un HANDLER que controle que si insertamos un cliente y/o un vehículo que ya existen, el resto de sentencias continúen ejecutándose, y se añade como mínimo la nueva reparación.
+>
+> Para probar el procedimiento toma como referencia los datos siguientes: (tomados de un ejercicio de la unidad anterior)
+>
+> Un cliente nuevo nos ha traído su vehículo al taller el día 03/03/2020. En recepción se registran los siguientes datos:
+>
+> * Del cliente.- Código: 00011, Nombre y apellidos: Tomás Gómez Calle, Teléfono: 22334455.
+> * Del vehículo.- Matrícula: 3131 FGH, Modelo: Renault Scénic, matriculado el 17/03/2009, 105.000 km.
+> * De la reparación.- Sustitución de las lámparas delanteras.
