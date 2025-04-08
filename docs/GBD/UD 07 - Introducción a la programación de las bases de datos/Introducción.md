@@ -1,13 +1,37 @@
-# Introducción a la programación de las bases de datos
+# Introducción a la programación en bases de datos
 
-Elementos que puede crear un usuario en MySQL:
+<!-- toc -->
 
-* Procedimientos almacenados `CALL`
-* Funciones `SELECT`
-* Eventos
-* Triggers o disparadores asociadas a INSERT, UPDATE o DELETE
+- [Variables](#variables)
+    * [Variables del sistema](#variables-del-sistema)
+    * [Variables de usuario](#variables-de-usuario)
+    * [Variables locales](#variables-locales)
+- [Sentencias compuestas / bloques de código](#sentencias-compuestas--bloques-de-codigo)
+    * [Estructuras condicionales](#estructuras-condicionales)
+        + [Sentencia `IF`](#sentencia-if)
+        + [Sentencia `CASE`](#sentencia-case)
+    * [Estructura de repetición](#estructura-de-repeticion)
+        + [`WHILE` y `REPEAT`](#while-y-repeat)
+        + [Loop](#loop)
+- [Cursores](#cursores)
+    * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+    * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+- [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
+    * [Procedimiento](#procedimiento)
+        + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
+        + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
+    * [Funciones](#funciones)
+        + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
+    * [Eventos](#eventos)
+    * [Triggers](#triggers)
 
-## Descripción de la programación
+<!-- tocstop -->
+
+Cuando trabajamos con una base de datos podemos necesitar que se ejecute la misma secuencia de sentencias de manera repetida. Por ejemplo, si tenemos que realizar una serie de consultas SQL para obtener un resultado específico, podríamos crear un script SQL que contenga todas estas sentencias y ejecutarlo cada vez que necesitemos obtener el mismo resultado. Sin embargo, esto puede resultar poco eficiente y poco práctico si tenemos que ejecutar el mismo script varias veces.
+
+Para evitar esto podemos **almacenar esta sentencias** en el servidor y después podríamos ejecutarlas aunque no tengamos acceso a los scripts.
+
+Antes de entrar directamente en la escritura de rutinas almacenadas debemos entender algunos conceptos básicos de programación. En este apartado vamos a ver algunos de estos conceptos que nos ayudarán a entender mejor la programación en bases de datos.
 
 ## Variables
 
@@ -230,7 +254,7 @@ END$$
 DELIMITER ;
 ```
 
-Más adelante veremos en detalle la creación de procedimientos almacenados por lo que no explicaremos el significado de cada una de las partes de la sentencia.
+Más adelante veremos en detalle la creación de procedimientos por lo que no explicaremos el significado de cada una de las partes de la sentencia.
 
 #### Sentencia `CASE`
 
@@ -306,9 +330,9 @@ DELIMITER ;
 
 Una estructura repetitiva se utiliza para ejecutar un bloque de código varias veces. En MySQL, podemos utilizar las siguientes estructuras de repetición:
 
-* `WHILE`
-* `REPEAT`
-* `LOOP`
+- `WHILE`
+- `REPEAT`
+- `LOOP`
 
 #### `WHILE` y `REPEAT`
 
@@ -425,17 +449,17 @@ DECLARE handler_action HANDLER FOR condition_value statement;
 
 `handler_action` indicará qué acción deseamos que se realice cuando suceda `condition_value` y puede ser una de las siguientes:
 
-* `CONTINUE`: Indica que se continuará la ejecución del código después de que se produzca la condición especificada.
-* `EXIT`: Indica que se saldrá del bloque de código después de que se produzca la condición especificada.
-* `UNDO`: Indica que se deshará la última acción realizada después de que se produzca la condición especificada.
+- `CONTINUE`: Indica que se continuará la ejecución del código después de que se produzca la condición especificada.
+- `EXIT`: Indica que se saldrá del bloque de código después de que se produzca la condición especificada.
+- `UNDO`: Indica que se deshará la última acción realizada después de que se produzca la condición especificada.
 
 `condition_value` hace referencia a la condición que hará que se active el _hancler_. Esta condición puede ser un error específico (como `NOT FOUND`, `SQLEXCEPTION`, etc.) o una condición personalizada definida por el usuario.
 
 A nosotros nos interesarán los valores `SQLWARNING`, `NOT FOUND` y `SQLEXCEPTION`:
 
-* `SQLWARNING`: Indica que se ha producido una advertencia en la ejecución de una sentencia SQL. Esto no es un error, pero puede indicar que algo no ha salido como se esperaba.
-* `SQLEXCEPTION`: Indica que se ha producido un error en la ejecución de una sentencia SQL. Esto puede ser un error de sintaxis, un error de conexión, etc.
-* `NOT FOUND`: Indica que no se ha encontrado ninguna fila en el conjunto de resultados del _cursor_. Esto puede ocurrir cuando se ha llegado al **final del conjunto de resultados** o cuando no hay filas que cumplan la condición de la consulta SQL asociada al _cursor_.
+- `SQLWARNING`: Indica que se ha producido una advertencia en la ejecución de una sentencia SQL. Esto no es un error, pero puede indicar que algo no ha salido como se esperaba.
+- `SQLEXCEPTION`: Indica que se ha producido un error en la ejecución de una sentencia SQL. Esto puede ser un error de sintaxis, un error de conexión, etc.
+- `NOT FOUND`: Indica que no se ha encontrado ninguna fila en el conjunto de resultados del _cursor_. Esto puede ocurrir cuando se ha llegado al **final del conjunto de resultados** o cuando no hay filas que cumplan la condición de la consulta SQL asociada al _cursor_.
 
 Finalmente, `statement` será una instrucción o un bloque de código que se ejecutará cuando se produzca la condición especificada. Esta instrucción puede ser cualquier sentencia SQL válida o un bloque de código que contenga sentencias SQL.
 
@@ -496,12 +520,12 @@ END$$
 
 Estas estructuras permiten encapsular lógica y automatizar tareas dentro de la base de datos:
 
-* **Procedimientos**: Bloques de código que se almacenan en la base de datos y se ejecutan mediante un nombre específico utilizando `CALL`.
-* **Funciones**: Similares a los procedimientos, pero devuelven un valor y se pueden usar en consultas SQL. Se invocan con la sentencia `SELECT` o dentro de otras funciones o procedimientos.
-* **Eventos**: Tareas programadas que se ejecutan automáticamente en un momento específico o de forma recurrente.
-* **Triggers**: Bloques de código que se ejecutan automáticamente en respuesta a eventos como `INSERT`, `UPDATE` o `DELETE` en una tabla.
+- **Procedimientos**: Bloques de código que se almacenan en la base de datos y se ejecutan mediante un nombre específico utilizando `CALL`.
+- **Funciones**: Similares a los procedimientos, pero devuelven un valor y se pueden usar en consultas SQL. Se invocan con la sentencia `SELECT` o dentro de otras funciones o procedimientos.
+- **Eventos**: Tareas programadas que se ejecutan automáticamente en un momento específico o de forma recurrente.
+- **Triggers**: Bloques de código que se ejecutan automáticamente en respuesta a eventos como `INSERT`, `UPDATE` o `DELETE` en una tabla.
 
-### Procedimientos almacenados
+### Procedimiento
 
 Para declarar un procedimiento almacenado utilizamos la sentencia `CREATE PROCEDURE`. La sintaxis es la siguiente:
 
@@ -514,9 +538,9 @@ CREATE
 
 A continuación iremos viendo cada una de las partes de la sentencia:
 
-* `DEFINER`: Indica a quién _pertence_ el procedimiento. Este parámetro es opcional y si no se especifica se utilizará el usuario que lo ha creado.
-* `proc_parameter`: Aquí especificamos los parámetros de entrada y salida del procedimiento.
-* `characteristic`: Aquí especificamos las características del procedimiento como `CONTAINS SQL`, `NO SQL`, `READS SQL DATA`, `MODIFIES SQL DATA`, etc. Las características más importantes serán las que indican si el procedimiento lee o modifica datos de la base de datos.
+- `DEFINER`: Indica a quién _pertence_ el procedimiento. Este parámetro es opcional y si no se especifica se utilizará el usuario que lo ha creado.
+- `proc_parameter`: Aquí especificamos los parámetros de entrada y salida del procedimiento.
+- `characteristic`: Aquí especificamos las características del procedimiento como `CONTAINS SQL`, `NO SQL`, `READS SQL DATA`, `MODIFIES SQL DATA`, etc. Las características más importantes serán las que indican si el procedimiento lee o modifica datos de la base de datos.
 
 #### Parámetros de entrada y salida
 
@@ -581,8 +605,8 @@ SELECT @parametro_out AS "Parametro de salida", @parametro_inout AS "Parametro d
 
 Este parámetro funciona en combinación con la cláusula `SQL SECURITY` y se utiliza para definir el contexto de seguridad del procedimiento. `SQL SECURITY` puede tomar dos valores:
 
-* `DEFINER`: El procedimiento se ejecuta con los privilegios del usuario que lo creó (el usuario definido en `DEFINER = ...`).
-* `INVOKER`: El procedimiento se ejecuta con los privilegios del usuario que lo invoca (el usuario que llama al procedimiento).
+- `DEFINER`: El procedimiento se ejecuta con los privilegios del usuario que lo creó (el usuario definido en `DEFINER = ...`).
+- `INVOKER`: El procedimiento se ejecuta con los privilegios del usuario que lo invoca (el usuario que llama al procedimiento).
 
 Si omitimos el parámetro `DEFINER` se utilizará el usuario que ha creado el procedimiento.
 
@@ -662,10 +686,10 @@ Una de las características que podemos ignorar en la creación de procedimiento
 
 Además de usar explícitamente `DETERMINISTIC` o `NON DETERMINISTIC`, también podemos utilizar:
 
-* `CONTAINS SQL`: Indica que una rutina no tiene sentencias que **lean o escriban datos**. Este es el caso de nuestro ejemplo anterior.
-* `NO SQL`: Indica que la rutina no contiene sentencias SQL.
-* `READS SQL DATA`: Indica que la rutina tiene sentencias de lectura de datos, como SELECT, pero no de escritura.
-* `MODIFIES SQL DATA`: Indica que la rutina contiene sentecias de escritura de datos como por ejemplo, `INSERT` or `DELETE`).
+- `CONTAINS SQL`: Indica que una rutina no tiene sentencias que **lean o escriban datos**. Este es el caso de nuestro ejemplo anterior.
+- `NO SQL`: Indica que la rutina no contiene sentencias SQL.
+- `READS SQL DATA`: Indica que la rutina tiene sentencias de lectura de datos, como SELECT, pero no de escritura.
+- `MODIFIES SQL DATA`: Indica que la rutina contiene sentecias de escritura de datos como por ejemplo, `INSERT` or `DELETE`).
 
 Si indicamos que nuestra sentencia es `NO SQL` o que `READS SQL DATA` no sería necesario indicar `[NOT] DETERMINISTIC`.
 
@@ -699,7 +723,7 @@ SELECT cuenta_nombres("WOODY");
 
 ### Eventos
 
-TODO: Todavía por hacer.            u
+TODO: Todavía por hacer.
 
 ### Triggers
 
