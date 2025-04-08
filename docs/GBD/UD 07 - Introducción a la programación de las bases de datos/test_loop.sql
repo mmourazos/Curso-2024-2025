@@ -1,11 +1,11 @@
 DELIMITER $$
 
-CREATE PROCEDURE test_loop(IN input INT)
+CREATE PROCEDURE sakila.test_loop(IN input INT)
 BEGIN
+    DECLARE iteration INT DEFAULT 0;
 
     etiqueta: LOOP
 
-        DECLARE iteration INT DEFAULT 0;
 
         IF iteration = 10 THEN
             LEAVE etiqueta;

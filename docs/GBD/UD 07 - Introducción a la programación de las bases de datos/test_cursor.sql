@@ -2,7 +2,7 @@ DELIMITER $$
 
 USE sakila$$
 
-CREATE PROCEDURE test_cursor()
+CREATE PROCEDURE test_cursor(IN limit_value INT)
 READS SQL DATA
 
 BEGIN
@@ -12,10 +12,10 @@ BEGIN
     DECLARE name VARCHAR(45);
 
     -- Declaramos el cursor.
-    DECLARE actor_cursor CURSOR FOR SELECT actor_id, first_name FROM actor;
+    DECLARE actor_cursor CURSOR FOR SELECT actor_id, first_name FROM actor LIMIT limit_value;
 
     -- Declarar el manejador para cerrar el cursor. Este manejador detectará si
-    -- se procude un error de `NOT FOUND` (cuando no hay más filas que leer) y,
+    -- se produce un error de `NOT FOUND` (cuando no hay más filas que leer) y,
     -- como respuesta establecerá la variable `done` a `TRUE` (que se utilizará
     -- para decidir si salir del bucle o no).
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;

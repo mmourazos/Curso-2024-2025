@@ -11,7 +11,58 @@ Elementos que puede crear un usuario en MySQL:
 
 ## Variables
 
-### Variables globales
+Una variable es un mecanismo que permite almacenar un valor temporalmente. Para acceder a este valor se utilizará un nombre, el nombre de la variable, un ejemplo de uso de una variable en MySQL sería el siguiente:
+
+```sql
+set @mi_variable = 10;
+```
+
+(En MySQL hemos de preceder el nombre de la variable con el símbolo `@` para indicar que es una variable de usuario). En este caso hemos creado una variable llamada `mi_variable` y le hemos asignado el valor `10`. A partir de este momento podremos utilizar la variable `mi_variable` en cualquier parte de la consulta SQL. Por ejemplo:
+
+```sql
+select @mi_variable as "mi variable";
++-------------+
+| mi variable |
++-------------+
+|          10 |
++-------------+
+1 row in set (0.0014 sec)
+```
+
+En MySQL, existen dos tipos de variables: **variables del sistema** y **variables de usuario**.
+
+### Variables del sistema
+
+Las variables del sistema son variables que se utilizan para almacenar información sobre el estado de la base de datos y su configuración. Estas variables son definidas por el sistema y pueden ser utilizadas para obtener información sobre la configuración del servidor, el estado de las conexiones, etc. Se pueden consultar utilizando la sentencia `SHOW VARIABLES` o `SELECT @@nombre_variable`. Por ejemplo:
+
+```sql
+
+SHOW VARIABLE LIKE 'max_connections';
++-----------------+-------+
+| Variable_name   | Value |
++-----------------+-------+
+| max_connections | 151   |
++-----------------+-------+
+1 row in set (0.0022 sec)
+```
+
+```sql
+SELECT @@max_connections;
++-------------------+
+| @@max_connections |
++-------------------+
+|               151 |
++-------------------+
+1 row in set (0.0011 sec)
+```
+
+Estas variables pueden tener un **scope global o de sesión** . Las variables de **scope global** son aquellas que afectan a todo el servidor y se pueden consultar utilizando la sentencia `SHOW GLOBAL VARIABLES` y su valor se mantiene hasta que se reinicia el servidor. Las variables de **scope de sesión** son aquellas que afectan a la sesión actual y se pueden consultar utilizando la sentencia `SHOW SESSION VARIABLES`. Estas estas últimas se eliminan al cerrar la sesión.
+
+_El **scope** de una variable se refiere a los lugares desde los cuales se puede acceder a la misma._
+
+_Así, si decimos que el **scope** de una variable es global, significa que se puede acceder a ella desde cualquier lado y su valor se mantiene entre sessiones. Por el contrario, si decimos que el **scope** de una variable es de sesión, significa que se puede acceder a ella desde cualquier parte de la sesión actual pero no se asegura que su valor será el mismo en otra sesión._
+
+_Finalmente, si decimos que el **scope** de una variable es local, significa que sólo se puede acceder a ella desde dentro de la rutina donde se ha declarado pero no existirá (y no será visible) fuera de ella._
 
 ### Variables de usuario
 
@@ -27,11 +78,68 @@ SET @nombre_variable = valor;
 SELECT @nombre_variable := valor;
 ```
 
-La variable se puede utilizar en cualquier parte de la consulta, pero no se puede utilizar en la cláusula `WHERE` de una subconsulta.
+Para consultar el valor de una variable de usuario hemos de utilizar la sentencia `SELECT`:
+
+```sql
+SELECT @nombre_variable;
+```
+
+Las variables se pueden utilizar en la mayoría de los contextos donde se permiten expresiones. Por ejemplo, se pueden utilizar en la cláusula `WHERE` de una consulta SQL, en la cláusula `SET` de una sentencia `UPDATE`, o en la cláusula `VALUES` de una sentencia `INSERT`:
+
+```sql
+SET @year = 2006;
+
+SELECT film_id, title FROM film WHERE release_year = @year;
++---------+-----------------------------+
+| film_id | title                       |
++---------+-----------------------------+
+|       1 | ACADEMY DINOSAUR            |
+|       2 | ACE GOLDFINGER              |
+|       3 | ADAPTATION HOLES            |
+|       4 | AFFAIR PREJUDICE            |
+|       5 | AFRICAN EGG                 |
+...
+```
+
+Sin embargo, no se pueden utilizar los contextos donde debería ir una constante o valor literal. Por ejemplo, no se pueden utilizar en la cláusula `LIMIT` de una consulta SQL.
+
+```sql
+SET @limit = 10;
+
+SELECT actor_id, first_name, last_name FROM actor ORDER BY last_name LIMIT @limit;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@limit' at line 1
+
+SET @col_1 = 'release_year';
+SET @col_2 = 'rental_rate';
+
+SELECT film_id, title, rental_rate, release_year FROM film ORDER BY @col_2 LIMIT 5;
++---------+------------------+-------------+--------------+
+| film_id | title            | rental_rate | release_year |
++---------+------------------+-------------+--------------+
+|       1 | ACADEMY DINOSAUR |        0.99 |         2006 |
+|       2 | ACE GOLDFINGER   |        4.99 |         2006 |
+|       3 | ADAPTATION HOLES |        2.99 |         2006 |
+|       4 | AFFAIR PREJUDICE |        2.99 |         2006 |
+|       5 | AFRICAN EGG      |        2.99 |         2006 |
++---------+------------------+-------------+--------------+
+
+SELECT film_id, title, @col_2, @col_1 FROM film LIMIT 5;
++---------+------------------+-------------+--------------+
+| film_id | title            | @col_2      | @col_1       |
++---------+------------------+-------------+--------------+
+|       1 | ACADEMY DINOSAUR | rental_rate | release_year |
+|       2 | ACE GOLDFINGER   | rental_rate | release_year |
+|       3 | ADAPTATION HOLES | rental_rate | release_year |
+|       4 | AFFAIR PREJUDICE | rental_rate | release_year |
+|       5 | AFRICAN EGG      | rental_rate | release_year |
++---------+------------------+-------------+--------------+
+```
+
+Como podemos ver en las dos últimas sentencias **no se muestra ningún error** aunque el resultado **no es el esperado**.
 
 ### Variables locales
 
-Las variables locales son variables que se utilizan dentro de un bloque de código (como un procedimiento almacenado o una función) y sólo son accesibles dentro de ese bloque. Se definen con la sentencia `DECLARE` y deben ser inicializadas antes de ser utilizadas. La sintaxis es la siguiente:
+Las variables locales son variables que se utilizan dentro de un bloque de código de una _rutina almacenada_ (como un procedimiento o una función) y sólo son accesibles dentro de ese bloque. Se definen con la sentencia `DECLARE` y deben ser inicializadas antes de ser utilizadas. La sintaxis es la siguiente:
 
 ```txt
 DECLARE nombre_variable tipo_dato [DEFAULT valor];
@@ -45,7 +153,11 @@ END
 
 En sentencia anterior hemos declarado una variable de nombre `nombre_variable` de tipo entero `INT` y le asignamos un valor inicial de `0`. Esta variable sólo será accesible dentro del bloque `BEGIN ... END` en el que se ha declarado. Si no se asigna un valor inicial, la variable tendrá un valor nulo `NULL` por defecto.
 
-## Sentencias compuestas
+**IMPORTANTE: Cuando declaramos variables en una rutina almacenada hemos de hacerlo antes de cualquier otra sentencia SQL. En caso contrario nos dará un error de sintaxis. Las variables han de declararse también antes de _handlers_ o _cursores_ (elementos que veremos más adelante).**
+
+Para ver una lista de los tipos de datos que se pueden utilizar para declarar variables locales, podemos consultar la documentación oficial de MySQL en el siguiente enlace: [MySQL Data Types](https://dev.mysql.com/doc/refman/8.4/en/data-types.html).
+
+## Sentencias compuestas / bloques de código
 
 Cuando creamos alguna de estas rutinas almacenadas (funciones, procedimientos, eventos o triggers) podemos utilizar _sentencias compuestas_ ([_compound statements_](https://dev.mysql.com/doc/refman/8.4/en/sql-compound-statements.html)). Una sentencia compuesta consiste en un conjunto ordenado de instrucciones o sentencia que se han de escribir dentro de un bloque delimitado por `BEGIN` y `END`.
 
@@ -250,7 +362,7 @@ END$$
 DELIMITER ;
 ```
 
-Compo se puede intuir por la estructura del código escrito, el bucle `WHILE` se ejecuta mientras (_while_) la condición `iteration < input` sea verdadera. En cambio, el bucle `REPEAT` se ejecuta al menos una vez y luego evalúa la condición `iteration >= input` y se seguirá ejecutando hasta (_until_) que la condición sea verdadera. Podríamos decir que si queremos transformar un bucle _while_ en un bucle _repeat_ deberíamos _invertir_ la condición de terminación.
+Compor se puede intuir por la estructura del código escrito, el bucle `WHILE` se ejecuta mientras (_while_) la condición `iteration < input` sea verdadera. En cambio, el bucle `REPEAT` se ejecuta al menos una vez y luego evalúa la condición `iteration >= input` y se seguirá ejecutando hasta (_until_) que la condición sea verdadera. Podríamos decir que si queremos transformar un bucle _while_ en un bucle _repeat_ deberíamos _invertir_ la condición de terminación.
 
 #### Loop
 
@@ -267,7 +379,7 @@ Este tipo de bucle se utiliza cuando no se conoce el número de iteraciones de a
 ```sql
 DELIMITER $$
 
-CREATE PROCEDURE test_loop(IN input INT)
+CREATE PROCEDURE sakila.test_loop(IN input INT)
 BEGIN
 
     etiqueta: LOOP
@@ -298,17 +410,45 @@ En realidad, un _cursor_ es un objeto que permite recorrer fila a fila el result
 La sintaxis para declarar un _cursor_ es la siguiente:
 
 ```txt
-DECLARE cursor_name CURSOR FOR select_statement
+DECLARE cursor_name CURSOR FOR select_statement;
 ```
 
-Un ejemplo más concreto dentro de un procedimiento almacenado sería el siguiente:
+### ¿Qué es un handler?
+
+De nuevo, de manera informal, un _handler_ es una _variable_ que almacena el estado de un _cursor_. Un _handler_ se utiliza para controlar el flujo de ejecución del código en función del estado del _cursor_. Por ejemplo, si el _cursor_ ha llegado al final del conjunto de resultados, podemos utilizar un _handler_ para salir del bucle que recorre el _cursor_.
+
+La sintaxis para declarar un _handler_ es la siguiente:
+
+```txt
+DECLARE handler_action HANDLER FOR condition_value statement;
+```
+
+`handler_action` indicará qué acción deseamos que se realice cuando suceda `condition_value` y puede ser una de las siguientes:
+
+* `CONTINUE`: Indica que se continuará la ejecución del código después de que se produzca la condición especificada.
+* `EXIT`: Indica que se saldrá del bloque de código después de que se produzca la condición especificada.
+* `UNDO`: Indica que se deshará la última acción realizada después de que se produzca la condición especificada.
+
+`condition_value` hace referencia a la condición que hará que se active el _hancler_. Esta condición puede ser un error específico (como `NOT FOUND`, `SQLEXCEPTION`, etc.) o una condición personalizada definida por el usuario.
+
+A nosotros nos interesarán los valores `SQLWARNING`, `NOT FOUND` y `SQLEXCEPTION`:
+
+* `SQLWARNING`: Indica que se ha producido una advertencia en la ejecución de una sentencia SQL. Esto no es un error, pero puede indicar que algo no ha salido como se esperaba.
+* `SQLEXCEPTION`: Indica que se ha producido un error en la ejecución de una sentencia SQL. Esto puede ser un error de sintaxis, un error de conexión, etc.
+* `NOT FOUND`: Indica que no se ha encontrado ninguna fila en el conjunto de resultados del _cursor_. Esto puede ocurrir cuando se ha llegado al **final del conjunto de resultados** o cuando no hay filas que cumplan la condición de la consulta SQL asociada al _cursor_.
+
+Finalmente, `statement` será una instrucción o un bloque de código que se ejecutará cuando se produzca la condición especificada. Esta instrucción puede ser cualquier sentencia SQL válida o un bloque de código que contenga sentencias SQL.
+
+_(Cuando se trata de una sola instrucción no es necesario rodearla de `BEGIN` y `END`)._
+
+No entraremos aquí en la definición de condiciones ni explicaremos los distintos tipos de [códigos de error de MySQL](https://dev.mysql.com/doc/mysql-errors/8.0/en/server-error-reference.html) ni los posibles [valores de sql](https://www.ibm.com/docs/en/i/7.4.0?topic=codes-listing-sqlstate-values) ya que excede lo necesario para esta sección.
+
+Un ejemplo más concreto dentro de como declarar y recorrer un cursor en un procedimiento almacenado sería el siguiente:
 
 ```sql
-DELI$MITER $$
+DELIMITER $$
 
-USE sakila$$
-
-CREATE PROCEDURE test_cursor()
+CREATE PROCEDURE sakila.test_cursor()
 BEGIN
 
     -- Declaramos unas variables para almacenar los valores de ciertas columnas.
@@ -319,10 +459,12 @@ BEGIN
     -- Declaramos el cursor.
     DECLARE actor_cursor CURSOR FOR SELECT actor_id, first_name FROM actor;
 
-    -- Declarar el manejador para cerrar el cursor. Este manejador detectará si
-    -- se procude un error de `NOT FOUND` (cuando no hay más filas que leer) y,
-    -- como respuesta establecerá la variable `done` a `TRUE` (que se utilizará
-    -- para decidir si salir del bucle o no).
+    -- Declaramos el manejador para cerrar el cursor.
+    -- Este manejador detectará si se produce un "NOT FOUND" (no hay más filas
+    -- que leer en el cursor) y, como respuesta, ejecutará la sentencia:
+    -- "SET done = TRUE"
+    -- que establece el valor de la variable "done" a "TRUE" que a su vez se
+    -- utilizará para decidir si salimos o no del bucle ("LEAVE read_loop;").
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     -- Abrir el cursor
@@ -350,11 +492,11 @@ BEGIN
 END$$
 ```
 
-## Procedimientos almacenados, funciones, eventos y triggers
+## Rutinas almacenadas: procedimientos, funciones, eventos y triggers
 
-En $MySQL, estas estructuras permiten encapsular lógica y automatizar tareas dentro de la base de datos:
+Estas estructuras permiten encapsular lógica y automatizar tareas dentro de la base de datos:
 
-* **Procedimientos almacenados**: Bloques de código que se almacenan en la base de datos y se ejecutan mediante un nombre específico utilizando `CALL`.
+* **Procedimientos**: Bloques de código que se almacenan en la base de datos y se ejecutan mediante un nombre específico utilizando `CALL`.
 * **Funciones**: Similares a los procedimientos, pero devuelven un valor y se pueden usar en consultas SQL. Se invocan con la sentencia `SELECT` o dentro de otras funciones o procedimientos.
 * **Eventos**: Tareas programadas que se ejecutan automáticamente en un momento específico o de forma recurrente.
 * **Triggers**: Bloques de código que se ejecutan automáticamente en respuesta a eventos como `INSERT`, `UPDATE` o `DELETE` en una tabla.
@@ -372,24 +514,193 @@ CREATE
 
 A continuación iremos viendo cada una de las partes de la sentencia:
 
-* `DEFINER`:
+* `DEFINER`: Indica a quién _pertence_ el procedimiento. Este parámetro es opcional y si no se especifica se utilizará el usuario que lo ha creado.
 * `proc_parameter`: Aquí especificamos los parámetros de entrada y salida del procedimiento.
 * `characteristic`: Aquí especificamos las características del procedimiento como `CONTAINS SQL`, `NO SQL`, `READS SQL DATA`, `MODIFIES SQL DATA`, etc. Las características más importantes serán las que indican si el procedimiento lee o modifica datos de la base de datos.
-
-#### `DEFINER`
 
 #### Parámetros de entrada y salida
 
 ```sql
-CREATE PROCEDURE mi_procedimiento (IN parametro1 INT, OUT parametro2 VARCHAR(50))
+CREATE PROCEDURE mi_procedimiento (IN parametro1 INT, OUT parametro2 VARCHAR(50), INOUT parametro3 INT)
 ```
 
-#### Características
+Des esta forma estaremos indicando que el procedimiento `mi_procedimiento` tiene un parámetro de entrada `parametro1` de tipo entero y un parámetro de salida `parametro2` de tipo cadena de caracteres con una longitud máxima de 50 caracteres y un parámetro de entrada y salida `parametro3` de tipo entero. Los parámetros de entrada se utilizan para pasar valores al procedimiento, mientras que los parámetros de salida se utilizan para devolver valores al llamador del procedimiento y los parámetros de entrada y salida se utilizan para pasar y devolver valores al mismo tiempo.
 
-Des esta forma estaremos indicando que el procedimiento `mi_procedimiento` tiene un parámetro de entrada `parametro1` de tipo entero y un parámetro de salida `parametro2` de tipo cadena de caracteres con una longitud máxima de 50 caracteres.
+Un ejemplo de como usar estos parámetros sería el siguiente:
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sakila.test_parametros(IN parametro1 INT, OUT parametro2 VARCHAR(50), INOUT parametro3 INT)
+BEGIN
+    SELECT CONCAT('El valor de parametro1 es: ', parametro1) AS mensaje1;
+    SET parametro2 = "Hola mundo";
+    SELECT CONCAT('El valor de parametro3 es: ', parametro3, ' y lo hemos cambiado a ', parametro1) AS mensaje2;
+END$$
+
+DELIMITER ;
+```
+
+Para probarlo podríamos utilizarlo en la siguiente sentencia:
+
+```sql
+SET @parametron_inout = 10;
+
+CALL test_parametros(5, @parametro_out, @parametro_inout);
+
+SELECT @parametro_out AS "Parametro de salida", @parametro_inout AS "Parametro de entrada y salida";
+```
+
+Y obtendríamos el siguiente resultado:
+
+```txt
+CALL test_parametros(1, @parametro_out, @parametro_inout);
++------------------------------+
+| mensaje1                     |
++------------------------------+
+| El valor de parametro1 es: 1 |
++------------------------------+
+1 row in set (0.0034 sec)
+
++-------------------------------------------------------+
+| mensaje2                                              |
++-------------------------------------------------------+
+| El valor de parametro3 es: 10 y lo hemos cambiado a 1 |
++-------------------------------------------------------+
+
+SELECT @parametro_out AS "Parametro de salida", @parametro_inout AS "Parametro de entrada y salida";
+1 row in set (0.0034 sec)
++---------------------+-------------------------------+
+| Parametro de salida | Parametro de entrada y salida |
++---------------------+-------------------------------+
+| Hola mundo          |                            10 |
++---------------------+-------------------------------+
+```
+
+#### Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`
+
+Este parámetro funciona en combinación con la cláusula `SQL SECURITY` y se utiliza para definir el contexto de seguridad del procedimiento. `SQL SECURITY` puede tomar dos valores:
+
+* `DEFINER`: El procedimiento se ejecuta con los privilegios del usuario que lo creó (el usuario definido en `DEFINER = ...`).
+* `INVOKER`: El procedimiento se ejecuta con los privilegios del usuario que lo invoca (el usuario que llama al procedimiento).
+
+Si omitimos el parámetro `DEFINER` se utilizará el usuario que ha creado el procedimiento.
+
+Por ejemplo, si creamos un procedimiento con el usuario "admin" y deseamos que se ejecute con los privilegios de "admin", utilizaremos la siguiente sentencia:
+
+```sql
+CREATE DEFINER = 'admin'@'%' PROCECURE mi_procedimiento()
+SQL SECURITY DEFINER
+```
+
+_En la práctica no haría falta especificar `DEFINER` si estamos creando el procedimiento como admin. Tampoco haría falta indicar `SQL SECURITY DEFINER` ya que este es el valor por defecto._
+
+Si por el contrario creamos un procedimiento como `admin` pero no queremos que se ejecute con sus privilegios, sino con los del usuario que lo invoca, utilizaremos la siguiente sentencia:
+
+```sql
+CREATE PROCEDURE mi_procedimiento()
+SQL SECURITY INVOKER
+```
+
+Obviamente, si el usuario que invoca (ejecuta la instrucción `CALL mi_procedimiento()`) no tiene privilegios para ejecutar el procedimiento, o no tiene privilegios para acceder a los objetos de la base de datos que se utilizan dentro del procedimiento, se producirá un error.
 
 ### Funciones
 
+Las funciones se parecen mucho a los procedimientos en que ambos se pueden ejecutar directamente por parte de un usuario. Los procedimientos se ejecutan con la instrucción `CALL` y las funciones se ejecutan con la instrucción `SELECT`. La diferencia principal entre ambos es que las funciones devuelven un valor y los procedimientos no. Cuando decimos que una función devuelve una valor queremos decir que podríamos substituir la llamada a la función por el valor que devuelve. Esto no es lo que sucede con los procedimientos que _no devuelven un valor_ si no que pueden modificar los parámetros `OUT` e `INOUT`.
+
+Al igual que los procedimientos, las funciones también tienen la cláusula `SQL SECURITY` que indica el contexto de seguridad en el que se ejecuta la función y funciona de manera similar a los procedimientos.
+
+La sintaxis para crear una función es la siguiente:
+
+```txt
+CREATE 
+    [DEFINER = user] 
+    FUNCTION [IF NOT EXISTS] func_name ([func_parameter[,...]])
+    RETURNS data_type
+    [characteristic ...] routine_body
+```
+
+El significa de `DEFINER` y la cláusula `SQL SECURITY` (dentro del bloque `characteristic`) es el mismo que en los procedimientos. La diferencia principal es que las funciones tienen la cláusula `RETURNS` que indica el tipo de dato que devuelve la función. Esta cláusula es obligatoria y no se puede omitir. Dentro de la función habrá siempre una sentencia `RETURN` que devolverá el valor de la función.
+
+Otra diferencia lógica entre procedimientos y funciones es que en los parámetros de una función no se pueden utilizar los modificadores `IN`, `OUT` o `INOUT`. Todos los parámetros de una función son de entrada y no se pueden modificar. En este sentido, las funciones son más restrictivas que los procedimientos.
+
+Veamos un ejemplo de como crear una función:
+
+```sql
+DELIMITER $$
+
+USE sakila$$
+
+CREATE FUNCTION test_funcion(parametro1 INT, parametro2 INT)
+RETURNS INT
+DETERMINISTIC
+
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = parametro1 + parametro2;
+    RETURN resultado;
+END$$
+
+DELIMITER ;
+```
+
+Como mencionamos antes, para invocar una función hemos de utilizarla dentro de una sentencia `SELECT`:
+
+```sql
+SELECT test_funcion(5, 10);
++---------------------+
+| test_funcion(5, 10) |
++---------------------+
+|                  15 |
++---------------------+
+1 row in set (0.0027 sec)
+```
+
+#### `DETERMINISTIC` y `NON DETERMINISTIC`
+
+Una de las características que podemos ignorar en la creación de procedimientos pero no en las funciones es `DETERMINISTIC` y `NON DETERMINISTIC`. Esta característica indica si la función devuelve siempre el mismo resultado para los mismos parámetros de entrada. Si la función es `DETERMINISTIC` significa que siempre devolverá el mismo resultado para los mismos parámetros de entrada. Si la función es `NON DETERMINISTIC` significa que puede devolver resultados diferentes para los mismos parámetros de entrada. Esto ha de indicarse pues el SGBD lo utilizará para optimizar la ejecución de la función. Si no se indica, el SGBD asumirá que la función es `NON DETERMINISTIC` y no podrá optimizar su ejecución.
+
+Además de usar explícitamente `DETERMINISTIC` o `NON DETERMINISTIC`, también podemos utilizar:
+
+* `CONTAINS SQL`: Indica que una rutina no tiene sentencias que **lean o escriban datos**. Este es el caso de nuestro ejemplo anterior.
+* `NO SQL`: Indica que la rutina no contiene sentencias SQL.
+* `READS SQL DATA`: Indica que la rutina tiene sentencias de lectura de datos, como SELECT, pero no de escritura.
+* `MODIFIES SQL DATA`: Indica que la rutina contiene sentecias de escritura de datos como por ejemplo, `INSERT` or `DELETE`).
+
+Si indicamos que nuestra sentencia es `NO SQL` o que `READS SQL DATA` no sería necesario indicar `[NOT] DETERMINISTIC`.
+
+Un ejemplo de función que lee datos sería el siguiente:
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION sakila.cuenta_nombres(nombre VARCHAR(50))
+READS SQL DATA
+RETURNS INT
+BEGIN
+    DECLARE cuenta INT DEFAULT 0;
+    SELECT COUNT(*) FROM actor WHERE first_name = nombre INTO cuenta;
+    RETURN cuenta;
+END$$
+
+DELIMITER ;
+```
+
+Si la invocamos de la siguiente manera:
+
+```sql
+SELECT cuenta_nombres("WOODY");
++-------------------------+
+| cuenta_nombres("WOODY") |
++-------------------------+
+|                       2 |
++-------------------------+
+```
+
 ### Eventos
 
+TODO: Todavía por hacer.            u
+
 ### Triggers
+
+TODO: Fin.
