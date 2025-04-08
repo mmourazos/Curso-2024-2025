@@ -40,7 +40,6 @@ BEGIN
   SELECT gr1 AS "grupo 1", pt1 AS "puntos 1";
   SELECT gr2 AS "grupo 2", pt2 AS "puntos 2";
 
-END
-#
+END #
 
 DELIMITER ; -- Restauramos el delimitador por defecto.
