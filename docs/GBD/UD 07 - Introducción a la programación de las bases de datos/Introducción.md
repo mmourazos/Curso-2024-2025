@@ -22,7 +22,6 @@
         + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
     * [Funciones](#funciones)
         + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
-    * [Eventos](#eventos)
     * [Triggers](#triggers)
 
 <!-- tocstop -->
@@ -538,7 +537,7 @@ CREATE
 
 A continuación iremos viendo cada una de las partes de la sentencia:
 
-- `DEFINER`: Indica a quién _pertence_ el procedimiento. Este parámetro es opcional y si no se especifica se utilizará el usuario que lo ha creado.
+- `DEFINER`: Indica a quién _pertenece_ el procedimiento. Este parámetro es opcional y si no se especifica se utilizará el usuario que lo ha creado.
 - `proc_parameter`: Aquí especificamos los parámetros de entrada y salida del procedimiento.
 - `characteristic`: Aquí especificamos las características del procedimiento como `CONTAINS SQL`, `NO SQL`, `READS SQL DATA`, `MODIFIES SQL DATA`, etc. Las características más importantes serán las que indican si el procedimiento lee o modifica datos de la base de datos.
 
@@ -721,10 +720,52 @@ SELECT cuenta_nombres("WOODY");
 +-------------------------+
 ```
 
-### Eventos
-
-TODO: Todavía por hacer.
-
 ### Triggers
 
-TODO: Fin.
+Los _triggers_ o _disparadores_ son un tipo de rutina almacenada que estará asociada a dos elementos:
+
+- Una tabla de la base de datos.
+- Una acción que modifique los datos de dicha tabla (`INSERT`, `UPDATE` o `DELETE`).
+
+Además de estos elementos también podremos indicar si queremos que nuestro _trigger_ salte antes o después de la acción que lo dispara. Por ejemplo, si tenemos un _trigger_ asociado a una tabla y a la acción `INSERT`, podremos indicar si queremos que el _trigger_ se ejecute antes o después de que se inserten los datos en la tabla.
+
+Durante la ejecución del código del trigger tendremos acceso a los valores nuevos y antiguos (cuando proceda) de los datos que se están modificando. Estos valores se pueden utilizar para realizar operaciones adicionales o para validar los datos antes de que se inserten o actualicen en la tabla.
+
+La sintaxis para crear un _trigger_ es la siguiente:
+
+```txt
+CREATE
+    [DEFINER = user]
+    TRIGGER [IF NOT EXISTS] trigger_name
+    trigger_time trigger_event
+    ON tbl_name FOR EACH ROW
+    [trigger_order]
+    trigger_body
+```
+
+Donde:
+
+- `trigger_time`: Indica si el _trigger_ se ejecuta antes (`BEFORE`) o después (`AFTER`) de la acción que lo dispara. Este parámetro es obligatorio.
+- trigger_event: Indica la acción que dispara el _trigger_ (`INSERT`, `UPDATE` o `DELETE`). Este parámetro es obligatorio.
+
+- `trigger_order`: Indica el orden de ejecución del _trigger_ si hay varios _triggers_ asociados a la misma tabla y acción. Puede ser `FOLLOWS` o `PRECEDES`. Este parámetro es opcional.
+  - `FOLLOWS nombre_del_trigger_anterior`: Si queremos que el _trigger_ se ejecute después de otro _trigger_.
+  - `PRECEDES nombre_del_trigger_siguiente`: Si queremos que el _trigger_ se ejecute antes de otro _trigger_.
+
+Veamos un ejemplo de _trigger_:
+
+```sql
+DELIMITER $$
+
+CREATE TRIGGER sakila.test_trigger
+BEFORE INSERT ON actor
+fOR EACH ROW
+BEGIN
+    SET NEW.first_name = UPPER(NEW.first_name);
+    SET NEW.last_name = UPPER(NEW.last_name);
+END$$
+
+DELIMITER ;
+```
+
+Este trigger, por ejemplo, se ejecutará antes de que se realice una operación de inserción en la tabla `actor` y convertirá los valores de las columnas `first_name` y `last_name` a mayúsculas. Para ello utilizamos la variable `NEW` que contiene los valores que se están insertando en la tabla.

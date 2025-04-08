@@ -239,6 +239,7 @@ Obtendremos el siguiente resultado:
 Y esta vez sí se habrá actualizado el valor de `Reparado` a `1` para la fecha `2011-01-08`.
 
 ```txt
+...
 | 2011-01-07  |        1 |
 | 2011-01-08  |        1 |
 | NULL        |        0 |
@@ -258,3 +259,228 @@ Y esta vez sí se habrá actualizado el valor de `Reparado` a `1` para la fecha 
 > * Del cliente.- Código: 00011, Nombre y apellidos: Tomás Gómez Calle, Teléfono: 22334455.
 > * Del vehículo.- Matrícula: 3131 FGH, Modelo: Renault Scénic, matriculado el 17/03/2009, 105.000 km.
 > * De la reparación.- Sustitución de las lámparas delanteras.
+
+_En primer lugar cabe destacar que se ha omitido por error el campo `DNI` del cliente. Será necesario incluirlo como parámetro de entrada del procedimiento._
+_Hay que tener en cuenta que los kilómetros del vehículo se almacenan en la tabla `REPARACIONES`._
+_"Sustitución de las lámparas delanteras" podría considerarse como el valor del campo `Avería` o el campo `Observaciones` de `REPARACIONES`._
+
+Si invocamos el procedimiento con los datos indicados:
+
+```sql
+call TalleresFaber.ReparacionClienteNuevo('00011', '0', 'Tomás', 'Gómez Calle', '555', '3131 FGH', 'Renault', 'Scénic', '2009-03-17', 105000, 'Sustitución
+lámparas delanteras');
+```
+
+Debería de obtener el siguiente resultado:
+
+```txt
++-------------------------------------+
+| Aviso: clave duplicada              |
++-------------------------------------+
+| El cliente y/o vehículo ya existen. |
++-------------------------------------+
+1 row in set (0.0175 sec)
+
++-------------------------------------+
+| Aviso: clave duplicada              |
++-------------------------------------+
+| El cliente y/o vehículo ya existen. |
++-------------------------------------+
+1 row in set (0.0175 sec)
+```
+
+Y comprobando la tabla `REPARACIONES`:
+
+```txt
++--------------+-----------+--------------+-----------+-----------------------------------------------+-------------+----------+---------------------------+
+| IdReparacion | Matricula | FechaEntrada | Km        | Avería                                       | FechaSalida | Reparado | Observaciones             |
++--------------+-----------+--------------+-----------+-----------------------------------------------+-------------+----------+---------------------------+
+|            1 | 5566 ABC  | 2010-12-30   |  50000.00 | Posible desgaste de la correa de distribución | 2011-01-01  |        1 | Sin observaciones         |
+|            2 | 1313 DEF  | 2011-01-01   |  60000.00 | Ruido tubo de escape                          | 2011-01-02  |        1 | Cambiar si es necesario   |
+...
+|            9 | 1515 DEF  | 2011-01-07   |  45000.00 | Ruido amortiguadores                          | 2011-01-08  |        0 | No acepta presupuesto     |
+|           10 | 1212 DEF  | 2011-01-10   |  62300.00 | El radiador pierde agua                       | NULL        |        0 | Pendiente de entrega      |
+|           11 | 3131 FGH  | 2025-04-08   | 105000.00 | Sustitución lámparas delanteras               | NULL        |     NULL | NULL                      |
++--------------+-----------+--------------+-----------+-----------------------------------------------+-------------+----------+---------------------------+
+11 rows in set (0.0023 sec)
+```
+
+Podemos comprobar que se ha añadido la nueva reparación (con `IdReparacionp` 11) a la tabla `REPARACIONES` y que el resto de datos no se han modificado.
+
+## Apartado 6
+
+> Creación de funciones:
+>
+> 1. Diseña una función que calcule el importe de los recambios sustituidos en una reparación.
+> 2. Crea una función que devuelva el importe de las actuaciones que se llevan a cabo en una reparación (para calcular el importe multiplica las horas por el importe de cada actuación). En ambas funciones Pasar como variable el Id de la reparación.
+>
+> 3. Diseñar una consulta que calcule el importe total (mano de obra y recambios) de las reparaciones que se le hayan realizado al vehículo de matrícula '1313 DEF'.
+
+_Se nos pide crear dos funciones y una consulta. La primera función calculará el importe de los recambios sustituidos en una reparación y la segunda función calculará el importe de las actuaciones que se llevan a cabo en una reparación._
+
+_La consulta que se nos pide calculará el importe total (mano de obra y recambios), se entiende que empleando las funciones que acabamos de crear._
+
+La primera función la llamaremos `TotalRecambios` y a la segunda `TotalActuaciones`.
+
+`TotalRecambios` ha de calcular la **suma** del producto del número de unidades (tabla `Incluye` campo `Unidades`) por el precio de referencia de cada recambio (tabla `RECAMBIOS` campo `PrecioReferencia`).
+
+Una vez completada la función podemos probarla invocándola con el `IdReparacion` 10:
+
+```sql
+SELECT TalleresFaber.TotalRecambios(10) AS "Total recambios";
++-----------------+
+| Total recambios |
++-----------------+
+|           92.90 |
++-----------------+
+```
+
+Para comprobar el resultado podemos ejecutar la siguiente consulta:
+
+```sql
+SELECT rp.IdReparacion, i.Unidades, rc.PrecioReferencia FROM REPARACIONES AS rp INNER JOIN Incluyen AS i ON rp.IdReparacion = i.IdReparacion INNER JOIN RECAMBIOS AS rc ON i.IdRecambio = rc.IdRecambio WHERE rp.IdReparacion = 10;
+```
+
+Que debería devolver el siguiente resultado:
+
+```txt
++--------------+----------+------------------+
+| IdReparacion | Unidades | PrecioReferencia |
++--------------+----------+------------------+
+|           10 |        2 |             2.00 |
+|           10 |        1 |            88.90 |
++--------------+----------+------------------+
+```
+
+Si hacemos las cuentas comprobamos que: $2 * 2.00 + 1 * 88.90 = 4.00 + 88.90 = 92.90$.
+
+La segunda función es análoga a la primera pero involucrando a las tablas `REPARACIONES`, `Realizan` y `ACTUACIONES`.
+
+Si invocamos la función con el `IdReparacion` 10:
+
+```sql
+select TalleresFaber.TotalActuaciones(10) AS "Total actuaciones";
+```
+
+Deberíamos de obtener el siguiente resultado:
+
+```txt
++-------------------+
+| Total actuaciones |
++-------------------+
+|            309.40 |
++-------------------+
+```
+
+De nuevo, para comprobar el resultado podemos ejecutar la siguiente consulta:
+
+```sql
+SELECT rp.IdReparacion, r.Horas, a.Importe FROM REPARACIONES AS rp INNER JOIN Realizan AS r ON rp.IdReparacion = r.IdReparacion INNER JOIN ACTUACIONES AS a ON r.Referencia = a.Referencia WHERE rp.IdReparacion = 10;
+```
+
+Que nos devolverá el siguiente resultado:
+
+```txt
++--------------+-------+---------+
+| IdReparacion | Horas | Importe |
++--------------+-------+---------+
+|           10 |  0.20 |   10.00 |
+|           10 |  2.50 |  120.50 |
+|           10 |  0.30 |   20.50 |
++--------------+-------+---------+
+```
+
+Y si realizamos los cálculos:
+
+```sql
+select (0.2 * 10 + 2.5 * 120.50 + 0.3 * 20.5) AS "Total actuaciones";
+```
+
+Podremos comprobar que los resultados concuerdan:
+
+```txt
++-------------------+
+| Total actuaciones |
++-------------------+
+|           309.400 |
++-------------------+
+```
+
+Finalmente, para calcular el importe total de las reparaciones que se le hayan realizado al vehículo de matrícula `1313 DEF` podremos realizar una consulta que incluya ambas funciones. El resultado debería de ser el siguiente:
+
+Total recambios:
+
+```sql
++-----------------+
+| Coste recambios |
++-----------------+
+|          210.00 |
+|           87.71 |
++-----------------+
+```
+
+Total = 210.00 + 87.71 = 297.71.
+
+Total actuaciones:
+
+```txt
++-------------------+
+| Coste actuaciones |
++-------------------+
+|            450.00 |
+|              6.50 |
++-------------------+
+```
+
+Total = 450.00 + 6.50 = 456.50.
+
+Sumando ambos resultados: Total recambios + Total actuaciones = 297.71 + 456.50 = 754.21.
+
+Que concuerda con lo obtenido al ejecutar la consulta que se nos pedía:
+
+```sql
++------------------+
+| Total reparación |
++------------------+
+|           754.21 |
++------------------+
+```
+
+## Apartado 7
+
+> Crea una función que reciba como parámetro de entrada el número correspondiente a un mes y devuelva el importe total facturado ese mes. Utiliza para ello las dos funciones obtenidas en la práctica anterior.
+>
+> NOTAS:
+>
+> * Por ejemplo para Enero, número del mes 1.
+> * Utilizar un cursor para recorrer cada fila de la consulta de los IdReparacion que se obtengan en ese mes.
+> * Controla mediante un HANDLER que la consulta haya devuelto alguna fila.
+
+Una vez creada la función podremos probarla con el mes de enero (1):
+
+```sql
+select TalleresFaber.FacturadoMes(1) AS total_mes;
+```
+
+Y debería devolvernos el siguiente resultado:
+
+```txt
++-----------+
+| total_mes |
++-----------+
+|   3366.05 |
++-----------+
+```
+
+**Nótese que sólo hay reparaciones para el mes de enero.**
+
+**Una forma simple de comprobar los valores internos (mediante `SELECT`) para el código de la función consiste en reescribir la función en forma de procedimiento, ya que en un procedimiento sí podemos utilizar sentencias `SELECT`.**
+
+**Un ejemplo del uso de un _handler_ tal como se nos indica en el enunciado lo podemos encontra [aquí](https://dev.mysql.com/doc/refman/8.4/en/cursors.html).**
+
+## Apartado 8
+
+> Crea un trigger que, antes de insertar una fila en la tabla Incluyen, compruebe si existen unidades en Stock en la tabla RECAMBIOS llevando a cabo las siguientes acciones:
+>
+> * Si hay suficientes unidades actualiza el Stock restando las unidades que se van a insertar.
+> * Si no hay suficientes unidades en Stock cancela la inserción de las unidades.
