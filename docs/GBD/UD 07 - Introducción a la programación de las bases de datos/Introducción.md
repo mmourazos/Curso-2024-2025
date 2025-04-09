@@ -3,27 +3,30 @@
 <!-- toc -->
 
 - [Variables](#variables)
-    * [Variables del sistema](#variables-del-sistema)
-    * [Variables de usuario](#variables-de-usuario)
-    * [Variables locales](#variables-locales)
+  * [Variables del sistema](#variables-del-sistema)
+  * [Variables de usuario](#variables-de-usuario)
+  * [Variables locales](#variables-locales)
 - [Sentencias compuestas / bloques de código](#sentencias-compuestas--bloques-de-codigo)
-    * [Estructuras condicionales](#estructuras-condicionales)
-        + [Sentencia `IF`](#sentencia-if)
-        + [Sentencia `CASE`](#sentencia-case)
-    * [Estructura de repetición](#estructura-de-repeticion)
-        + [`WHILE` y `REPEAT`](#while-y-repeat)
-        + [Loop](#loop)
+  * [Estructuras condicionales](#estructuras-condicionales)
+    + [Sentencia `IF`](#sentencia-if)
+    + [Sentencia `CASE`](#sentencia-case)
+  * [Estructura de repetición](#estructura-de-repeticion)
+    + [`WHILE` y `REPEAT`](#while-y-repeat)
+    + [Loop](#loop)
 - [Cursores](#cursores)
-    * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
-    * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+  * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+  * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+    + [Sintaxis de un handler](#sintaxis-de-un-handler)
+    + [Ejemplo de handler](#ejemplo-de-handler)
 - [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
-    * [Procedimiento](#procedimiento)
-        + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
-        + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
-    * [Funciones](#funciones)
-        + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
-    * [Triggers](#triggers)
-        + [`NEW` y `OLD`](#new-y-old)
+  * [Procedimiento](#procedimiento)
+    + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
+    + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
+  * [Funciones](#funciones)
+    + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
+  * [Triggers](#triggers)
+    + [`NEW` y `OLD`](#new-y-old)
+- [Uso de `SIGNAL`](#uso-de-signal)
 
 <!-- tocstop -->
 
@@ -439,7 +442,11 @@ DECLARE cursor_name CURSOR FOR select_statement;
 
 ### ¿Qué es un handler?
 
-De nuevo, de manera informal, un _handler_ es una _variable_ que almacena el estado de un _cursor_. Un _handler_ se utiliza para controlar el flujo de ejecución del código en función del estado del _cursor_. Por ejemplo, si el _cursor_ ha llegado al final del conjunto de resultados, podemos utilizar un _handler_ para salir del bucle que recorre el _cursor_.
+Un _handler_ o manejador es un elemento que puede _capturar_ _excepciones_ y ejecutar un bloque de código en respuesta a una condición específica. En otras palabras, un _handler_ es un mecanismo que permite manejar errores o condiciones especiales que pueden ocurrir durante la ejecución de un bloque de código.
+
+Con relación a los cursores, un _handler_ se utiliza para manejar situaciones en las que no hay más filas que leer en el cursor. Por ejemplo, si estamos recorriendo un cursor y llegamos al final del conjunto de resultados, se producirá una condición (exceción) `NOT FOUND`. En este caso, podemos utilizar un _handler_ para capturar esta condición y ejecutar un bloque de código específico (como cerrar el cursor o modificar una variable que indique la terminación del bucle).
+
+#### Sintaxis de un handler
 
 La sintaxis para declarar un _handler_ es la siguiente:
 
@@ -466,6 +473,8 @@ Finalmente, `statement` será una instrucción o un bloque de código que se eje
 _(Cuando se trata de una sola instrucción no es necesario rodearla de `BEGIN` y `END`)._
 
 No entraremos aquí en la definición de condiciones ni explicaremos los distintos tipos de [códigos de error de MySQL](https://dev.mysql.com/doc/mysql-errors/8.0/en/server-error-reference.html) ni los posibles [valores de sql](https://www.ibm.com/docs/en/i/7.4.0?topic=codes-listing-sqlstate-values) ya que excede lo necesario para esta sección.
+
+#### Ejemplo de handler
 
 Un ejemplo más concreto dentro de como declarar y recorrer un cursor en un procedimiento almacenado sería el siguiente:
 
@@ -786,5 +795,33 @@ Dentro de un trigger se pueden invocar procedimientos **siempre que estos no dev
 
 Dentro de un trigger tampoco se pueden iniciar o terminar transacciones. Esto es, no se pueden utilizar las sentencias `START TRANSACTION`, `COMMIT` o `ROLLBACK`.
 
+## Uso de `SIGNAL`
 
+`SIGNAL` es el mecanismo que nos permite _devolver_ un error. Mediante este mecanismo podremos enviar información de error a un _handler_ o al cliente. Además también nos dal control sobre otras características del error como el código de error, valor del `SQLSTATE` y mensaje de rror.
 
+La sintaxis es la siguiente:
+
+```txt
+SIGNAL condition_value
+    [SET signal_information_item
+    [, signal_information_item] ...]
+```
+
+`condition_value` indica el código de error que ha de ser devuelto. Puede tratarse de un `SQLSTATE` (una cadena de 5 caracteres) o un nombre de condición que hace referencia a una condición definida previamente.
+
+`SQLSTATE` puede indicar un error, una acdvertencia (`warning`) o "not found". Esto se determina a partir de los dos primeros caracteres de la cadena:
+
+Los dos primeros careacteres de `SQLSTATE` determinan su clase:
+
+- '00': Éxito. No se trataría de una señal válida ya que no se ha producido nada que devamos manejar.
+- '01': Advertencia. Indica que se ha producido una advertencia pero no un error.
+  - Se incremenará el valor de la variable de sistema `warning_count`.
+  - La sentencia `SHOW WARNINGS` mostrará la señal y los _handlers_ definidos mediante `SQLWARNING` se activarán.
+  - La funciones definidas por el usuario no pueden devolver warnings.
+- '02': Puede indicar dos casos:
+  - No encontrado. Indica que no se ha encontrado un valor o una fila. Se activarán los _handlers_ definidos mediante `NOT FOUND`.
+  - Excepción. Se ha producido una excepción definida por el usuario. Se activarán los _handlers_ definidos mediante `SQLEXCEPTION`.
+  - En ambos casos se interrumpirá la ejecución de la sentecia si esta no es manejada por un _handler_.
+- '04': Se tratará como cualquier otra excepción.
+
+Cuando somos nosotros los que generamos una excepción podremos usar el valor `45000` de `SQLSTATE`. Este valor indica que se trata de una "excepción no menajeda definida por el usuario".
