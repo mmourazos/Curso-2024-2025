@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS TalleresFaber.a4_func$$
 
 CREATE FUNCTION TalleresFaber.a4_func(fecha DATE)
 RETURNS INT
-NOT DETERMINISTIC
+MODIFIES SQL DATA
 BEGIN
   DECLARE finalizadas INT;
   SELECT COUNT(*) FROM REPARACIONES AS r WHERE r.fechasalida = fecha INTO finalizadas;

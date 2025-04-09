@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS TalleresFaber.a3_proc$$
+
 CREATE PROCEDURE TalleresFaber.a3_proc(IN matricula VARCHAR(8), OUT num_rep INT)
 BEGIN
   -- Declaramos la variable para guardar la marca del vehículo.
@@ -7,7 +9,7 @@ BEGIN
 
   DECLARE EXIT HANDLER FOR NOT FOUND
      SELECT CONCAT('No se ha encontrado el vehículo con matrícula ', matricula) AS 'Error';
-  
+
   SELECT v.marca FROM VEHICULOS AS v WHERE v.matricula = matricula INTO marca;
 
   SELECT v.matricula, v.marca, modelo, color, count(idreparacion) AS "num. reparaciones" FROM VEHICULOS AS v 

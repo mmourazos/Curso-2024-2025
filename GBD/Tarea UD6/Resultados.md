@@ -260,15 +260,14 @@ Y esta vez sí se habrá actualizado el valor de `Reparado` a `1` para la fecha 
 > * Del vehículo.- Matrícula: 3131 FGH, Modelo: Renault Scénic, matriculado el 17/03/2009, 105.000 km.
 > * De la reparación.- Sustitución de las lámparas delanteras.
 
-_En primer lugar cabe destacar que se ha omitido por error el campo `DNI` del cliente. Será necesario incluirlo como parámetro de entrada del procedimiento (pues es la clave primaria de la tabla `CLIENTES`)._
-_Hay que tener en cuenta que los kilómetros del vehículo se almacenan en la tabla `REPARACIONES`._
-_"Sustitución de las lámparas delanteras" podría considerarse como el valor del campo `Avería` o el campo `Observaciones` de `REPARACIONES`. En este ejemplo se eligió la segunda opción._
+* _En primer lugar cabe destacar que se ha omitido por error el campo `DNI` del cliente. Será necesario incluirlo como parámetro de entrada del procedimiento ~~(pues es la clave primaria de la tabla `CLIENTES`)~~ pues no puede ser nulo._
+* _Hay que tener en cuenta que los kilómetros del vehículo se almacenan en la tabla `REPARACIONES`._
+* _"Sustitución de las lámparas delanteras" podría considerarse como el valor del campo `Avería` o el campo `Observaciones` de `REPARACIONES`. En este ejemplo se eligió la segunda opción._
 
 Si invocamos el procedimiento con los datos indicados:
 
 ```sql
-call TalleresFaber.ReparacionClienteNuevo('00011', '0', 'Tomás', 'Gómez Calle', '555', '3131 FGH', 'Renault', 'Scénic', '2009-03-17', 105000, 'Sustitución
-lámparas delanteras');
+CALL TalleresFaber.ReparacionClienteNuevo('00011', '0', 'Tomás', 'Gómez Calle', '555', '3131 FGH', 'Renault', 'Scénic', '2009-03-17', 105000, 'Sustitución lámparas delanteras');
 ```
 
 Debería de obtener el siguiente resultado:
