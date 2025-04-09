@@ -4,7 +4,7 @@
 
 > Crea un procedimiento que muestre los vehículos (marca, modelo y color) que no estén reparados y los datos de los clientes y vehículos que han entrado a reparar hoy. (En nuestro caso ninguno).
 
-_Lo que se indica en el enunciado es que hay dos consultas. La primera para mostrar los datos que se indican de los vehcílos que no están reparados y la segunda para mostrar los datos de los clientes y vehículos que han entrado a reparar hoy. En este caso, como se indica en el enunciado, no hay vehículos que hayan entrado a reparar hoy._
+_Lo que se indica en el enunciado es que hay dos consultas. La primera para mostrar los datos (marca, modelo y color) de los vehículos que no están reparados y la segunda para mostrar los datos de los clientes y vehículos que han entrado a reparar hoy. En este caso, como se indica en el enunciado, no hay vehículos que hayan entrado a reparar hoy._
 
 ```txt
 +---------+--------+---------------+
@@ -77,7 +77,7 @@ SELECT @num_rep;
 1 row in set (0.0006 sec)
 ```
 
-Para un coche sin reparaciones (matrícula: )
+Para un coche sin reparaciones (matrícula: `2233 ABC`)
 Este es sólo un posible resultado, variaciones sobre el mismo sería válidas.
 
 ```sql
@@ -120,7 +120,7 @@ SELECT @num_rep;
 
 > Modifica el procedimiento anterior añadiendo un HANDLER que controle que si esa matrícula no está en la base de datos, el resto de instrucciones no se ejecuten.
 
-**NOTA: Para que salte el `NOT FOUND` / `SQLSTATE '02000` ha de realizarse una consulta que guarde el resultado en una variable (por ejemplo que guarde la marca del vehículo con la matrícula indicada).**
+**NOTA: Para que salte el `NOT FOUND` / `SQLSTATE '02000` ha de realizarse una consulta que guarde el resultado en una variable (por ejemplo que guarde la marca del vehículo de la matrícula consultada).**
 
 Un select _normal_ no disparará un `SQLSTATE '02000'` aún que no devuelva resultados.
 
@@ -143,7 +143,7 @@ CALL TalleresFaber.a3_proc('0000 XXX', @num_rep);
 
 > Crea una función que actualice el estado de las reparaciones que estén finalizadas en una fecha que se indique y que devuelva cuantas reparaciones han finalizado en esa fecha.
 
-_En este apartado se nos pide que indiquemos una fecha. Hemos de comprobar si hay reparaciones con `FechaSalida` igual a esa fecha, ese será el valor a devolver._
+_En este apartado se nos pide que indiquemos una fecha. Hemos de comprobar cuantas reparaciones hay con `FechaSalida` igual a esa fecha, ese será el valor a devolver._
 
 _Para las reparaciones cuya `FechaSalida` sea igual a la fecha indicada, se ha de actualizar el campo `Reparado` a `1`._
 
@@ -160,7 +160,7 @@ Si optamos por la segunda opción hemos de usar la siguiente sentencia:
 set global log_bin_trust_function_creators = 1;
 ```
 
-Se nos indica que debemos mirar esta variable en el error que nos da MySQL al intentar crear la función.
+Se nos indica que deberíamos mirar esta variable en el error que nos da MySQL al intentar crear la función no determinista.
 
 Para más información sobre dicha variable se puede consultar [log_bin_trust_function_creators](https://dev.mysql.com/doc/refman/8.4/en/replication-options-binary-log.html#sysvar_log_bin_trust_function_creators).
 
@@ -260,9 +260,9 @@ Y esta vez sí se habrá actualizado el valor de `Reparado` a `1` para la fecha 
 > * Del vehículo.- Matrícula: 3131 FGH, Modelo: Renault Scénic, matriculado el 17/03/2009, 105.000 km.
 > * De la reparación.- Sustitución de las lámparas delanteras.
 
-_En primer lugar cabe destacar que se ha omitido por error el campo `DNI` del cliente. Será necesario incluirlo como parámetro de entrada del procedimiento._
+_En primer lugar cabe destacar que se ha omitido por error el campo `DNI` del cliente. Será necesario incluirlo como parámetro de entrada del procedimiento (pues es la clave primaria de la tabla `CLIENTES`)._
 _Hay que tener en cuenta que los kilómetros del vehículo se almacenan en la tabla `REPARACIONES`._
-_"Sustitución de las lámparas delanteras" podría considerarse como el valor del campo `Avería` o el campo `Observaciones` de `REPARACIONES`._
+_"Sustitución de las lámparas delanteras" podría considerarse como el valor del campo `Avería` o el campo `Observaciones` de `REPARACIONES`. En este ejemplo se eligió la segunda opción._
 
 Si invocamos el procedimiento con los datos indicados:
 
@@ -298,8 +298,6 @@ Y comprobando la tabla `REPARACIONES`:
 |            1 | 5566 ABC  | 2010-12-30   |  50000.00 | Posible desgaste de la correa de distribución | 2011-01-01  |        1 | Sin observaciones         |
 |            2 | 1313 DEF  | 2011-01-01   |  60000.00 | Ruido tubo de escape                          | 2011-01-02  |        1 | Cambiar si es necesario   |
 ...
-|            9 | 1515 DEF  | 2011-01-07   |  45000.00 | Ruido amortiguadores                          | 2011-01-08  |        0 | No acepta presupuesto     |
-|           10 | 1212 DEF  | 2011-01-10   |  62300.00 | El radiador pierde agua                       | NULL        |        0 | Pendiente de entrega      |
 |           11 | 3131 FGH  | 2025-04-08   | 105000.00 | Sustitución lámparas delanteras               | NULL        |     NULL | NULL                      |
 +--------------+-----------+--------------+-----------+-----------------------------------------------+-------------+----------+---------------------------+
 11 rows in set (0.0023 sec)
@@ -322,7 +320,7 @@ _La consulta que se nos pide calculará el importe total (mano de obra y recambi
 
 La primera función la llamaremos `TotalRecambios` y a la segunda `TotalActuaciones`.
 
-`TotalRecambios` ha de calcular la **suma** del producto del número de unidades (tabla `Incluye` campo `Unidades`) por el precio de referencia de cada recambio (tabla `RECAMBIOS` campo `PrecioReferencia`).
+`TotalRecambios` ha de calcular la **suma** del producto del número de unidades (tabla `Incluye`, campo `Unidades`) por el precio de referencia de cada recambio (tabla `RECAMBIOS`, campo `PrecioReferencia`).
 
 Una vez completada la función podemos probarla invocándola con el `IdReparacion` 10:
 
@@ -476,7 +474,7 @@ Y debería devolvernos el siguiente resultado:
 
 **Una forma simple de comprobar los valores internos (mediante `SELECT`) para el código de la función consiste en reescribir la función en forma de procedimiento, ya que en un procedimiento sí podemos utilizar sentencias `SELECT`.**
 
-**Un ejemplo del uso de un _handler_ tal como se nos indica en el enunciado lo podemos encontra [aquí](https://dev.mysql.com/doc/refman/8.4/en/cursors.html).**
+**Un ejemplo del uso de un _handler_ tal como se nos indica en el enunciado lo podemos encontrar [aquí](https://dev.mysql.com/doc/refman/8.4/en/cursors.html).**
 
 ## Apartado 8
 
@@ -484,3 +482,195 @@ Y debería devolvernos el siguiente resultado:
 >
 > * Si hay suficientes unidades actualiza el Stock restando las unidades que se van a insertar.
 > * Si no hay suficientes unidades en Stock cancela la inserción de las unidades.
+
+**Recordar que se puede usar `SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '...'` para lanzar un error de usuario y cancelar la inserción como se muestra en los apuntes.**
+
+Una vez creado el trigger podremos probarlo con el siguiente recambio:
+
+```txt
++------------+---------------+--------------------+-------+------------------+
+| IdRecambio | Descripcion   | UnidadBase         | Stock | PrecioReferencia |
++------------+---------------+--------------------+-------+------------------+
+| AA_000_333 | Amortiguación | Caja de 2 unidades |     5 |            65.00 |
++------------+---------------+--------------------+-------+------------------+
+```
+
+Podemos ver que el _stock_ es de 5 unidades. Si intentamos insertar un número mayor a 5 en `Incluyen` debería saltar el _trigger_ y cancelar la inserción:
+
+```sql
+INSERT INTO Incluyen (IdReparacion, IdRecambio, Unidades) VALUES (1, 'AA_000_333', 100);
+```
+
+Deberíamos obtener una respuesta como la siguiente:
+
+```txt
+ERROR: 1644: No hay suficiente stock para el recambio
+```
+
+Y podemos comprobar que el _stock_ no ha cambiado:
+
+```txt
++------------+---------------+--------------------+-------+------------------+
+| IdRecambio | Descripcion   | UnidadBase         | Stock | PrecioReferencia |
++------------+---------------+--------------------+-------+------------------+
+| AA_000_333 | Amortiguación | Caja de 2 unidades |     5 |            65.00 |
++------------+---------------+--------------------+-------+------------------+
+```
+
+Si por en contrario hacemos al inserción con un número de unidades menor o igual a 5:
+
+```sql
+INSERT INTO Incluyen (IdReparacion, IdRecambio, Unidades) VALUES (1, 'AA_000_333', 3);
+```
+
+Obtendremos el:
+
+```txt
+Query OK, 1 row affected (0.0371 sec)
+```
+
+Y el valor de RECAMBIOS debería haber cambiado:
+
+```txt
++------------+---------------+--------------------+-------+------------------+
+| IdRecambio | Descripcion   | UnidadBase         | Stock | PrecioReferencia |
++------------+---------------+--------------------+-------+------------------+
+| AA_000_333 | Amortiguación | Caja de 2 unidades |     2 |            65.00 |
++------------+---------------+--------------------+-------+------------------+
+```
+
+## Apartado 9
+
+> 1. Crea una tabla denominada PedidoRecambios que contenga 3 columnas:
+>    1. IdRecambio.
+>    2. Descripcion.
+>    3. Stock.
+> 2. Con los mismos tipos de datos que tienen esas columnas en la tabla RECAMBIOS.
+> 3. Crea un trigger asociado a la tabla RECAMBIOS que después de actualizar el Stock de un recambio, si el número de unidades en Stock del recambio modificado es inferior a 4 unidades, inserte una fila en la tabla PedidoRecambios con los datos resultantes.
+
+_Lo que se pide es que se guarden los **nuevos valores** de `IdRecambio`, `Descripcion` y `Stock` en la tabla `PedidoRecambios`. Si el valor del `Stock` cae por debajo de 4 unidades._
+_Es decir, si se modifica el stock de un recambio y el nuevo valor es menor que 4 se crea una entrada en `PedidoRecambios` con la información de dicho recambio._
+
+Una vez creado el trigger podremos probarlo actualizando el stock de un recambio:
+
+El valor actual del recambio `AA_000_333` es de 5 unidades:
+
+```txt
++------------+---------------+--------------------+-------+------------------+
+| IdRecambio | Descripcion   | UnidadBase         | Stock | PrecioReferencia |
++------------+---------------+--------------------+-------+------------------+
+| AA_000_333 | Amortiguación | Caja de 2 unidades |     5 |            65.00 |
++------------+---------------+--------------------+-------+------------------+
+```
+
+```sql
+UPDATE RECAMBIOS SET Stock = 3 WHERE IdRecambio = 'AA_000_333';
+```
+
+```txt
+Query OK, 1 row affected (0.0237 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+```
+
+El nuevo valor del recambios sería:
+
+```txt
++------------+---------------+--------------------+-------+------------------+
+| IdRecambio | Descripcion   | UnidadBase         | Stock | PrecioReferencia |
++------------+---------------+--------------------+-------+------------------+
+| AA_000_333 | Amortiguación | Caja de 2 unidades |     3 |            65.00 |
++------------+---------------+--------------------+-------+------------------+
+```
+
+Y si comprobamos el contenido de `PedidoRecambios`:
+
+```txt
++------------+---------------+-------+
+| IdRecambio | Descripcion   | Stock |
++------------+---------------+-------+
+| AA_000_333 | Amortiguación |     3 |
++------------+---------------+-------+
+```
+
+**Si volvemos a actualizar el stock a un valor menor que cuatro se volvería a intentar insertar el recambio en `PedidoRecambios` y obtendríamos un error de clave duplicada.** Pero no se nos pide que lo gestionemos.
+
+## Apartado 10
+
+> Utilizando funciones de librerías disponibles en MySQL obtener:
+>
+> * Un listado con dos columnas: en la primera, en mayúsculas apellidos y nombre de todos los clientes (entre los apellidos y el nombre incluir una coma como separador) y en la segunda, la ciudad en la que cada cliente tiene su domicilio (únicamente la ciudad, no la dirección).
+> * Un listado con 2 columnas: en la primera la fecha de alta de los empleados con el formato dd/mm/aaaa y en la segunda aparecerá 'Contrato temporal ' para aquellos empleados que lleven contratados en el taller menos de 2 años, y 'Contrato fijo' para el resto.
+
+Se indica que hemos de utilizar funciones integradas en MySQL sin que las tengamos que escribir nosotros. Aquí podemos encontrar un [listado de dichas funciones](https://dev.mysql.com/doc/refman/8.4/en/built-in-function-reference.html).
+
+Una lista con las funciones que trabajan con cadenas de texto la podemos encontrar [aquí](https://dev.mysql.com/doc/refman/8.4/en/string-functions.html).
+Una lista con las funciones que trabajan con fechas la podemos encontrar [aquí](https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html).
+
+**REVISAD LAS VARIANTES DE LAS FUNCIONES `CONCAT` Y `SUBSTRING`.**
+**LO MISMO PARA LAS VARIANTES DE `DATE`.**
+
+El resultado debería de ser algo como lo siguiente:
+
+```txt
++-------------------------------+-------------+
+| Nombre Completo               | Ciudad      |
++-------------------------------+-------------+
+| Alvarez Martín, Isabel        | Madrid      |
+| Ceballos López, Carlos        | Santander   |
+| Ruiz Esteban, Alfonso         | Reinosa     |
+| Escudero Ruiz, Carmen         | Santander   |
+| Muriedas, Arce, Enrique       | Torrelavega |
+| Arce Villegas, Manuel Antonio | Torrelavega |
+| Martínez Salces, María Luisa  | Santander   |
+| Barquín Rodríguez, Antonio    | Reinosa     |
+| Cos Herrero, Jesús            | Correpoco   |
+| Sanchez Valverde, Fernando    | Valladolid  |
+| Gómez Calle, Tomás            | NULL        |
+|                               | NULL        |
++-------------------------------+-------------+
+```
+
+Para la primera consulta y algo como:
+
+```txt
++-----------------------+------------------+
+| Fecha de contratación | Tipo de contrato |
++-----------------------+------------------+
+| 21/03/2009            | Contrato fijo    |
+| 12/01/2008            | Contrato fijo    |
+| 01/06/2008            | Contrato fijo    |
+| 23/02/2010            | Contrato fijo    |
+| 12/01/2008            | Contrato fijo    |
+| 01/01/2010            | Contrato fijo    |
+| 01/06/2008            | Contrato fijo    |
+| 16/10/2009            | Contrato fijo    |
+| 15/03/2010            | Contrato fijo    |
+| 12/01/2008            | Contrato fijo    |
++-----------------------+------------------+
+```
+
+Para la segunda, puesto que todos superan los dos años de contrato.
+
+Si queremos comprobar que se obtienen los dos resultados hemos de comparar con 15 en lugar de 2:
+
+```txt
++-----------------------+-------------------+
+| Fecha de contratación | Tipo de contrato  |
++-----------------------+-------------------+
+| 21/03/2009            | Contrato fijo     |
+| 12/01/2008            | Contrato fijo     |
+| 01/06/2008            | Contrato fijo     |
+| 23/02/2010            | Contrato temporal |
+| 12/01/2008            | Contrato fijo     |
+| 01/01/2010            | Contrato temporal |
+| 01/06/2008            | Contrato fijo     |
+| 16/10/2009            | Contrato fijo     |
+| 15/03/2010            | Contrato temporal |
+| 12/01/2008            | Contrato fijo     |
++-----------------------+-------------------+
+```
+
+## Nota final
+
+**He intentado que este documento quede lo más claro posible pero ante cualquier duda poneros en contacto conmigo y lo reviso.**

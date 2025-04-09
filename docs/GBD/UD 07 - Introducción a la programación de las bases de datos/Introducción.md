@@ -23,6 +23,7 @@
     * [Funciones](#funciones)
         + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
     * [Triggers](#triggers)
+        + [`NEW` y `OLD`](#new-y-old)
 
 <!-- tocstop -->
 
@@ -769,3 +770,21 @@ DELIMITER ;
 ```
 
 Este trigger, por ejemplo, se ejecutará antes de que se realice una operación de inserción en la tabla `actor` y convertirá los valores de las columnas `first_name` y `last_name` a mayúsculas. Para ello utilizamos la variable `NEW` que contiene los valores que se están insertando en la tabla.
+
+#### `NEW` y `OLD`
+
+Los objetos `NEW` y `OLD` son variables especiales que se utilizan dentro de los _triggers_ para acceder a los valores de las filas afectadas por la acción que dispara el _trigger_. Estas variables son útiles para realizar operaciones adicionales o para validar los datos antes de que se inserten o actualicen en la tabla.
+
+Mediante `NEW` (y `OLD`) tendremos acceso a los valores de las columnas que se están modificando de la siguiente manera:
+
+- `NEW.nombre_columna`: Hace referencia al valor de la columna después de la modificación (en caso de un `INSERT` o `UPDATE`) y hace referencia al dato que está siendo insertado (en caso de un `INSERT`). No se puede utilizar en un `DELETE` ya que no hay un valor nuevo.
+- `OLD.nombre_columna`: Hace referencia al valor de la columna antes del cambio (en caso de un `UPDATE` o `DELETE`) y hace referencia al dato que está siendo eliminado (en caso de un `DELETE`). Igualmente, no se puede utilizar en un `INSERT` ya que no hay un valor antiguo.
+
+Si el trigger se establece con `BEFORE` se puede modificar el valor de `NEW` antes de que se inserte o actualice el registro. Si el trigger se establece con `AFTER` no se puede modificar el valor de `NEW` ya que ya se ha realizado la operación.
+
+Dentro de un trigger se pueden invocar procedimientos **siempre que estos no devuelvan valores a cliente** (es decir, que saldrían por pantalla en el cliente o en pestañas de MySQL Workbench) pero **sí pueden devolver valores** mediante parámetros `OUT` o `INOUT`. Esto es importante tenerlo en cuenta ya que si el procedimiento devuelve valores al cliente se producirá un error. Por ejemplo, no se puede utilizar un `SELECT` dentro de un trigger que devuelva valores al cliente pero sí que guarda valores en una variable local.
+
+Dentro de un trigger tampoco se pueden iniciar o terminar transacciones. Esto es, no se pueden utilizar las sentencias `START TRANSACTION`, `COMMIT` o `ROLLBACK`.
+
+
+
