@@ -5,7 +5,6 @@ class Figura {
   }
 }
 
-
 class Cubo extends Figura {
   constructor(color, material, lado) {
     super(color, material);
