@@ -1,0 +1,10 @@
+DELIMITER $$
+
+CREATE TRIGGER world.trigg1 BEFORE INSERT ON world.City
+FOR EACH ROW
+BEGIN
+    E 
+    
+END$$
+
+DELIMITER ;
