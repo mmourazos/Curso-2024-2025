@@ -1,0 +1,10 @@
+DELIMITER $$
+
+CREATE PROCEDURE sakila.proc2()
+SQL SECURITY INVOKER
+
+BEGIN
+    SELECT * FROM sakila.actor limit 10;
+END$$
+
+DELIMITER ;
