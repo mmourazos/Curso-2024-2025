@@ -108,6 +108,17 @@ CREATE [DEFINER = user] TRIGGER [IF NOT EXISTS] nombre_trigger
   trigger_body
 ```
 
+### Variables `NEW` y `OLD`
+
+`NEW.nombre_del_campo`
+`OLD.nombre_del_campo`
+
+¿Dónde se pueden usar?
+
+* `INSERT`: Sólo tenemos la variable `NEW`.
+* `UPDATE`: Ambas variables. New hará referencia al nuevo valor y Old al antiguo (andes de la modificación).
+* `DELETE`: Sólo tenemos la variable `OLD`.
+
 ### Ejemplo de trigger
 
 Creemos un _trigger_ que se ejecute antes de insertar un nuevo registro (_row_) en la tabla `Country` de la base de datos `world`. El _trigger_ se encargará de asegurarse de que el campo `Name` comience con una letra mayúscula seguido de letras minúsculas. Para ello crearemos una función que se encargue de modificar dicha cadena de texto.
@@ -116,6 +127,8 @@ Creemos un _trigger_ que se ejecute antes de insertar un nuevo registro (_row_) 
 CREATE FUNCTION Capitalize (str VARCHAR(255))
   RETURN CONCAT(UPPER(SUBSTRING(str, 1, 1)), LOWER(SUBSTRING(str, 2)));
 ```
+
+"hola" -> "Hola"
 
 Esta función concatena dos _subcadenas_ de texto. La primera es la primera letra de la cadena original convertida a mayúscula y la segunda es el resto de la cadena convertida a minúscula.
 
