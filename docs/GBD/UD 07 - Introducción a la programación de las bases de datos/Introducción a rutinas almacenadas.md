@@ -2,51 +2,36 @@
 
 <!-- toc -->
 
-- [Variables](#variables)
-    * [Variables del sistema](#variables-del-sistema)
-    * [Variables de usuario](#variables-de-usuario)
-    * [Variables locales](#variables-locales)
+- [Variables del sistema](#variables-del-sistema)
+  * [Variables de usuario](#variables-de-usuario)
+  * [Variables locales](#variables-locales)
 - [Sentencias compuestas / bloques de código](#sentencias-compuestas--bloques-de-codigo)
-    * [Estructuras condicionales](#estructuras-condicionales)
-        + [Sentencia `IF`](#sentencia-if)
-        + [Sentencia `CASE`](#sentencia-case)
-    * [Estructura de repetición](#estructura-de-repeticion)
-        + [`WHILE` y `REPEAT`](#while-y-repeat)
-        + [Loop](#loop)
+  * [Estructuras condicionales](#estructuras-condicionales)
+    + [Sentencia `IF`](#sentencia-if)
+    + [Sentencia `CASE`](#sentencia-case)
+  * [Estructura de repetición](#estructura-de-repeticion)
+    + [`WHILE` y `REPEAT`](#while-y-repeat)
+    + [Loop](#loop)
 - [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
-    * [Procedimiento](#procedimiento)
-        + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
-        + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
-    * [Funciones](#funciones)
-        + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
-    * [Triggers](#triggers)
-        + [`NEW` y `OLD`](#new-y-old)
+  * [Procedimiento](#procedimiento)
+    + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
+    + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
+  * [Funciones](#funciones)
+    + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
+  * [Triggers](#triggers)
+    + [`NEW` y `OLD`](#new-y-old)
 - [Cursores](#cursores)
-    * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
-    * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
-        + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
-        + [Sintaxis de un handler](#sintaxis-de-un-handler)
-        + [Ejemplo de handler](#ejemplo-de-handler)
+  * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+  * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+    + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
+    + [Sintaxis de un handler](#sintaxis-de-un-handler)
+    + [Ejemplo de handler](#ejemplo-de-handler)
 - [Uso de `SIGNAL`](#uso-de-signal)
-    * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
+  * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
 
 <!-- tocstop -->
 
-Cuando trabajamos con una base de datos podemos necesitar que se ejecute la misma secuencia de sentencias de manera repetida. Por ejemplo, si tenemos que realizar una serie de consultas SQL para obtener un resultado específico, podríamos crear un script SQL que contenga todas estas sentencias y ejecutarlo cada vez que necesitemos obtener el mismo resultado. Sin embargo, esto puede resultar poco eficiente y poco práctico si tenemos que ejecutar el mismo script varias veces.
-
-Para evitar esto podemos **almacenar esta sentencias** en el servidor y después podríamos ejecutarlas aunque no tengamos acceso a los scripts.
-
-Antes de entrar directamente en la escritura de rutinas almacenadas debemos entender algunos conceptos básicos de programación. En este apartado vamos a ver algunos de estos conceptos que nos ayudarán a entender mejor la programación en bases de datos.
-
-## Variables
-
-Una variable es un mecanismo que permite almacenar un valor temporalmente. Para acceder a este valor se utilizará un nombre, el nombre de la variable, un ejemplo de uso de una variable en MySQL sería el siguiente:
-
-```sql
-set @mi_variable = 10;
-```
-
-(En MySQL hemos de preceder el nombre de la variable con el símbolo `@` para indicar que es una variable de usuario). En este caso hemos creado una variable llamada `mi_variable` y le hemos asignado el valor `10`. A partir de este momento podremos utilizar la variable `mi_variable` en cualquier parte de la consulta SQL. Por ejemplo:
+Cuando trabajamos con una base de datos podemos necesitar que se ejecute la misma secuencia de sentencias de manera repetida. Por ejemplo, si tenemos que realizar una serie de consultas SQL para obtener un resultado específico, podríamos crear un script SQL que contenga todas estas sentencias y ejecutarlo cada vez que necesitemos obtener el mismo resultado. Sin embargo, esto puede resultar poco eficiente y poco práctico si tenemos que ejecutar el mismo script varias veces. Para evitar esto podemos **almacenar esta sentencias** en el servidor y después podríamos ejecutarlas aunque no tengamos acceso a los scripts. Antes de entrar directamente en la escritura de rutinas almacenadas debemos entender algunos conceptos básicos de programación. En este apartado vamos a ver algunos de estos conceptos que nos ayudarán a entender mejor la programación en bases de datos. ## Variables Una variable es un mecanismo que permite almacenar un valor temporalmente. Para acceder a este valor se utilizará un nombre, el nombre de la variable, un ejemplo de uso de una variable en MySQL sería el siguiente: ```sql set @mi_variable = 10;``` (En MySQL hemos de preceder el nombre de la variable con el símbolo `@` para indicar que es una variable de usuario). En este caso hemos creado una variable llamada `mi_variable` y le hemos asignado el valor `10`. A partir de este momento podremos utilizar la variable `mi_variable` en cualquier parte de la consulta SQL. Por ejemplo:
 
 ```sql
 select @mi_variable as "mi variable";
@@ -69,7 +54,7 @@ El orden de declaración de _cosas_ dentro de una rutina almacenada es el siguie
 - Condiciones (relacionadas con `SIGNAL` y _handlers_, las veremos _al final_).
 - _Handlers_ (los veremos junto con los elementos del punto anterior).
 
-### Variables del sistema
+## Variables del sistema
 
 Las variables del sistema son variables que se utilizan para almacenar información sobre el estado de la base de datos y su configuración. Estas variables son definidas por el sistema y pueden ser utilizadas para obtener información sobre la configuración del servidor, el estado de las conexiones, etc. Se pueden consultar utilizando la sentencia `SHOW VARIABLES` o `SELECT @@nombre_variable`. Por ejemplo:
 

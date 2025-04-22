@@ -3,32 +3,32 @@
 <!-- toc -->
 
 - [Variables](#variables)
-    * [Variables del sistema](#variables-del-sistema)
-    * [Variables de usuario](#variables-de-usuario)
-    * [Variables locales](#variables-locales)
+  * [Variables del sistema](#variables-del-sistema)
+  * [Variables de usuario](#variables-de-usuario)
+  * [Variables locales](#variables-locales)
 - [Sentencias compuestas / bloques de código](#sentencias-compuestas--bloques-de-codigo)
-    * [Estructuras condicionales](#estructuras-condicionales)
-        + [Sentencia `IF`](#sentencia-if)
-        + [Sentencia `CASE`](#sentencia-case)
-    * [Estructura de repetición](#estructura-de-repeticion)
-        + [`WHILE` y `REPEAT`](#while-y-repeat)
-        + [Loop](#loop)
+  * [Estructuras condicionales](#estructuras-condicionales)
+    + [Sentencia `IF`](#sentencia-if)
+    + [Sentencia `CASE`](#sentencia-case)
+  * [Estructura de repetición](#estructura-de-repeticion)
+    + [`WHILE` y `REPEAT`](#while-y-repeat)
+    + [Loop](#loop)
 - [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
-    * [Procedimiento](#procedimiento)
-        + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
-        + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
-    * [Funciones](#funciones)
-        + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
-    * [Triggers](#triggers)
-        + [`NEW` y `OLD`](#new-y-old)
+  * [Procedimiento](#procedimiento)
+    + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
+    + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
+  * [Funciones](#funciones)
+    + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
+  * [Triggers](#triggers)
+    + [`NEW` y `OLD`](#new-y-old)
 - [Cursores](#cursores)
-    * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
-    * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
-        + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
-        + [Sintaxis de un handler](#sintaxis-de-un-handler)
-        + [Ejemplo de handler](#ejemplo-de-handler)
+  * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+  * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+    + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
+    + [Sintaxis de un handler](#sintaxis-de-un-handler)
+    + [Ejemplo de handler](#ejemplo-de-handler)
 - [Uso de `SIGNAL`](#uso-de-signal)
-    * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
+  * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
 
 <!-- tocstop -->
 
@@ -280,6 +280,17 @@ CASE case_value
     [WHEN when_value THEN statement_list] ...
     [ELSE statement_list]
 END CASE
+
+```
+
+Sintaxis alternativa:
+
+```txt
+CASE
+    WHEN search_condition THEN statement_list
+    [WHEN search_condition THEN statement_list] ...
+    [ELSE statement_list]
+END CASE
 ```
 
 Esta expresión sería equivalente a:
@@ -449,10 +460,9 @@ Estas estructuras permiten encapsular lógica y automatizar tareas dentro de la 
 Para declarar un procedimiento almacenado utilizamos la sentencia `CREATE PROCEDURE`. La sintaxis es la siguiente:
 
 ```txt
-CREATE
-    [DEFINER = user]
-    PROCEDURE [IF NOT EXISTS] sp_name ([proc_parameter[,...]])
-    [characteristic ...] routine_body
+CREATE [DEFINER = user] PROCEDURE [IF NOT EXISTS] sp_name ([proc_parameter[,...]])
+[characteristic ...]
+routine_body
 ```
 
 A continuación iremos viendo cada una de las partes de la sentencia:
