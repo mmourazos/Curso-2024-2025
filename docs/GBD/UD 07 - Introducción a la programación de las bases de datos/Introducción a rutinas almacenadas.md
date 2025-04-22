@@ -9,9 +9,9 @@
   * [Estructuras condicionales](#estructuras-condicionales)
     + [Sentencia `IF`](#sentencia-if)
     + [Sentencia `CASE`](#sentencia-case)
-  * [Estructura de repetición](#estructura-de-repeticion)
+  * [Estructuras repetititivas - bucles](#estructuras-repetititivas---bucles)
+    + [Bucle `LOOP`](#bucle-loop)
     + [`WHILE` y `REPEAT`](#while-y-repeat)
-    + [Loop](#loop)
 - [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
   * [Procedimiento](#procedimiento)
     + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
@@ -89,7 +89,7 @@ _Finalmente, si decimos que el **scope** de una variable es local, significa que
 
 ### Variables de usuario
 
-Las variables de usuario son variables que se pueden utilizar para guardar datos temporales (como el resultado de una consulta) y pasarlos entre diferentes sentencias SQL. Se definen con el símbolo `@` seguido de caracteres alfanuméricos y los símbolos `.`, `_` y `$`, con una longitud máxima de 64 caracteres. Si necesitamos que incluyan algún otro carácter hemos de indicar el texto entre comillas `""`, `''` o `` ` `` `` ` `` pueden ser de cualquier tipo de datos.
+Las variables de usuario son variables que se pueden utilizar para guardar datos temporales (como el resultado de una consulta) y pasarlos entre diferentes sentencias SQL. Se definen con el símbolo `@` seguido de caracteres alfanuméricos y los símbolos `.`, `_` y `$`, con una longitud máxima de 64 caracteres. Si necesitamos que incluyan algún otro carácter hemos de indicar el texto entre comillas `""` o `''`.
 
 Para definir una variable de usuario hemos de utilizar la sentencia `SET` o `SELECT`.
 
@@ -162,11 +162,13 @@ Como podemos ver en las dos últimas sentencias **no se muestra ningún error** 
 
 ### Variables locales
 
-Las variables locales son variables que se utilizan dentro de un bloque de código de una _rutina almacenada_ (como un procedimiento o una función) y sólo son accesibles dentro de ese bloque. Se definen con la sentencia `DECLARE` y deben ser inicializadas antes de ser utilizadas. La sintaxis es la siguiente:
+Las variables locales son variables que se utilizan dentro de un bloque de código de una _rutina almacenada_ (como un procedimiento o una función) y sólo son accesibles dentro de ese bloque. Se definen utilizando la sentencia `DECLARE`. La sintaxis es la siguiente:
 
 ```txt
 DECLARE nombre_variable tipo_dato [DEFAULT valor];
 ```
+
+Por ejemplo:
 
 ```sql
 BEGIN
@@ -257,7 +259,9 @@ Más adelante veremos en detalle la creación de procedimientos por lo que no ex
 
 #### Sentencia `CASE`
 
-La sentencia `CASE` es otra forma de implementar estructuras condicionales en MySQL. Esta sentencia no aporta nada nuevo respecto a la sentencia `IF`, pero puede resultar más legible en algunos casos. La sintaxis de la sentencia `CASE` es la siguiente:
+La sentencia `CASE` es otra forma de implementar estructuras condicionales en MySQL. Esta sentencia no aporta nada nuevo respecto a la sentencia `IF`, pero puede resultar más legible en algunos casos.
+
+La sentencia `CASE` tiene dos sintaxis alternativas:
 
 ```txt
 CASE case_value
@@ -288,7 +292,19 @@ END
 FROM OrderDetails;
 ```
 
-Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
+La otra forma de escribir la sentencia `CASE` es la siguiente:
+
+```txt
+CASE
+    WHEN search_condition THEN statement_list
+    [WHEN search_condition THEN statement_list] ...
+    [ELSE statement_list]
+END CASE
+```
+
+La diferencia es que, en lugar de compar los valores de la expresión desde la cláusula `CASE` y las que siguen a los `WHEN`, no habrá nada después de `CASE` y se evalúan las condiciones de la cláusula `WHEN` (que tendrán que se _booleanas_, es decir, verdadero o falso).
+
+Un ejemplo más completo utilizando esta sentencia en un procedimiento sería el siguiente:
 
 ```sql
 DELIMITER $$
@@ -325,13 +341,51 @@ END$$
 DELIMITER ;
 ```
 
-### Estructura de repetición
+### Estructuras repetititivas - bucles
 
-Una estructura repetitiva se utiliza para ejecutar un bloque de código varias veces. En MySQL, podemos utilizar las siguientes estructuras de repetición:
+Una estructura repetitiva se utiliza para ejecutar un mismo conjunto de instrucciones un determinado número de veces. Este es el motivo por el que se denominan "estructuras repetitivas". En otras palabras, una estructura repetitiva nos permite repetir un bloque de código varias veces hasta que se cumpla una condición de terminación. Otro nompbre por el que se las conoce es el de _bucles_ o _loops_
 
+En MySQL dispondremos de los siguientes tipos de bucles:
+
+- `LOOP`
 - `WHILE`
 - `REPEAT`
-- `LOOP`
+
+El bucle `LOOP` es el más básico (y el más complicado) pero que podríamos utilizar para hacer lo mismo que hace los otros dos. Empezaremos explicando el bucle `LOOP` y después veremos los bucles `WHILE` y `REPEAT`, que resultarán más sencillos.
+
+#### Bucle `LOOP`
+
+Este bucle es, en principio, un bucle infinito pues no tiene una condición de terminación. Para salir del bucle se utiliza la sentencia `LEAVE` seguida de la _etiqueta_ del bucle. La sintaxis es la siguiente:
+
+```txt
+[begin_label:] LOOP
+    statement_list
+END LOOP [end_label]
+```
+
+Este tipo de bucle se utiliza cuando no se conoce el número de iteraciones de antemano como, por ejemplo, cuando queremos _iterar_ sobre un cursor. Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sakila.test_loop(IN input INT)
+BEGIN
+
+    mi_primer_loop: LOOP
+
+        -- Declaramos una variable de tipo entero con el valor inicial 0.
+        DECLARE iteration INT DEFAULT 0;
+
+        IF iteration = 10 THEN
+            LEAVE etiqueta;
+        END IF;
+
+    END LOOP mi_primer_loop;
+
+END$$
+
+DELIMITER ;
+```
 
 #### `WHILE` y `REPEAT`
 
@@ -386,39 +440,6 @@ DELIMITER ;
 ```
 
 Compor se puede intuir por la estructura del código escrito, el bucle `WHILE` se ejecuta mientras (_while_) la condición `iteration < input` sea verdadera. En cambio, el bucle `REPEAT` se ejecuta al menos una vez y luego evalúa la condición `iteration >= input` y se seguirá ejecutando hasta (_until_) que la condición sea verdadera. Podríamos decir que si queremos transformar un bucle _while_ en un bucle _repeat_ deberíamos _invertir_ la condición de terminación.
-
-#### Loop
-
-Este bucle es, en principio, un bucle infinito pues no tiene una condición de terminación. Para salir del bucle se utiliza la sentencia `LEAVE`. La sintaxis es la siguiente:
-
-```txt
-[begin_label:] LOOP
-    statement_list
-END LOOP [end_label]
-```
-
-Este tipo de bucle se utiliza cuando no se conoce el número de iteraciones de antemano como, por ejemplo, cuando queremos _iterar_ sobre un cursor. Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
-
-```sql
-DELIMITER $$
-
-CREATE PROCEDURE sakila.test_loop(IN input INT)
-BEGIN
-
-    etiqueta: LOOP
-
-        DECLARE iteration INT DEFAULT 0;
-
-        IF iteration = 10 THEN
-            LEAVE etiqueta;
-        END IF;
-
-    END LOOP etiqueta;
-
-END$$
-
-DELIMITER ;
-```
 
 ## Rutinas almacenadas: procedimientos, funciones, eventos y triggers
 
