@@ -4,11 +4,11 @@
 
 - [MySQLShell `mysqlsh`](#mysqlshell-mysqlsh)
 - [Cuentas en MySQL](#cuentas-en-mysql)
-- [¿Cómo se ha creado una tabla?](#cómo-se-ha-creado-una-tabla)
+- [¿Cómo se ha creado una tabla?](#%C2%BFcomo-se-ha-creado-una-tabla)
 - [No puedo acceder a MySQL como root (Ubuntu)](#no-puedo-acceder-a-mysql-como-root-ubuntu)
-  - [¿Por qué sucede esto?](#por-qué-sucede-esto)
-  - [¿Cual es la clave del usuario `root` en Ubuntu?](#cual-es-la-clave-del-usuario-root-en-ubuntu)
-  - [Conclusiones](#conclusiones)
+  * [¿Por qué sucede esto?](#%C2%BFpor-que-sucede-esto)
+  * [¿Cual es la clave del usuario `root` en Ubuntu?](#%C2%BFcual-es-la-clave-del-usuario-root-en-ubuntu)
+  * [Conclusiones](#conclusiones)
 
 <!-- tocstop -->
 
@@ -43,13 +43,13 @@ Si usamos la opción `-f script` se nos abrirá una consola interactiva en la qu
 
 Las cuentas de los usuarios de MySQL se almacenan en la base de datos `mysql.user`. Esta base de datos los siguientes campos:
 
-* `user`: Nombre del usuario.
-* `host`: Host desde el que se puede conectar el usuario.
-* `plugin`: Plugin que se va a usar para autenticar al usuario.
-* `authentication_string`: Contraseña cifrada del usuario.
-* `password_expired`: Indica si la contraseña ha expirado.
-* **Un montón de campos de la forma `..._priv` que indican los privilegios que tiene el usuario.**
-* Otros campos que no nos interesan.
+- `user`: Nombre del usuario.
+- `host`: Host desde el que se puede conectar el usuario.
+- `plugin`: Plugin que se va a usar para autenticar al usuario.
+- `authentication_string`: Contraseña cifrada del usuario.
+- `password_expired`: Indica si la contraseña ha expirado.
+- **Un montón de campos de la forma `..._priv` que indican los privilegios que tiene el usuario.**
+- Otros campos que no nos interesan.
 
 La clave primaria de esta tabla es la combinación de los campos `user` y `host`. Ninguno de ellos puede ser `NULL` pero sí se admite que sean vacíos (`''`).
 
@@ -79,8 +79,8 @@ Aunque hayas introducido el password correcto para el usuarios `root` del sistem
 
 Si entramos en la base de datos _por las bravas_ `sudo mysql` y consultamos la tabla con la información sobre los usuarios `mysql.user` veremos que tiene dos campos relacionados con la autenticación que nos interesan:
 
-* `authentication_string`: Aquí se almacena la contraseña cifrada.
-* `plugin`: Nos indica el plugin que se va a usar para autenticar al usuario.
+- `authentication_string`: Aquí se almacena la contraseña cifrada.
+- `plugin`: Nos indica el plugin que se va a usar para autenticar al usuario.
 
 Si cotilleamos qué valores hay en estos campos para root (además de host):
 
@@ -96,8 +96,8 @@ SELECT user, host, plugin, authentication_string FROM mysql.user WHERE User='roo
 
 Como podemos ver hay dos cosas que nos llaman la atención:
 
-* **El campo `authentication_string` está vacío**. Esto significa que no hay contraseña configurada para el usuario `root`.
-* **El campo `plugin` tiene el valor `auth_socket`**. Esto significa que el usuario `root` se autentica a través del socket del sistema.
+- **El campo `authentication_string` está vacío**. Esto significa que no hay contraseña configurada para el usuario `root`.
+- **El campo `plugin` tiene el valor `auth_socket`**. Esto significa que el usuario `root` se autentica a través del socket del sistema.
 
 Es decir, el usuario `root` que se usa para acceder desde `localhost` a MySQL será el usuario `root` de sistema Ubuntu.
 
