@@ -1,0 +1,4 @@
+CREATE FUNCTION sakila.get_num_actors()
+RETURNS INT
+READS SQL DATA
+    RETURN (SELECT COUNT(*) FROM actor);
