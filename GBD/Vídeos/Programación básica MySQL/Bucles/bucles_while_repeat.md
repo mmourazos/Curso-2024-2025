@@ -70,3 +70,40 @@ Iteración: 4
 
 Query OK, 0 rows affected (0.0008 sec)text
 ```
+
+## Bucle `REPEAT`
+
+Si la sintaxis del bucle `REPEAT` es la siguiente:
+
+```text
+[etiqueta:] REPEAT
+    -- Código a ejecutar
+UNTIL condición END REPEAT [etiqueta];
+```
+
+La diferencia con el bucle `WHILE` es que la condición se evalúa al final del bloque de código. Por lo tanto, el bloque de código se ejecutará al menos una vez, incluso si la condición es falsa desde el principio.
+
+Al igual que en el bucle `WHILE`, si la condición no cambia dentro del bloque de código, el bucle se ejecutará indefinidamente. Por lo tanto, es importante asegurarse de que la condición cambie en algún momento para evitar un bucle infinito.
+
+Un ejemplo de bucle `REPEAT` sería el siguiente:
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE IF NOT EXISTS world.bucle_repeat(IN repeticiones INT)
+BEGIN
+
+    DECLARE iteracion INT DEFAULT 0;
+
+    REPEAT
+
+        SELECT iteracion AS 'Iteración';
+
+        SET iteracion = iteracion + 1;
+
+    UNTIL repeticiones >= iteracion END REPEAT;
+
+END$$
+
+DELIMITER ;
+```

@@ -16,6 +16,9 @@ BEGIN
         SET iteracion = iteracion + 1;
     END WHILE;
 
+
+    SELECT 'Fin del bucle' AS 'Fin del bucle';
+
 END$$
 
 DELIMITER ;
