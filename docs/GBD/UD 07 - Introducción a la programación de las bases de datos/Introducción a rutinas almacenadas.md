@@ -3,31 +3,32 @@
 <!-- toc -->
 
 - [Variables del sistema](#variables-del-sistema)
-  * [Variables de usuario](#variables-de-usuario)
-  * [Variables locales](#variables-locales)
+    * [Variables de usuario](#variables-de-usuario)
+    * [Variables locales](#variables-locales)
 - [Sentencias compuestas / bloques de código](#sentencias-compuestas--bloques-de-codigo)
-  * [Estructuras condicionales](#estructuras-condicionales)
-    + [Sentencia `IF`](#sentencia-if)
-    + [Sentencia `CASE`](#sentencia-case)
-  * [Estructuras repetititivas - bucles](#estructuras-repetititivas---bucles)
-    + [Bucle `LOOP`](#bucle-loop)
-    + [`WHILE` y `REPEAT`](#while-y-repeat)
+    * [Estructuras condicionales](#estructuras-condicionales)
+        + [Sentencia `IF`](#sentencia-if)
+        + [Sentencia `CASE`](#sentencia-case)
+    * [Estructuras repetitivas - bucles](#estructuras-repetitivas---bucles)
+        + [Bucle `LOOP`](#bucle-loop)
+            - [Sobre etiquetas](#sobre-etiquetas)
+        + [`WHILE` y `REPEAT`](#while-y-repeat)
 - [Rutinas almacenadas: procedimientos, funciones, eventos y triggers](#rutinas-almacenadas-procedimientos-funciones-eventos-y-triggers)
-  * [Procedimiento](#procedimiento)
-    + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
-    + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
-  * [Funciones](#funciones)
-    + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
-  * [Triggers](#triggers)
-    + [`NEW` y `OLD`](#new-y-old)
+    * [Procedimiento](#procedimiento)
+        + [Parámetros de entrada y salida](#parametros-de-entrada-y-salida)
+        + [Seguridad en la ejecución: `DEFINER` y `SQL SECURITY`](#seguridad-en-la-ejecucion-definer-y-sql-security)
+    * [Funciones](#funciones)
+        + [`DETERMINISTIC` y `NON DETERMINISTIC`](#deterministic-y-non-deterministic)
+    * [Triggers](#triggers)
+        + [`NEW` y `OLD`](#new-y-old)
 - [Cursores](#cursores)
-  * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
-  * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
-    + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
-    + [Sintaxis de un handler](#sintaxis-de-un-handler)
-    + [Ejemplo de handler](#ejemplo-de-handler)
+    * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+    * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
+        + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
+        + [Sintaxis de un handler](#sintaxis-de-un-handler)
+        + [Ejemplo de handler](#ejemplo-de-handler)
 - [Uso de `SIGNAL`](#uso-de-signal)
-  * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
+    * [_Condiciones_ definidas por el usuario](#_condiciones_-definidas-por-el-usuario)
 
 <!-- tocstop -->
 
@@ -56,7 +57,7 @@ El orden de declaración de _cosas_ dentro de una rutina almacenada es el siguie
 
 ## Variables del sistema
 
-Las variables del sistema son variables que se utilizan para almacenar información sobre el estado de la base de datos y su configuración. Estas variables son definidas por el sistema y pueden ser utilizadas para obtener información sobre la configuración del servidor, el estado de las conexiones, etc. Se pueden consultar utilizando la sentencia `SHOW VARIABLES` o `SELECT @@nombre_variable`. Por ejemplo:
+Las variables del sistema son variables que se utilizan para almacenar información sobre el estado y modo de funcionamiento del gestor de la base de datos y su configuración. Estas variables son definidas por el sistema y pueden ser utilizadas para obtener información sobre la configuración del servidor, el número máximo de conexiones, etc. Se pueden consultar utilizando la sentencia `SHOW VARIABLES` o `SELECT @@nombre_variable`. Por ejemplo:
 
 ```sql
 
@@ -83,13 +84,13 @@ Estas variables pueden tener un **scope global o de sesión** . Las variables de
 
 _El **scope** de una variable se refiere a los lugares desde los cuales se puede acceder a la misma._
 
-_Así, si decimos que el **scope** de una variable es global, significa que se puede acceder a ella desde cualquier lado y su valor se mantiene entre sessiones. Por el contrario, si decimos que el **scope** de una variable es de sesión, significa que se puede acceder a ella desde cualquier parte de la sesión actual pero no se asegura que su valor será el mismo en otra sesión._
+_Así, si decimos que el **scope** de una variable es global, significa que se puede acceder a ella desde cualquier lado (desde cualquier conexión) y su valor se mantiene entre sesiones. Por el contrario, si decimos que el **scope** de una variable es **de sesión**, significa que se puede acceder a ella desde cualquier parte de la sesión actual pero no se asegura que su valor será el mismo en otra sesión._
 
-_Finalmente, si decimos que el **scope** de una variable es local, significa que sólo se puede acceder a ella desde dentro de la rutina donde se ha declarado pero no existirá (y no será visible) fuera de ella._
+_Finalmente, si decimos que el **scope** de una variable es **local**, significa que sólo se puede acceder a ella desde dentro de la rutina donde se ha **declarado** y dejará de existir al finalizar la rutina._
 
 ### Variables de usuario
 
-Las variables de usuario son variables que se pueden utilizar para guardar datos temporales (como el resultado de una consulta) y pasarlos entre diferentes sentencias SQL. Se definen con el símbolo `@` seguido de caracteres alfanuméricos y los símbolos `.`, `_` y `$`, con una longitud máxima de 64 caracteres. Si necesitamos que incluyan algún otro carácter hemos de indicar el texto entre comillas `""` o `''`.
+Las variables de usuario son variables que se pueden utilizar para guardar datos temporales (como el resultado de una consulta) y pasarlos entre diferentes sentencias SQL. Se definen con el símbolo `@` seguido del nombre de la variable. El nombre ha de estar compuesto de caracteres alfanuméricos y los símbolos `.`, `_` y `$`, con una longitud máxima de 64 caracteres. Si necesitamos que incluyan algún otro carácter hemos de indicar el texto entre comillas `""` o `''`.
 
 Para definir una variable de usuario hemos de utilizar la sentencia `SET` o `SELECT`.
 
@@ -124,7 +125,7 @@ SELECT film_id, title FROM film WHERE release_year = @year;
 ...
 ```
 
-Sin embargo, no se pueden utilizar los contextos donde debería ir una constante o valor literal. Por ejemplo, no se pueden utilizar en la cláusula `LIMIT` de una consulta SQL.
+Sin embargo, **no se pueden utilizar** los contextos **donde debería ir una constante o valor literal**. Por ejemplo, no se pueden utilizar en la cláusula `LIMIT` de una consulta SQL.
 
 ```sql
 SET @limit = 10;
@@ -162,7 +163,9 @@ Como podemos ver en las dos últimas sentencias **no se muestra ningún error** 
 
 ### Variables locales
 
-Las variables locales son variables que se utilizan dentro de un bloque de código de una _rutina almacenada_ (como un procedimiento o una función) y sólo son accesibles dentro de ese bloque. Se definen utilizando la sentencia `DECLARE`. La sintaxis es la siguiente:
+Las variables locales son variables que se utilizan dentro de un bloque de código de una _rutina almacenada_ (como un procedimiento o una función) y sólo son accesibles dentro de ese bloque. Se definen utilizando la sentencia `DECLARE`.+
+
+La sintaxis para declarar una variable es la siguiente:
 
 ```txt
 DECLARE nombre_variable tipo_dato [DEFAULT valor];
@@ -178,7 +181,7 @@ END
 
 En sentencia anterior hemos declarado una variable de nombre `nombre_variable` de tipo entero `INT` y le asignamos un valor inicial de `0`. Esta variable sólo será accesible dentro del bloque `BEGIN ... END` en el que se ha declarado. Si no se asigna un valor inicial, la variable tendrá un valor nulo `NULL` por defecto.
 
-**IMPORTANTE: Cuando declaramos variables en una rutina almacenada hemos de hacerlo antes de cualquier otra sentencia SQL. En caso contrario nos dará un error de sintaxis. Las variables han de declararse también antes de _handlers_ o _cursores_ (elementos que veremos más adelante).**
+**IMPORTANTE: Cuando declaramos variables en una rutina almacenada hemos de hacerlo antes de cualquier otra sentencia SQL. En caso contrario nos dará un error de sintaxis. Las variables han de declararse también antes de _conditions_, _handlers_ o _cursores_ (elementos que veremos más adelante).**
 
 Para ver una lista de los tipos de datos que se pueden utilizar para declarar variables locales, podemos consultar la documentación oficial de MySQL en el siguiente enlace: [MySQL Data Types](https://dev.mysql.com/doc/refman/8.4/en/data-types.html).
 
@@ -192,22 +195,62 @@ Cuando creamos alguna de estas rutinas almacenadas (funciones, procedimientos, e
 END [end_label]
 ```
 
-Para definir la lógica de ejecución utilizaremos estructuras de control. Estas estructuras son similares a las que se utilizan en otros lenguajes de programación y nos permiten controlar el flujo de ejecución del código.
+Cuando una rutina almacenada necesita solo una sentencia **no es necesario crear un bloque de código**. Por ejemplo, si queremos crear un procedimiento que devuelva el número de filas de una tabla, podríamos escribirlo de la siguiente forma:
+
+```sql
+CREATE FUNCTION sakila.get_num_actors()
+RETURNS INT
+READS SQL DATA
+    RETURN (SELECT COUNT(*) FROM actor);
+```
+
+Para definir la lógica de ejecución, es decir, qué sentencias se ejecutarán y en qué orden, utilizaremos estructuras de control. Estas estructuras son similares a las que se utilizan en otros lenguajes de programación y nos permiten controlar el flujo de ejecución del código.
+
+Las sentencias de control disponibles en MySQL son:
+
+- Condicionales: `IF`, `CASE`.
+- Bucles: `LOOP`, `WHILE`, `REPEAT`.
+- Sentencia de salida: `LEAVE` (disponible dentro de bloques de código y bucles).
+- Sentencia de repetición de bucle: `ITERATE` (disponible dentro de bucles).
+- Sentencia de retorno de resultado: `RETURN` (disponible dentro de las funciones).
+
+Estas sentencias de control de flujo se pueden consultar en detalle en la [documentación de MySQL](https://dev.mysql.com/doc/refman/8.4/en/flow-control-statements.html).
 
 ### Estructuras condicionales
 
-Una estructura condicional nos permite ejecutar diferentes bloques de código según se cumplan o no ciertas condiciones. En MySQL, podemos utilizar las setencias IF y CASE para implementar estructuras condicionales.
+Una estructura condicional nos permite ejecutar diferentes bloques de código según se cumplan o no ciertas condiciones. En MySQL disponemos de las sentencias `IF` y `CASE` para implementar estructuras condicionales.
+
+Gráficamente una estructura condicional se puede representar de la siguiente forma:
+
+```mermaid
+flowchart TD
+    
+    I((Inicio)) --> B0[Bloque 0]
+    B0 --> C{Condición}
+    C -->|Verdadero| B1[Bloque 1]
+    C -->|Falso| B2[Bloque 2]
+    B1 --> B3[Bloque 3]
+    B2 --> B3
+    B3 --> F(((Fin)))
+```
+
+Comenzamos la ejecución del bloque de código en inicio (`BEGIN`), comenzarán las sentencias de nuestra rutina (Bloque 0) llegando a la condición. Si la condición se cumple, diremos que verdadera se ejecutará el bloque 1 y después el bloque 3. Si la condición es falsa se ejecutará el bloque 2 y después el bloque 3. Finalmente llegaremos al final de la rutina (Fin).
 
 #### Sentencia `IF`
 
 La sintaxis de una sentencia `IF` tiene la siguiente forma:
 
 ```txt
-IF search_condition THEN statement_list
-    [ELSEIF search_condition THEN statement_list] ...
-    [ELSE statement_list]
+IF search_condition THEN
+    statement_list
+[ELSEIF search_condition THEN statement_list] ...
+[ELSE statement_list]
 END IF
 ```
+
+Donde _`search_condigion`_ será una expresión booleana (es decir, una expresión que puede ser verdadera o falsa). Si la condición es verdadera se ejecutará el bloque de código que sigue a `THEN` y si es falsa se ejecutará el bloque de código que sigue a `ELSE`.
+
+`ELSE` es opcional y si no aparece se ejecutará el bloque del `THEN` si la condición es verdadera y no se ejecutará nada si la condición es falsa.
 
 Para verlo con un ejemplo:
 
@@ -219,17 +262,33 @@ ELSE
 END IF;
 ```
 
-Se pueden _encadenar_ instrucciones `IF` utilizando la cláusula `ELSEIF` para evaluar múltiples condiciones. La sentencia `ELSE` se ejecuta si ninguna de las condiciones anteriores se cumple.
+Se pueden _encadenar_ instrucciones `IF`:
 
 ```sql
-IF resultados > limit THEN
-    SELECT CONCAT('Hay más de ', limit, ' resultados');
-ELSEIF resultados = limit THEN
-    SELECT CONCAT('Hay exactamente ', limit, ' resultados');
-ELSE
-    SELECT CONCAT('Hay menos de ', limit, ' resultados');
+IF x < 0 THEN
+    SELECT 'x es negativo';
+ELSE 
+    IF x = 0 THEN
+        SELECT 'x es cero';
+    END IF;
+ELSE 
+    SELECT 'x es positivo.';
 END IF;
 ```
+
+Como se puede ver este código es difícil de leer y no es recomendable. En su lugar, podemos utilizar la sentencia `ELSEIF` para evaluar múltiples condiciones. El código anterior, utilizando la sentencia `ELSEIF` quedaría de la siguiente forma:
+
+```sql
+IF x < 0 THEN
+    SELECT 'x es negativo';
+eLSEIF x = 0 THEN
+    SELECT 'x es cero';
+ELSE 
+    SELECT 'x es positivo.';
+END IF;
+```
+
+Utilizando la cláusula `ELSEIF` para evaluar múltiples condiciones. La sentencia `ELSE` se ejecuta si ninguna de las condiciones anteriores se cumple.
 
 Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
 
@@ -263,6 +322,8 @@ La sentencia `CASE` es otra forma de implementar estructuras condicionales en My
 
 La sentencia `CASE` tiene dos sintaxis alternativas:
 
+La primera es como sigue:
+
 ```txt
 CASE case_value
     WHEN when_value THEN statement_list
@@ -271,25 +332,35 @@ CASE case_value
 END CASE
 ```
 
-Esta expresión sería equivalente a:
+Donde _`case_value`_ es una expresión que se evalúa y se compara con los valores de las cláusulas `WHEN`. Si la expresión coincide con uno de los valores de `WHEN`, se ejecuta el bloque de código correspondiente y saldremos del `CASE`. Si su valor no coincide con ningún `WHEN`, se ejecuta el bloque de código del `ELSE` (si existe).
+
+La segunda sintaxis es la siguiente:
 
 ```txt
-IF case_value = when_value THEN statement_list
-    [ELSEIF case_value = when_value THEN statement_list] ...
+CASE
+    WHEN search_condition THEN statement_list
+    [WHEN search_condition THEN statement_list] ...
     [ELSE statement_list]
-END IF
+END CASE
 ```
+
+En este caso _`search_condition`_ será una expresión booleana (es decir, una expresión que puede ser verdadera o falsa). Si la condición es verdadera se ejecutará el bloque de código que sigue a `THEN` y se termina. Si es falsa se comprobará la condición del siguiente `WHEN` y así sucesivamente. Si ninguna de las condiciones es verdadera se ejecutará el bloque de código que sigue a `ELSE` (si existe).
+
+**Importante:** Si se _entra_ en algún `WHEN` **se dará por finalizado el `CASE`**. No se comparan los siguientes `WHEN` ni se ejecuta el bloque de código del `ELSE`. Por lo tanto, si se entra en un `WHEN` se ejecutará el bloque de código correspondiente y se saldrá del `CASE`.
 
 Un ejemplo de la sentencia `CASE` sería el siguiente:
 
 ```sql
-SELECT OrderID, Quantity,
+SELECT Quantity FROM OrderDetails WHERE OrderID = 10248;
+
 CASE
-    WHEN Quantity > 30 THEN "The quantity is greater than 30"
-    WHEN Quantity = 30 THEN "The quantity is 30"
-    ELSE "The quantity is under 30"
-END
-FROM OrderDetails;
+    WHEN Quantity > 30 THEN
+        SELECT "The quantity is greater than 30";
+    WHEN Quantity = 30 THEN
+        SELECT "The quantity is 30";
+    ELSE 
+        SELECT "The quantity is under 30";
+END CASE;
 ```
 
 La otra forma de escribir la sentencia `CASE` es la siguiente:
@@ -302,8 +373,6 @@ CASE
 END CASE
 ```
 
-La diferencia es que, en lugar de compar los valores de la expresión desde la cláusula `CASE` y las que siguen a los `WHEN`, no habrá nada después de `CASE` y se evalúan las condiciones de la cláusula `WHEN` (que tendrán que se _booleanas_, es decir, verdadero o falso).
-
 Un ejemplo más completo utilizando esta sentencia en un procedimiento sería el siguiente:
 
 ```sql
@@ -315,16 +384,17 @@ CREATE PROCEDURE test_case(IN input INT)
 READS SQL DATA
 BEGIN
 
-    CASE WHEN input < 0 THEN
-        SELECT 'Negative number';
-    WHEN input = 0 THEN
-        SELECT 'Zero';
-    WHEN input > 0 AND input < 10 THEN
-        SELECT 'Single digit positive number';
-    WHEN input >= 10 AND input < 100 THEN
-        SELECT 'Double digit positive number';
-    ELSE
-        SELECT 'Large positive number';
+    CASE
+        WHEN input < 0 THEN
+            SELECT 'Negative number';
+        WHEN input = 0 THEN
+            SELECT 'Zero';
+        WHEN input > 0 AND input < 10 THEN
+            SELECT 'Single digit positive number';
+        WHEN input >= 10 AND input < 100 THEN
+            SELECT 'Double digit positive number';
+        ELSE
+            SELECT 'Large positive number';
     END CASE;
 
     CASE input
@@ -341,9 +411,9 @@ END$$
 DELIMITER ;
 ```
 
-### Estructuras repetititivas - bucles
+### Estructuras repetitivas - bucles
 
-Una estructura repetitiva se utiliza para ejecutar un mismo conjunto de instrucciones un determinado número de veces. Este es el motivo por el que se denominan "estructuras repetitivas". En otras palabras, una estructura repetitiva nos permite repetir un bloque de código varias veces hasta que se cumpla una condición de terminación. Otro nompbre por el que se las conoce es el de _bucles_ o _loops_
+Una estructura repetitiva se utiliza para ejecutar un mismo conjunto de instrucciones cierto número de veces. Este es el motivo por el que se denominan "estructuras repetitivas", repiten un bloque de código. En otras palabras, una estructura repetitiva nos permite repetir un bloque de código varias veces hasta que se cumpla una condición (_condición de terminación_) que usaremos para determinar cuándo salir del bucle. Otro nombre por el que se las conoce es el de _bucles_ o _loops_.
 
 En MySQL dispondremos de los siguientes tipos de bucles:
 
@@ -351,11 +421,17 @@ En MySQL dispondremos de los siguientes tipos de bucles:
 - `WHILE`
 - `REPEAT`
 
-El bucle `LOOP` es el más básico (y el más complicado) pero que podríamos utilizar para hacer lo mismo que hace los otros dos. Empezaremos explicando el bucle `LOOP` y después veremos los bucles `WHILE` y `REPEAT`, que resultarán más sencillos.
+Aunque todos ellos son distintos, al igual que sucede con `CASE` e `IF` podríamos replicar el funcionamiento de uno de ellos con cualquiera de los otros dos.
+
+El bucle `LOOP` es el más básico (y el más complicado) y nos permite hacer lo mismo que hacen los otros dos. Podríamos decir que los bucles `WHILE` y `REPEAT` vienen siendo un bucle `LOOP` simplificado.
+
+Empezaremos explicando el bucle `LOOP` y después veremos los bucles `WHILE` y `REPEAT`, que resultarán más sencillos.
 
 #### Bucle `LOOP`
 
-Este bucle es, en principio, un bucle infinito pues no tiene una condición de terminación. Para salir del bucle se utiliza la sentencia `LEAVE` seguida de la _etiqueta_ del bucle. La sintaxis es la siguiente:
+Este bucle es, en principio, un bucle infinito pues no tiene una condición de terminación. Para salir del hemos de invocar una sentencia `LEAVE` seguida de la _etiqueta_ del bucle o, si estamos dentro de una función, se puede utilizar `RETURN` (cuando aparece una sentencia `RETURN` dentro de una función, esta terminará y devolverá el valor indicado).
+
+Su sintaxis es la siguiente:
 
 ```txt
 [begin_label:] LOOP
@@ -363,22 +439,30 @@ Este bucle es, en principio, un bucle infinito pues no tiene una condición de t
 END LOOP [end_label]
 ```
 
-Este tipo de bucle se utiliza cuando no se conoce el número de iteraciones de antemano como, por ejemplo, cuando queremos _iterar_ sobre un cursor. Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
+##### Sobre etiquetas
+
+Las etiquetas son _nombre_ que se pueden asignar a un bloque de código. Su utilidad consiste en que nos permiten usar dentro de ese bloque una sentencia `LEAVE` o `RETURN` para salir de él. La etiqueta se define justo antes de la palabra `LOOP` y se utiliza para identificar el bucle al que pertenece la instrucción `LEAVE etiqueta_del_bloque` para ir al final del bloque de código.
+
+Volviendo al bucle `LOOP`, este tipo de bucle se utiliza cuando no se conoce el número de iteraciones de antemano como, por ejemplo, cuando queremos _iterar_ sobre (recorrer los valores de) un cursor.
+
+Un ejemplo más completo utilizando esta sentencia en un procedimiento almacenado sería el siguiente:
 
 ```sql
 DELIMITER $$
 
 CREATE PROCEDURE sakila.test_loop(IN input INT)
 BEGIN
+    -- Declaramos una variable de tipo entero con el valor inicial 0.
+    DECLARE iteration INT DEFAULT 0;
 
     mi_primer_loop: LOOP
 
-        -- Declaramos una variable de tipo entero con el valor inicial 0.
-        DECLARE iteration INT DEFAULT 0;
-
-        IF iteration = 10 THEN
+        -- Comprobamos si la variable iteration es menor que el valor de input (condición de salida del bucle).
+        IF iteration < input THEN
             LEAVE etiqueta;
         END IF;
+
+        SELECT iteration AS 'Repetición número';
 
     END LOOP mi_primer_loop;
 
