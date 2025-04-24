@@ -1,5 +1,5 @@
 class Animal:
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
 
     def sonido(self):

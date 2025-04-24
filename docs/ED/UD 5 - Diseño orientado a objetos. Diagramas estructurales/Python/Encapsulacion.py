@@ -4,6 +4,7 @@
 class MiClase:
     atributo_publico = 1  # Atributo público de clase
     __atributo_privado = 2  # Atributo privado de clase
+    _protected = "protegido"
 
     def get_atributo_privado(self):
         return self.__atributo_privado
@@ -21,6 +22,7 @@ if __name__ == "__main__":
     print(obj.get_atributo_privado())  # 2
     obj.set_atributo_privado(10)
     print(obj.get_atributo_privado())  # 10
+    
 
     obj.__atributo_privado = 20  # Esto no debería funcionar.
     print(obj.get_atributo_privado())  # Pero lo hace.
@@ -30,3 +32,5 @@ if __name__ == "__main__":
     )  # Esto generará un error, ya que __atributo_privado es privado
     # Esto generará un error, ya que __atributo_privado es privado
     # print(obj.__atributo_privado)  # AttributeError: 'MiClase' object has no attribute '__atributo_privado'
+
+print(interna)
