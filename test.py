@@ -9,7 +9,7 @@ def strToDic(s):
             d[char] = d[char] + 1
         else:
             d.update({char: 1})
-    return d
+    return dil
 
 
 def isAnagram(s: str, t: str) -> bool:
