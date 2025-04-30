@@ -23,6 +23,9 @@
         + [`NEW` y `OLD`](#new-y-old)
 - [Cursores](#cursores)
     * [¿Qué es un cursor?](#%C2%BFque-es-un-cursor)
+        + [Propiedades de un cursor](#propiedades-de-un-cursor)
+        + [Sintaxis de un cursor](#sintaxis-de-un-cursor)
+        + [Señal `NOT FOUND`, _handlers_ y cursores](#senal-not-found-_handlers_-y-cursores)
     * [¿Qué es un handler?](#%C2%BFque-es-un-handler)
         + [Relación entre _handler_, `SIGNAL` y `SQLSTATE`](#relacion-entre-_handler_-signal-y-sqlstate)
         + [Sintaxis de un handler](#sintaxis-de-un-handler)
@@ -801,9 +804,25 @@ Antes de continuar explicando como crear rutinas almacenadas es conveniente expl
 
 ### ¿Qué es un cursor?
 
-De manera informal podemos decir que un _cursor_ es una _variable_ que almacena un conjunto de filas devueltas por una consulta SQL. Se entiende, por lo tanto, que un _cursor_ estará siempre asociado a una consulta SQL. En este sentido, un _cursor_ es similar a una tabla temporal que se crea en memoria y que se puede recorrer fila a fila.
+Un cursor es un mecanismo que permite _encapsular_ una consulta SQL y recorrer el conjunto de filas devueltas por esta consulta. Un _cursor_ se puede utilizar para realizar operaciones en cada fila del conjunto de resultados, como actualizar o eliminar filas.
 
-En realidad, un _cursor_ es un objeto que permite recorrer fila a fila el resultado de una consulta SQL. Un _cursor_ se puede utilizar para realizar operaciones en cada fila del conjunto de resultados, como actualizar o eliminar filas.
+Los cursores **sólo pueden utilizarse dentro de rutinas almacenadas**.
+
+Para utilizar un cursor éste ha de declararse (sentencia `DECLARE CURSOR`), abrirse (`OPEN`), recorrerse (`FETCH`) y cerrarse (`CLOSE`).
+
+La declaración de un cursor ha de realizarse después de la declaración de las variables y antes de la declaración de los _handlers_. La apertura del cursor se realiza mediante la sentencia `OPEN` y el recorrido del cursor se realiza mediante la sentencia `FETCH`. Finalmente, el cursor se cierra mediante la sentencia `CLOSE`.
+
+#### Propiedades de un cursor
+
+1. Los cursores son _asensitive_: El servidor podrá hacer o no una copia en memoria de sus resultados:
+    - Si el servidor hace una copia de los resultados, el cursor será _sensible_ a los cambios realizados en la tabla.
+    - Si no hace una copia de los resultados, el cursor será _insensible_ a los cambios realizados en la tabla.
+2. Los cursores son _read only_: Esto significa que sólo se pueden leer y **no se pueden modificar**.
+3. Los cursores son _nonscrollable_: Es decir, los cursores **sólo se pueden recorrer en una dirección y no se pueden saltar filas**.
+
+**Sobre el primer punto**: La documentación de MySQL es algo confusa con respecto a este tema. En teoría, decir que un cursor es _asensitive_ quiere decir que el cursor _apunta_ a los datos _reales_ que hay tras la consulta. Esto significaría que si los datos cambian **mientras** recorremos el cursor podríamos ver los valores más actuales. La otra posibilidad es que el servidor hiciera una copia de los datos y el cursor apuntara a esta copia. En este caso, si los datos cambian mientras recorremos el cursor, no veríamos los cambios. `¯\_(ツ)_/¯`.
+
+#### Sintaxis de un cursor
 
 La sintaxis para declarar un _cursor_ es la siguiente:
 
@@ -811,9 +830,70 @@ La sintaxis para declarar un _cursor_ es la siguiente:
 DECLARE cursor_name CURSOR FOR select_statement;
 ```
 
+#### Señal `NOT FOUND`, _handlers_ y cursores
+
+Una señal es un mecanismo que permite indicar una condición o un estado específico durante la ejecución de un bloque de código. En el contexto de los cursores, las señales se utilizan para manejar situaciones como el final del conjunto de resultados o errores específicos.
+
+Un _handler_ es un bloque de código que se ejecuta en respuesta a una señal específica. En el caso de los cursores, un _handler_ se utiliza para manejar la señal `NOT FOUND`, que indica que no hay más filas que leer en el cursor.
+
+Cuando recorremos un cursor dentro de un bucle necesitamos una forma de determinar cuándo hemos llegado al final del conjunto de resultados. Para ello utilizamos la señal `NOT FOUND` que se activa cuando no hay más filas que leer en el cursor. Esta señal se puede capturar mediante un _handler_ y nos permite salir del bucle.
+
+Por lo tanto, la forma de recorrer un cursor es la siguiente:
+
+1. Declaramos una variable que indicará si hemos alcanzado el final del cursor.
+2. Declaramos el cursor.
+3. Declaramos el _handler_ que capturará la señal `NOT FOUND` y modificará la variable que indica el final del cursor.
+4. Abrimos el cursor.
+5. Escribimos el bucle que recorrerá el cursor.
+    5.1. Dentro del bucle, utilizamos la sentencia `FETCH` para leer la siguiente fila del cursor.
+6. Al crear el bucle establecemos como condición de salida la variable que indica el final del cursor.
+7. Cerramos el cursor.
+
+Veamos un ejemplo de como recorrer un cursor en un procedimiento:
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE sakila.test_cursor()
+BEGIN
+    -- fin_cursor: Variable que indica si hemos llegado al final del cursor.
+    DECLARE fin_cursor BIT DEFAULT False;
+    -- Declaramos ahora el cursor. El orden de las declaraciones es importante.
+    DECLARE mi_cursor CURSOR FOR SELECT first_name, last_name FROM actor;
+    -- Finalmente declaramos el handler que capturará la señal NOT FOUND.
+    -- Este handler ejecutará la sentencia "SET fin_cursor = True;" cuando detecte la señal "NOT FOUND".
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin_cursor = True;
+
+    -- Abrimos el cursor.
+    OPEN mi_cursor;
+
+    -- Escribimos el bucle que recorrerá el cursor.
+    WHILE NOT fin_cursor DO
+        -- Declaramos las variables que contendrán los valores del cursor.
+        DECLARE nombre VARCHAR(50);
+        DECLARE apellido VARCHAR(50);
+
+        -- Leemos la siguiente fila del cursor.
+        FETCH mi_cursor INTO nombre, apellido;
+
+        -- Mostramos los valores leídos por el cursor.
+        SELECT CONCAT('Nombre: ', nombre, ' Apellido: ', apellido) AS 'Datos del cursor';
+    END WHILE;
+    
+    -- Como ya hemos terminado de recorrer el cursor, lo cerramos.
+    CLOSE mi_cursor;
+
+END$$
+DELIMITER ;
+```
+
+En la mayoría de los ejemplos que se pueden encontrar se utilizan bucles `LOOP` para recorrer los cursores. En este caso hemos utilizado un bucle `WHILE` que es más sencillo de entender.
+
 ### ¿Qué es un handler?
 
-Un _handler_ o manejador es un elemento que puede _capturar_ _excepciones_ y ejecutar un bloque de código en respuesta a una condición específica. En otras palabras, un _handler_ es un mecanismo que permite manejar errores o condiciones especiales que pueden ocurrir durante la ejecución de un bloque de código.
+Como acabamos de ver el el ejemplo de recorrido de un cursor, un _handler_ es un mecanismo que nos permite definir un bloque de código para que se ejecute cuando se produzca una condición específica (una _señal_, como veremos más adelantes). A continuación veremos una explicación más detallada de los _handlers_ y su relación con las señales y el valor `SQLSTATE`.
+
+Un _handler_ o manejador es un elemento que puede _capturar excepciones_ y ejecutar un bloque de código en respuesta a una condición específica. En otras palabras, un _handler_ es un mecanismo que permite manejar errores o condiciones especiales que pueden ocurrir durante la ejecución de un bloque de código.
 
 Con relación a los cursores, un _handler_ se utiliza para manejar situaciones en las que no hay más filas que leer en el cursor. Por ejemplo, si estamos recorriendo un cursor y llegamos al final del conjunto de resultados, se producirá una condición (excepción) `NOT FOUND`. En este caso, podemos utilizar un _handler_ para capturar esta condición y ejecutar un bloque de código específico (como cerrar el cursor o modificar una variable que indique la terminación del bucle).
 
@@ -821,7 +901,7 @@ Con relación a los cursores, un _handler_ se utiliza para manejar situaciones e
 
 Como hemos dicho en el apartado anterior un _handler_ puede _capturar excepciones o errores_. Estos se pueden producir durante el _normal_ funcionamiento de nuestros scripts SQL. Por ejemplo, cuando llegamos al final de un cursor se producirá un error `NOT FOUND` que puede ser manejado por un _handler_.
 
-Existe también una forma que nos permite lanzar excepciones (no errores) de forma manual. Esto se hará por medio de la sentencia `SIGNAL` y se utiliza para lanzar excepciones personalizadas. `SIGNAL` nos permitirá lanzar excepciones codificadas mediante un valor `SQLSTATE`. Este valor es un código de error que indica el tipo de excepción que se ha producido.
+Existe también un mecanismo que nos permite lanzar excepciones (no errores) de forma manual. Esto se hará por medio de la sentencia `SIGNAL` y se utiliza para lanzar excepciones personalizadas. `SIGNAL` nos permitirá lanzar excepciones codificadas mediante un valor `SQLSTATE`. Este valor es un código de error que indica el tipo de excepción que se ha producido.
 
 Hay literalmente cientos de valores `SQLSTATE` que organizan en cuatro clases. La clase de un valor `SQLSTATE` viene definida por los dos primeros caracteres del código:
 
@@ -920,7 +1000,7 @@ END$$
 
 ## Uso de `SIGNAL`
 
-`SIGNAL` es el mecanismo que nos permite _devolver_ excepciones. Mediante este mecanismo podremos enviar información de la excepción a un _handler_ o al cliente. Además también nos da control sobre otras características del como el código de error, valor del `SQLSTATE` y mensaje de error.
+`SIGNAL` es el mecanismo que nos permite _lanzar_ excepciones. Mediante este mecanismo podremos enviar información de la excepción a un _handler_ o al cliente. Además también nos da control sobre otras características del como el código de error, valor del `SQLSTATE` y un mensaje de error.
 
 La sintaxis es la siguiente:
 
@@ -938,6 +1018,8 @@ SIGNAL condition_value
 **`SIGNAL` no se puede utilizar para _lanzar_ códigos de error. Sólo se podrá utilizar con valores de `SQLSTATE`.**
 
 Los valores de `SQLSTATE` que hemos visto en el apartado dedicado a los _handlers_ son los mismos que podemos utilizar aquí. Por lo tanto, si queremos devolver un error de tipo `NOT FOUND` podríamos utilizar el valor `02000` de `SQLSTATE`, para indicar una excepción definida por el usuario `450000`, etc. Pasemos a ve cómo se definen condiciones de error y cómo se utilizan.
+
+`signal_information_item` es un elemento opcional que nos permite enviar información adicional sobre la excepción. Esta información puede ser un mensaje de error `MESSAGE_TEXT`, un código de error `MYSQL_ERRNO` y otros datos relacionados con el error que se ha producido y su origen
 
 ### _Condiciones_ definidas por el usuario
 
