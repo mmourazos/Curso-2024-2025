@@ -4,17 +4,17 @@ En este documento veremos como crear bases de datos distribuidas entre varios se
 
 La única variación consistirá en que, en lugar de utilizar máquinas virtuales MS. Windows 10, utilizaremos máquinas virtuales Linux (Ubuntu Server 24.04) en VirtualBox.
 
-Otro cambio será que, en lugar de utilizar una _red NAT_ para interconectar las máquinas virtuales, utilizaremos dos interfaces de red (o adaptadores) para cada máquina virtual. El primero será el que viene configurado por defecto en VirtualBox, _NAT_ que nos permitirá tener conexión a Internet desde las máquinas virtuales. El segundo adaptador será de tipo _host-only_ (_solo-anfitrión_) y permitirá que las máquinas virtuales se _vean entre sí y vean al anfitrión_. Des este modo tendremos acceso a Internet y podremos conectarnos a las máquinas virtuales desde el anfitrión y entre ellas.
+Otro cambio será que, en lugar de utilizar una _red NAT_ para interconectar las máquinas virtuales, utilizaremos dos interfaces de red (o adaptadores) para cada máquina virtual. El primero será el que viene configurado por defecto en VirtualBox, _NAT_ que nos permitirá tener conexión a Internet desde las máquinas virtuales. El segundo adaptador será de tipo _host-only_ (_solo-anfitrión_) y permitirá que las máquinas virtuales **se vean entre sí y vean al anfitrión**. De este modo tendremos acceso a Internet y podremos conectarnos a las máquinas virtuales desde el anfitrión y entre ellas.
 
 ## Configuración de la red
 
 ### Configuración de las máquinas virtuales
 
-Una vez creada cada máquina virtual (y antes de iniciar el sistema operativo), se ha de configurar la red de cada máquina virtual.
+Una vez creada cada máquina virtual (y antes de iniciar el proceso de instalación del sistema operativo), se ha de configurar la red de cada máquina virtual.
 
 ### Configuración de red (VirtualBox)
 
-En VirtualBox, seleccionamos la máquina virtual y vamos a `Configuración` -> `Red`. Ahí podremos ver varias pestañas, una por cada adaptador de red. En la primera interfaz de red (adaptador 1) lo dejaremos como está (`NAT`) para que la máquina tenga acceso a Internet. En la segunda interfaz de red (adaptador 2) seleccionaremos `Adaptador de solo-anfitrión`.
+En VirtualBox, seleccionamos la máquina virtual y vamos a `Configuración` -> `Red`. Ahí podremos ver varias pestañas, una por cada adaptador de red. En la primera interfaz de red (adaptador 1) lo dejaremos como está (`NAT`) para que la máquina tenga acceso a Internet. En la segunda interfaz de red (adaptador 2) habilitaremos el adaptador y seleccionaremos `Adaptador de solo-anfitrión`.
 
 ### Configuración del sistema operativo
 
@@ -315,8 +315,16 @@ _El número de posición será distinto en cada caso y no ha de coincidir con el
 Finalmente hemos de crear un usuario en el maestro que utilizará el esclavo para conectarse a él y obtener la información necesaria para la replicación. Para ello, desde la consola de MySQL Shell (o MySQL Workbench) ejecutamos el siguiente comando:
 
 ```SQL
-CREATE USER 'replicador'@'%'
+CREATE USER 'replicador'@'%' IDENTIFIED BY '123abc..';
 ```
+
+A continuación hemos de asignarle lo siguientes privilegios:
+
+```SQL
+GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
+```
+
+El permiso `REPLICATION SLAVE` es el único que se necesita para que el esclavo pueda conectarse al maestro y realizar la réplica.
 
 ### Configuración del esclavo
 
@@ -358,3 +366,132 @@ MASTER_PASSWORD='replica123',
 MASTER_LOG_FILE='mysql-bin.000001',
 MASTER_LOG_POS=5102;
 ```
+
+O, utilizando la terminología más correcta:
+
+```SQL
+CHANGE REPLICATION SOURCE TO
+SOURCE_HOST='192.168.56.101',
+SOURCE_USER='replicador',
+SOURCE_PASSWORD='replica123',
+SOURCE_LOG_FILE='mysql-bin.000001',
+SOURCE_LOG_POS=5102;
+```
+
+Cuando ejecutamos esta sentencia el servidor nos responde con este mensaje:
+
+```text
+Note (code 1759): Sending passwords in plain text without SSL/TLS is extremely insecure.
+Note (code 1760): Storing MySQL user name or password information in the connection metadata repository is not secure and is therefore not recommended. Please consider using the USER and PASSWORD connection options for START REPLICA; see the 'START REPLICA Syntax' in the MySQL Manual for more information.
+```
+
+Que **SEGURO** que no tendrá ningún impacto en nuestra futuro a corto plazo... :wink: :wink:
+
+Ahora hemos de iniciar la réplica con el siguiente comando:
+
+```SQL
+START REPLICA;
+```
+
+¡Y ya todo funciona perfectamente! Y ¡¡ :fireworks: A LA PRIMERA :rocket: !! :tada:
+
+_(Ni en nuestros más alocados sueños.)_
+
+Para comprobarlo sólo tendremos que crear la base de datos `test_replicacion` en el maestro, meter algunos datos y ver si, ¡Qué digo ver! ¡Comprobar! Comprobar que se ha replicado en el esclavo. Para ello crearemos un pequeño script que nos ayude a crear la base de datos:
+
+```SQL
+DROP DATABASE IF EXISTS test_replicacion;
+
+CREATE DATABASE test_replicacion;
+
+CREATE TABLE test_replicacion.usuario (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO test_replicacion.usuario (nombre, email) VALUES
+('Juan', 'juan@sinmiendo.ltd'),
+('Manuel', 'mourazos@iessanclemente.net'),
+('MySQL', 'server@replica.com');
+```
+
+Y si nos conectamos al la réplica y miramos las base de datos que tenemos:
+
+```SQL
+SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+```
+
+...
+
+Esto no es lo que que debería salir. Nos falta `test_replicacion`.
+
+#### ¿Qué ha salido mal?
+
+Para obtener información sobre el estado de la réplica podemos escribir:
+
+```SQL
+SHOW REPLICA STATUS\G
+```
+
+Un par de líneas deberían de llamar nuestra atención:
+
+```text
+(...)
+Last_IO_Errno: 2061
+Last_IO_Error: error connecting to master 'replicador@192.168.56.101:3306' - retry-time: 60 retries: 1 message: Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.
+Last_SQL_Errno: 0
+(...)
+```
+
+**¿Qué significa esto?**
+
+Lo que ha sucedido es que cuando creamos el usuario `'replicador'@'%'` el _plugin_ de autenticación que se ha utilizado es `caching_sha2_password`. Y en la documentación de MySQL se nos indica los siguiente (la traducción es mía)
+
+> Para conectar a la fuente (_master_) utilizando una cuenta de usuario de replicación que se autentica con el plugin `caching_sha2_password`; deberemos de, o bien establecer una conexión segura (...) o habilitar o bien habilitar la conexión no cifrada para admitir el intercambio de contraseñas mediante un par de claves RSA. El plugin de autenticación `caching_sha2_password` es el valor predeterminado para los nuevos usuarios creados a partir de MySQL 8.0. Si la cuenta de usuario que ha creado o usa para replicación para la replicación utiliza este plugin de autenticación (`caching_sha2_password`) y no está utilizando una conexión segura, debe habilitar el intercambio de contraseñas basado en pares de claves RSA para una conexión exitosa. Puede hacerlo utilizando la opción `MASTER_PUBLIC_KEY_PATH` o la opción `GET_MASTER_PUBLIC_KEY=1` para esta sentencia.
+
+(Se puede comprobar en este enlace: [MySQL 8.0 Reference Manual: CHANGE MASTER TO statement](https://dev.mysql.com/doc/refman/8.0/en/change-master-to.htm))
+
+Si en la misma página leemos lo que nos dice del parámetro `GET_MASTER_PUBLIC_KEY`:
+
+> Habilita el intercambio de contraseñas basado en pares de claves RSA al solicitar la clave pública al maestro. Esta opción está deshabilitada de forma predeterminada.
+
+Que es lo que queríamos.
+
+De modo que, para solucionar el problema, hemos de volver a la consola de MySQL del esclavo y ejecutar los siguientes comando:
+
+```SQL
+STOP REPLICA;
+
+CHANGE REPLICATION SOURCE TO
+GET_MASTER_PUBLIC_KEY=1;
+
+START REPLICA;
+```
+
+Ahora sí que todo debería de funcionar correctamente. Podremos comprobarlo volver a ejecutar el _script_ de creación de la base de datos en el maestro y ver que ahora sí se ha replicado correctamente.
+
+#### Otra forma de solucionar el problema (menos segura)
+
+Si usar el _plugin_ de autenticación `caching_sha2_password` nos está dando problemas, lo que podemos hacer es cambiar el _plugin_ de autenticación del usuario `replicador` a `mysql_native_password` que es el que se utilizaba en versiones anteriores de MySQL. Para ello, desde la consola de MySQL del maestro ejecutamos el siguiente comando:
+
+```SQL
+ALTER USER 'replicador'@'%' IDENTIFIED WITH mysql_native_password BY '123abc..';
+```
+
+_(No he probado esta solución pero debería de funcionar)_
+
+#### _Batallita_
+
+La primera vez que realicé los pasos detallados en este documento para configurar la replicación se produjo el error anterior (como era esperado) y se solucionó estableciendo el parámetro `GET_MASTER_PUBLIC_KEY=1` en la sentencia `CHANGE REPLICATION SOURCE TO`.
+
+Documenté todo el proceso: mensajes de error, corrección y pruebas. Y luego lo borré todo por error antes de hacer _commit_. Cuatro horas de trabajo a la basura. Así que decidí volver a realizar el proceso desde cero y documentarlo todo de nuevo. Y, como no podía ser de otra manera, esta vez no me dio ningún error _CUANDO DEBERÍA DE DARLO_. Cree una nueva máquina virtual **replica** con la configuración indicada (sin incluir `GET_MASTER_PUBLIC_KEY`) y, cuando probé la replicación funcionó sin error. He de confesar que no sé cuál es el motivo. _Se me ocurre que cuando configuré la primera máquina réplica algo cambió en el servidor maestro que permitió que la segunda réplica funcionara sin errores. Pero no tengo ni idea de qué pudo ser._
