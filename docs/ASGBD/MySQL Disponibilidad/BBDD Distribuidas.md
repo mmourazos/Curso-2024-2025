@@ -1,5 +1,35 @@
 # Bases de datos distribuidas
 
+<!-- toc -->
+
+- [Configuración de la red](#configuracion-de-la-red)
+    * [Configuración de las máquinas virtuales](#configuracion-de-las-maquinas-virtuales)
+    * [Configuración de red (VirtualBox)](#configuracion-de-red-virtualbox)
+    * [Configuración del sistema operativo](#configuracion-del-sistema-operativo)
+        + [Configuración de la red (Ubuntu Server)](#configuracion-de-la-red-ubuntu-server)
+        + [Configuración de SSH](#configuracion-de-ssh)
+- [Configuración de MySQL](#configuracion-de-mysql)
+    * [Conexión a la máquina virtual](#conexion-a-la-maquina-virtual)
+    * [Instalación de MySQL](#instalacion-de-mysql)
+    * [Configuración del Servidor MySQL](#configuracion-del-servidor-mysql)
+        + [Permitir conexiones remotas](#permitir-conexiones-remotas)
+    * [Creación de usuario administrador de MySQL](#creacion-de-usuario-administrador-de-mysql)
+    * [Comprobar la configuración](#comprobar-la-configuracion)
+        + [Comprobar visibilidad entre máquinas virtuales](#comprobar-visibilidad-entre-maquinas-virtuales)
+            - [Comprobar conexión SSH](#comprobar-conexion-ssh)
+            - [Visibilidad entre los equipos](#visibilidad-entre-los-equipos)
+- [Caso 1: Replicación de bases de datos _maestro-esclavo_ (_source-replica_)](#caso-1-replicacion-de-bases-de-datos-_maestro-esclavo_-_source-replica_)
+    * [Objetivo](#objetivo)
+    * [Configuración del maestro](#configuracion-del-maestro)
+        + [Obtención de la información del maestro](#obtencion-de-la-informacion-del-maestro)
+        + [Creación de usuario para la réplica](#creacion-de-usuario-para-la-replica)
+    * [Configuración del esclavo](#configuracion-del-esclavo)
+        + [¿Qué ha salido mal?](#%C2%BFque-ha-salido-mal)
+        + [Otra forma de solucionar el problema (menos segura)](#otra-forma-de-solucionar-el-problema-menos-segura)
+        + [_Batallita_](#_batallita_)
+
+<!-- tocstop -->
+
 En este documento veremos como crear bases de datos distribuidas entre varios servidores MySQL. Se seguirán los ejemplos creados por el profesor Emiliano Gómez Vázquez en su curso de ASGBD.
 
 La única variación consistirá en que, en lugar de utilizar máquinas virtuales MS. Windows 10, utilizaremos máquinas virtuales Linux (Ubuntu Server 24.04) en VirtualBox.
@@ -158,8 +188,8 @@ sudo systemctl restart mysql.service
 
 Los cambios que hemos realizado en la configuración del servidor tendrán las siguientes consecuencias:
 
-* **La primera línea:** `bind-address=127.0.0.1,192.168.56.101` indica al servidor MySQL que acepte conexiones locales (`127.0.0.1` o interfaz de _loopback_) y además _escuche_ también en la interfaz de red con dirección IP `192.168.56.101` (`enp0s8`) para que podemos conectarnos a ella desde el anfitrión o desde otras máquinas virtuales.
-* **La segunda línea:** `mysqlx-bind-address=127.0.0.1,192.168.56.101` indica al servidor MySQL lo mismo que en el caso anterior pero para conexiones de la aplicación [MySQL Shell](https://dev.mysql.com/doc/mysql-shell/8.0/en/) que podemos descargar en [este enlace](<https://dev.mysql.com/downloads/shell/>) o instalar mediante `winget` con el comando de Powershell:
+- **La primera línea:** `bind-address=127.0.0.1,192.168.56.101` indica al servidor MySQL que acepte conexiones locales (`127.0.0.1` o interfaz de _loopback_) y además _escuche_ también en la interfaz de red con dirección IP `192.168.56.101` (`enp0s8`) para que podemos conectarnos a ella desde el anfitrión o desde otras máquinas virtuales.
+- **La segunda línea:** `mysqlx-bind-address=127.0.0.1,192.168.56.101` indica al servidor MySQL lo mismo que en el caso anterior pero para conexiones de la aplicación [MySQL Shell](https://dev.mysql.com/doc/mysql-shell/8.0/en/) que podemos descargar en [este enlace](<https://dev.mysql.com/downloads/shell/>) o instalar mediante `winget` con el comando de Powershell:
 
 ```powershell
 winget install Oracle.MySQLShell
@@ -342,9 +372,9 @@ binlog_do_db = test_replicacion
 
 Los valores que hemos modificado indicarán al servidor MySQL lo siguiente:
 
-* `server-id = 1`: Este parámetro le asigna un **identificador único** al servidor maestro o _source_. Este valor ha de ser único en el conjunto de servidores. En este caso le hemos asignado el valor `1`. Al servidor (o servidores) esclavo le asignaremos el valor `2` (`3`, `4`, etc.). _Los valores concretos son irrelevantes, lo importante es que no se repitan._
-* `log_bin = /var/log/mysql/mysql-bin.log`: Este parámetro le indica al servidor maestro que **guarde un log binario** en la ruta indicada. Este [log binario](https://dev.mysql.com/doc/refman/8.4/en/binary-log.html) contendrá todas las operaciones se que realizan en el servidor maestro y permitirá replicarlas en el esclavo. En este caso lo guardará en la ruta `/var/log/mysql/` con el nombre `mysql-bin.log`.
-* `binlog_do_db = test_replicacion`: Este parámetro le indica al servidor maestro **que bases de datos se han de replicar**. En nuestro caso sólo se r en el log binario las operaciones sobre la base de datos indicada. En este caso hemos de poner el nombre de la base de datos que queramos replicar que será `test_replicacion` en el ejemplo.
+- `server-id = 1`: Este parámetro le asigna un **identificador único** al servidor maestro o _source_. Este valor ha de ser único en el conjunto de servidores. En este caso le hemos asignado el valor `1`. Al servidor (o servidores) esclavo le asignaremos el valor `2` (`3`, `4`, etc.). _Los valores concretos son irrelevantes, lo importante es que no se repitan._
+- `log_bin = /var/log/mysql/mysql-bin.log`: Este parámetro le indica al servidor maestro que **guarde un log binario** en la ruta indicada. Este [log binario](https://dev.mysql.com/doc/refman/8.4/en/binary-log.html) contendrá todas las operaciones se que realizan en el servidor maestro y permitirá replicarlas en el esclavo. En este caso lo guardará en la ruta `/var/log/mysql/` con el nombre `mysql-bin.log`.
+- `binlog_do_db = test_replicacion`: Este parámetro le indica al servidor maestro **que bases de datos se han de replicar**. En nuestro caso sólo se r en el log binario las operaciones sobre la base de datos indicada. En este caso hemos de poner el nombre de la base de datos que queramos replicar que será `test_replicacion` en el ejemplo.
 
 **Si no indicamos una (o varias) base de datos con la opción `binlog_do_db`, se replicarán todas las bases de datos del servidor maestro. Es conveniente indicar únicamente las bases de datos que nos interesen tener replicadas en el esclavo.**
 
@@ -370,8 +400,8 @@ SHOW MASTER STATUS;
 
 Los valores que nos interesan son:
 
-* _File_: `mysql-bin.000001` (el nombre del fichero de log binario).
-* _Position_: `5102` (la posición del log binario).
+- _File_: `mysql-bin.000001` (el nombre del fichero de log binario).
+- _Position_: `5102` (la posición del log binario).
 
 _El número de posición será distinto en cada caso y no ha de coincidir con el de este ejemplo._
 
@@ -533,8 +563,8 @@ Si en la misma página buscamos el parámetro `GET_MASTER_PUBLIC_KEY` veremos qu
 
 En resumen: **no podemos conectarnos al servidor _fuente_ desde el esclavo si el mecanismo de autenticación del usuario es `caching_sha2_password`**si no utilizamos alguna de estas dos opciones:
 
-* `GET_MASTER_PUBLIC_KEY = 1`: Esto hará que el intercambio de contraseñas sea cifrado mediante el sistema de clave pública/clave privada.
-* `MASTER_PUBLIC_KEY_PATH = ruta_a_la_clave_publica_del_servidor`: Esto implicaría generar un par de claves en el servidor _fuente_ y copiar la clave pública en una ruta dentro de la máquina _réplica_.
+- `GET_MASTER_PUBLIC_KEY = 1`: Esto hará que el intercambio de contraseñas sea cifrado mediante el sistema de clave pública/clave privada.
+- `MASTER_PUBLIC_KEY_PATH = ruta_a_la_clave_publica_del_servidor`: Esto implicaría generar un par de claves en el servidor _fuente_ y copiar la clave pública en una ruta dentro de la máquina _réplica_.
 
 De modo que, para solucionar el problema, hemos de volver a la consola de MySQL Shell del esclavo y ejecutar los siguientes comandos:
 

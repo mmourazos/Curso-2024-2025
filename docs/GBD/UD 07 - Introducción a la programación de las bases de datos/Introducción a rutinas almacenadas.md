@@ -800,27 +800,39 @@ Dentro de un trigger tampoco se pueden iniciar o terminar transacciones. Esto es
 
 ## Cursores
 
-Antes de continuar explicando como crear rutinas almacenadas es conveniente explicar el concepto de _cursor_. Es bastante común que en una rutina almacenada necesitemos recorrer un conjunto de filas devueltas por una consulta SQL. Para ello utilizamos un _cursor_.
+Antes de continuar explicando como crear rutinas almacenadas es conveniente explicar el concepto de _cursor_. Es bastante común que en una rutina almacenada necesitemos recorrer una a una el conjunto de filas devueltas por una consulta SQL. Para ello utilizamos un _cursor_.
 
 ### ¿Qué es un cursor?
 
-Un cursor es un mecanismo que permite _encapsular_ una consulta SQL y recorrer el conjunto de filas devueltas por esta consulta. Un _cursor_ se puede utilizar para realizar operaciones en cada fila del conjunto de resultados, como actualizar o eliminar filas.
+Un cursor es un mecanismo que permite _encapsular_ una consulta SQL y recorrer *_una a una_ el conjunto de filas devueltas por esta consulta. Un _cursor_ se puede utilizar para realizar operaciones sobre cada fila del conjunto de resultados, como actualizar otra tabla a partir de sus valores, eliminar filas, etc.
 
 Los cursores **sólo pueden utilizarse dentro de rutinas almacenadas**.
 
-Para utilizar un cursor éste ha de declararse (sentencia `DECLARE CURSOR`), abrirse (`OPEN`), recorrerse (`FETCH`) y cerrarse (`CLOSE`).
+Para utilizar un cursor éste ha de:
 
-La declaración de un cursor ha de realizarse después de la declaración de las variables y antes de la declaración de los _handlers_. La apertura del cursor se realiza mediante la sentencia `OPEN` y el recorrido del cursor se realiza mediante la sentencia `FETCH`. Finalmente, el cursor se cierra mediante la sentencia `CLOSE`.
+1. Declararse (sentencia `DECLARE CURSOR`).
+2. Abrirse (`OPEN`).
+3. Recorrerse (`FETCH`).
+4. Y finalmente cerrarse (`CLOSE`).
+
+La declaración de un cursor ha de realizarse **después de la declaración de las variables y antes de la declaración de los _handlers_**. El orden es importante o se producirá un error.
 
 #### Propiedades de un cursor
 
+Los cursores tienen tres propiedades que son importantes a la hora de utilizarlos:
+
 1. Los cursores son _asensitive_: El servidor podrá hacer o no una copia en memoria de sus resultados:
-    - Si el servidor hace una copia de los resultados, el cursor será _sensible_ a los cambios realizados en la tabla.
-    - Si no hace una copia de los resultados, el cursor será _insensible_ a los cambios realizados en la tabla.
+    - Si el servidor hace una copia de los resultados, el cursor será _insensible_ a los cambios realizados en la tabla.
+    - Si no hace una copia de los resultados, el cursor será _sensible_ a los cambios realizados en la tabla.
 2. Los cursores son _read only_: Esto significa que sólo se pueden leer y **no se pueden modificar**.
 3. Los cursores son _nonscrollable_: Es decir, los cursores **sólo se pueden recorrer en una dirección y no se pueden saltar filas**.
 
-**Sobre el primer punto**: La documentación de MySQL es algo confusa con respecto a este tema. En teoría, decir que un cursor es _asensitive_ quiere decir que el cursor _apunta_ a los datos _reales_ que hay tras la consulta. Esto significaría que si los datos cambian **mientras** recorremos el cursor podríamos ver los valores más actuales. La otra posibilidad es que el servidor hiciera una copia de los datos y el cursor apuntara a esta copia. En este caso, si los datos cambian mientras recorremos el cursor, no veríamos los cambios. `¯\_(ツ)_/¯`.
+**Sobre el primer punto**: La documentación de MySQL es algo confusa con respecto a este tema. En teoría, decir que un cursor es _asensitive_ parece que quiere decir que no podemos saber si el cursor es _sensible_ (_sensitive_) o _insensible_ (_insensitive_) a los cambios en los datos subyacentes a la consulta.
+
+- Si el cursor _apunta_ a los datos _reales_ que hay tras la consulta y estos cambian esto se vería reflejado en el cursor. De ahí la denominación de _sensitive_. **Se dice que los cursores de este tipo son más rápidos** aunque no he encontrado una explicación técnica del motivo.
+- La otra posibilidad es que el servidor haga una copia de los datos y el cursor apunte a esta copia. En este caso, si los datos cambian mientras recorremos el cursor veríamos la _instantánea_ y no veríamos los cambios; por lo tanto sería _insensible_ a los cambios.
+
+`¯\_(ツ)_/¯`.
 
 #### Sintaxis de un cursor
 
@@ -830,11 +842,17 @@ La sintaxis para declarar un _cursor_ es la siguiente:
 DECLARE cursor_name CURSOR FOR select_statement;
 ```
 
+Donde `select_statement` es una sentencia `SELECT` válida.
+
+Antes de ver ejemplos de uso de cursores debemos ver dos elementos que se usan en los mismos: _handlers_ y señales. Si los siguientes conceptos son difíciles de entender no te preocupes, su funcionamiento será más evidente cuando veamos ejemplos de uso de cursores.
+
 #### Señal `NOT FOUND`, _handlers_ y cursores
 
-Una señal es un mecanismo que permite indicar una condición o un estado específico durante la ejecución de un bloque de código. En el contexto de los cursores, las señales se utilizan para manejar situaciones como el final del conjunto de resultados o errores específicos.
+Una señal es un mecanismo que permite indicar que se ha producido una condición o un estado específico durante la ejecución de un bloque de código. En el contexto de los cursores, las señales se utilizan para manejar situaciones como el final del conjunto de resultados o errores específicos.
 
-Un _handler_ es un bloque de código que se ejecuta en respuesta a una señal específica. En el caso de los cursores, un _handler_ se utiliza para manejar la señal `NOT FOUND`, que indica que no hay más filas que leer en el cursor.
+Un _handler_ es un bloque de código que se ejecuta en respuesta a una señal específica. Es decir, cuando declaramos un _handler_ hemos de indicar a qué señal (o tipo de señal) estará _atento_ y que acciones ha de realizar como respuesta a la misma.
+
+En el caso de los cursores se utilizará un _handler_ para detectar que hemos llegado al final de los datos. Cuando esto sucede se dispara na señal llamada `NOT FOUND`, esta que indica que no hay más filas que leer en el cursor y el _handler_ que la _maneja_ ejecutará el bloque de código que modificará una variable que indicará el final del proceso del cursor (esto se verá más claro en los ejemplos de uso de cursores).
 
 Cuando recorremos un cursor dentro de un bucle necesitamos una forma de determinar cuándo hemos llegado al final del conjunto de resultados. Para ello utilizamos la señal `NOT FOUND` que se activa cuando no hay más filas que leer en el cursor. Esta señal se puede capturar mediante un _handler_ y nos permite salir del bucle.
 
@@ -945,7 +963,7 @@ Finalmente, `statement` será una instrucción o un bloque de código que se eje
 
 _(Cuando se trata de una sola instrucción no es necesario rodearla de `BEGIN` y `END`)._
 
-No entraremos aquí en la definición de condiciones ni explicaremos los distintos tipos de [códigos de error de MySQL](https://dev.mysql.com/doc/mysql-errors/8.0/en/server-error-reference.html) ni los posibles [valores de sql](https://www.ibm.com/docs/en/i/7.4.0?topic=codes-listing-sqlstate-values) ya que excede lo necesario para esta sección.
+No entraremos aquí en la definición de condiciones ni explicaremos los distintos tipos de [códigos de error de MySQL](https://dev.mysql.com/doc/mysql-errors/8.0/en/server-error-reference.html) ni los posibles [valores de SQL](https://www.ibm.com/docs/en/i/7.4.0?topic=codes-listing-sqlstate-values) ya que excede lo necesario para esta sección.
 
 #### Ejemplo de handler
 
@@ -1153,3 +1171,5 @@ No lanzamos nada y no capturamos nada.
 +----------------------------------+
 1 row in set (0.0020 sec)
 ```
+
+The End.
