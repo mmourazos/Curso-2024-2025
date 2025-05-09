@@ -135,6 +135,4 @@ Como en casi todos los diagramas no todas las herramientas contemplan todos los 
 
 ## Diagramas de estados
 
-
-
 ## Diagramas de actividad
