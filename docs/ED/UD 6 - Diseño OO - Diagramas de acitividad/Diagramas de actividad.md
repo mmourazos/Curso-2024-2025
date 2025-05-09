@@ -29,7 +29,7 @@ Los elementos del diagramas de casos de uso serán: **actor**, **caso de uso** y
 
 #### Actor
 
-El actor representa un _rol_* o papel desempeñado por un elemento ajeno al sistema. Este elemento puede ser un usuario, un sistema o un dispositivo que interactúe con el sistema. El actor interactúa con el sistema para llevar a cabo una tarea o función específica.
+El actor representa un _rol_ o papel desempeñado por un elemento ajeno al sistema. Este elemento puede ser un usuario, un sistema o un dispositivo que interactúe con el sistema. El actor interactúa con el sistema para llevar a cabo una tarea o función específica.
 
 Sus característica fundamentales son:
 
@@ -39,19 +39,7 @@ Sus característica fundamentales son:
 * Los actores son el punto de inicio de los casos de uso.
 * Los actores principales figurarán el la parte superior del diagrama y los secundarios en la parte inferior.
 
-```mermaid
-userclassDiagram
-    actor Actor1
-    actor Actor2
-    class CasoUso1 {
-        +nombreCasoUso()
-    }
-    class CasoUso2 {
-        +nombreCasoUso()
-    }
-    Actor1 -- CasoUso1 : <<include>>
-    Actor2 -- CasoUso2 : <<extend>>
-```
+TODO: Icono de actor.
 
 #### Caso de uso
 
@@ -59,7 +47,31 @@ Un caso de uso describe una funcionalidad o comportamiento del sistema desde el 
 
 Por este motivo se nombran mediante un verbo en infinitivo seguido de un sustantivo. Por ejemplo: "Registrar usuario", "Buscar producto", "Realizar compra".
 
-#### Rerelaciones
+Los casos de uso se suelen representar de forma descendiente situando los más importantes en la parte superior.
+La acción correspondiente al caso de uso no puede ni excesivamente genérica ni demasiado específica.
+
+TODO: Icono de caso de uso.
+
+#### Relaciones
+
+Una relación indica una acción o flujo de información. Pueden ser de varios tipos:
+
+* Asociación: Indica una invocación desde un actor o un caso de uso a otro caso de uso.
+  * Se representa mediante una línea continua entre el actor y el caso de uso o entre dos casos de uso.
+* Inclusión: Se produce entre dos casos de uso e indica que uno de ellos necesita al otro para realizar su función. Es decir, tiene la funcionalidad del otro como parte integrante de su comportamiento.
+  * Se representa mediante una línea discontinua con una flecha que apunta al caso de uso incluido y la etiqueta `<<include>>`.
+* Extensión: Se produce entre dos casos de uso e indica que uno de ellos amplía la funcionalidad del otro. Es decir el primer caso de uso **no depende** del segundo para realizar su función pero el segundo puede **opcionalmente** añadir aspectos a la funcionalidad del primero.
+  * Se representa mediante una línea discontinua con una flecha que apunta al caso de uso base y la etiqueta `<<extend>>`.
+* Generalización: Se produce entre un caso de uso padre y un caso de uso hijo. El hijo hereda la funcionalidad del padre y puede añadirle más funcionalidades. El padre es una _generalización_ del hijo y el hijo una _especialización_ del padre. De este modo, podríamos substituir el caso padre por el hijo y no variaría el comportamiento del sistema.
+  * Se representa mediante una línea continua con una flecha que apunta al caso de uso padre.
+
+Un ejemplo de asociación:
+
+
+
+Un ejemplo de extensión:
+
+Un ejemplo de generalización:
 
 ## Diagramas de interacción
 
