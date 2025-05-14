@@ -3,19 +3,19 @@
 <!-- toc -->
 
 - [Diagramas de casos de uso](#diagramas-de-casos-de-uso)
-    * [Elementos de un diagrama de casos de uso](#elementos-de-un-diagrama-de-casos-de-uso)
-        + [Actor](#actor)
-        + [Caso de uso](#caso-de-uso)
-        + [Relaciones](#relaciones)
+  * [Elementos de un diagrama de casos de uso](#elementos-de-un-diagrama-de-casos-de-uso)
+    + [Actor](#actor)
+    + [Caso de uso](#caso-de-uso)
+    + [Relaciones](#relaciones)
 - [Diagramas de interacción](#diagramas-de-interaccion)
-    * [Diagramas de secuencia](#diagramas-de-secuencia)
-        + [Elementos de un diagrama de secuencia](#elementos-de-un-diagrama-de-secuencia)
-    * [Diagramas de comunicación](#diagramas-de-comunicacion)
-        + [Elementos de un diagrama de comunicación](#elementos-de-un-diagrama-de-comunicacion)
+  * [Diagramas de secuencia](#diagramas-de-secuencia)
+    + [Elementos de un diagrama de secuencia](#elementos-de-un-diagrama-de-secuencia)
+  * [Diagramas de comunicación](#diagramas-de-comunicacion)
+    + [Elementos de un diagrama de comunicación](#elementos-de-un-diagrama-de-comunicacion)
 - [Diagramas de estados](#diagramas-de-estados)
-    * [Elementos de un diagrama de estados](#elementos-de-un-diagrama-de-estados)
+  * [Elementos de un diagrama de estados](#elementos-de-un-diagrama-de-estados)
 - [Diagramas de actividad](#diagramas-de-actividad)
-    * [Elementos de un diagrama de actividad](#elementos-de-un-diagrama-de-actividad)
+  * [Elementos de un diagrama de actividad](#elementos-de-un-diagrama-de-actividad)
 
 <!-- tocstop -->
 
@@ -190,13 +190,13 @@ Un diagrama de estado tiene los siguientes elementos:
 
 Un ejemplo de diagrama de estados de un ascensor podría ser el siguiente:
 
-![Imagen de diagrama de estados](C:\Users\asinc\Documents\Trabajo\IES San Clemente\Curso-2024-2025\docs\ED\UD 6 - Diseño OO - Diagramas de acitividad\imagenes\Diagrama_estados.svg)
+![Imagen de diagrama de estados](./imagenes/Diagrama_estados.svg)
 
 ## Diagramas de actividad
 
 Constituyen una variante de los diagramas de estados en la que los estados representarán la ejecución de determinadas acciones o actividades. Las transiciones sólo se disparan cuando se finaliza la ejecución de las acciones correspondientes a cada estado.
 
-La diferencia entre un estado y una actividad consiste en que el primero es atómico y describe una situación mientras que la segunda es un proceso que puede llevar un tiempo en completarse.
+La diferencia entre un estado y una actividad consiste en que el primero es atómico y describe la situación de un objeto mientras que la segunda es un proceso que puede descomponerse en varias partes y tardar un tiempo en completarse.
 
 ### Elementos de un diagrama de actividad
 
@@ -206,7 +206,6 @@ Los elementos de un diagrama de actividad son:
 - Transición: Representa el paso de una actividad a otra. Se representa mediante una flecha que conecta dos actividades indicando el orden de ejecución.
 - Bifurcación / branching: representa una decisión que puede llevar a dos o más caminos. Se representa mediante un rombo. Siempre habrá una condición de guarda que indica el camino a seguir.
 - Divisiones / uniones: Representan la posibilidad de ejecutar varias actividades en paralelo. Se representan mediante una línea horizontal que divide el diagrama en dos o más partes. Dentro de cada parte se podrán dibujar dos o más sub-diagramas de actividad que se estarían ejecutando simultáneamente. La unión se representa mediante una línea horizontal que une dos o más actividades en paralelo.
-
 Diagrama que muestra el procesado de un pedido:
 
 ```mermaid
@@ -223,6 +222,3 @@ AsignarEncargado --> join_state
 join_state --> ProcesarPedido
 ProcesarPedido --> [*]
 ```
-
-
-
