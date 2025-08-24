@@ -561,7 +561,7 @@ Si en la misma página buscamos el parámetro `GET_MASTER_PUBLIC_KEY` veremos qu
 
 > Habilita el intercambio de contraseñas basado en pares de claves RSA al solicitar la clave pública al maestro. Esta opción está deshabilitada de forma predeterminada.
 
-En resumen: **no podemos conectarnos al servidor _fuente_ desde el esclavo si el mecanismo de autenticación del usuario es `caching_sha2_password`**si no utilizamos alguna de estas dos opciones:
+En resumen: **no podemos conectarnos al servidor _fuente_ desde el esclavo si el mecanismo de autenticación del usuario es `caching_sha2_password`** si no utilizamos alguna de estas dos opciones:
 
 - `GET_MASTER_PUBLIC_KEY = 1`: Esto hará que el intercambio de contraseñas sea cifrado mediante el sistema de clave pública/clave privada.
 - `MASTER_PUBLIC_KEY_PATH = ruta_a_la_clave_publica_del_servidor`: Esto implicaría generar un par de claves en el servidor _fuente_ y copiar la clave pública en una ruta dentro de la máquina _réplica_.
